@@ -1,0 +1,96 @@
+[
+    {
+        "entity": {
+            "id": "1",
+            "icon": "el-icon-rank",
+            "name": "系统管理1",
+            "url": "",
+            "template": "",
+            "childs": [
+                {
+                    "entity": {
+                        "id": "2",
+                        "icon": "el-icon-rank",
+                        "name": "内容管理2",
+                        "url": "",
+                        "childs": [
+                            {
+                                "entity": {
+                                    "id": "3",
+                                    "icon": "el-icon-rank",
+                                    "url": "abc",
+                                    "template": "foo",
+                                    "name": "foo管理",
+                                    "childs": null
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    },
+    {
+        "entity": {
+            "id": "4",
+            "icon": "el-icon-rank",
+            "name": "bar管理",
+            "url": "bcd",
+            "template": "bar",
+            "childs": null
+        }
+    },
+    {
+        "entity": {
+            "id": "5",
+            "icon": "el-icon-rank",
+            "name": "内容管理",
+            "url": "",
+            "template": "",
+            "childs": [
+                {
+                    "entity": {
+                        "id": "6",
+                        "icon": "el-icon-rank",
+                        "url": "cde",
+                        "template": "car",
+                        "name": "car管理",
+                        "childs": [
+                            {
+                                "entity": {
+                                    "id": "7",
+                                    "icon": "el-icon-rank",
+                                    "url": "edf",
+                                    "template": "test",
+                                    "name": "test测试",
+                                    "childs": [
+                                        {
+                                            "entity": {
+                                                "id": "9",
+                                                "icon": "el-icon-rank",
+                                                "url": "sdsf",
+                                                "template": "car1",
+                                                "name": "test测试",
+                                                "childs": null
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "entity": {
+                                    "id": "8",
+                                    "icon": "el-icon-rank",
+                                    "url": "sdf",
+                                    "template": "car",
+                                    "name": "car测试",
+                                    "childs": null
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    }
+]

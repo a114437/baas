@@ -1,0 +1,47 @@
+server:
+  port: 
+    8080
+
+#程序访问路径（发送邮件使用）
+url:
+  http://localhost:8080
+
+chain:
+  moac:
+    url:
+      #测试网
+      http://192.168.2.100:8545
+  jintum:
+    server:
+      #测试网
+      ws://101.200.235.69:5020
+
+spring:
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://10.10.10.3:3306/baas?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: Wt_a889799521d94b36a2d7ef9f4d84d9c0..  
+    
+  # redis 相关配置
+  redis:
+    #  数据库索引
+    database: 0
+    # 远程服务器地址
+    host: 127.0.0.1
+    # 远程服务器端口
+    port: 6379
+    # 验证码
+    password:
+    jedis:
+      pool:
+        # 最大空闲连接
+        max-idle: 8
+        # 最小空闲链接
+        min-idle: 0
+        # 最大连接数（负数表示没有限制）
+        max-active: 8
+        # 最大阻塞等待时间（负数表示没有限制）
+        max-wait: 0
+    # 链接超时时间（毫秒）
+    timeout: 500      

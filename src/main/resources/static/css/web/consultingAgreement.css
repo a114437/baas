@@ -1,0 +1,27 @@
+body{
+	text-align: center;
+	background: #F8F8F8;
+}
+header{
+	background: #FFFFFF;
+	border-bottom: 1px solid #F0F0F0;
+	height: 40px;
+	padding-top: 10px;
+}
+.navcTitle{
+	font-size: 20px;
+	font-weight: 900;
+}
+h1{
+	font-size: 20px;
+	font-weight: 600;
+	text-align: left;
+	margin-top: 4px;
+	margin-bottom: 4px;
+}
+p{
+	font-size: 16px;
+	text-indent:2em;
+	text-align: left;
+	line-height: 26px;
+}

@@ -1,0 +1,506 @@
+html,body {
+    font-size: 14px;
+    background-color: #eff4f8;
+    font-family: Microsoft YaHei,SimHei,Tahoma!important;
+    height:auto;
+    margin:0;
+    padding:0;
+}
+ul{
+	margin:0;
+	padding:0;
+}
+#login-container{
+	position: absolute;
+	top:0;
+	left:0;
+	z-index: 2;
+	width:100%;
+	min-width: 1102px;
+    overflow: hidden;
+    height: 720px;
+}
+
+.header-container {
+    position: relative;
+    height: 60px;
+    width: 100%;
+    left: 0;
+    top:0;
+    z-index: 3;
+}
+#login-header {
+    height: 60px;
+    min-width: 1002px;
+}
+#login-container .logo {
+    background: url(../image/logo.png) no-repeat scroll 0 transparent;
+    background-size: auto 44px;
+    float: left;
+    height: 51px;
+    margin: 10px 0 0 25px;
+    overflow: hidden;
+    width: 181px;
+    display: inline;
+}
+#login-container .yun-logo {
+    display: block;
+    float: left;
+    height: 44px;
+    outline: medium none;
+    text-indent: -9999em;
+    width: 186px;
+}
+#login-container .pan-logo {
+    display: none;
+    float: left;
+    height: 44px;
+    margin: 0 0 0 5px;
+    outline: medium none;
+    text-indent: -9999em;
+    width: 40px;
+}
+#login-container .login-title, #login-container .login-title a {
+    margin: 30px 20px 0 0;
+    color: #fff;
+    text-decoration: none;
+}
+#login-container .login-title {
+    float: right;
+    margin: 25px 20px 0 0;
+}
+#login-container #top_menu_other {
+    color: #f00;
+}
+
+#login-container .login-main {
+    display: table;
+    margin: 0 auto;
+    clear: both;
+    width: 1102px;
+    height: 77%;
+    position: relative;
+    overflow: hidden;
+    top: 15%;
+}
+#login-container #login-middle {
+    width: 352px;
+    height:auto;
+    display: block;
+    float: right;
+    vertical-align: middle;
+}
+.header-login {
+    position: relative;
+    width: 100%;
+    min-height: 300px;
+    z-index: 999;
+    background: #fff;
+    border-radius: 4px;
+    vertical-align: middle;
+    -webkit-box-shadow: 0 0 30px 3px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: #000 0 0 50px;
+    box-shadow: 0 0 30px 3px rgba(0, 0, 0, 0.15);
+}
+#login-middle .login-header-title {
+    height: 60px;
+}
+#login-middle .login-header-title h3 {
+    font-size: 20px;
+    text-align: center;
+    padding: 30px 0 12px 0;
+    font-weight: 100;
+    color: #333;
+}
+#login-middle .login-header-title h4 {
+    text-align: center;
+    font-size: 18px;
+    padding-top: 32px;
+    color: #333;
+    font-weight: 100;
+}
+.netdisk-qrcode-container {
+    height: 170px;
+    padding-bottom: 49px;
+    margin-top: 10px;
+}
+.qrcode-addoninfo {
+    text-align: center;
+    color: #333;
+    position: relative;
+    z-index: 49;
+    font-size: 14px;
+}
+.qrcode-addoninfo a {
+    color: #3582f8;
+    text-decoration: none;
+}
+
+#login-container #login-middle .guide-img {
+    background: url(http://pan.baidu.com/static/images/16new/baidu.png) no-repeat;
+    height: 182px;
+    width: 133px;
+    position: absolute;
+    right: 15px;
+    top: 112px;
+    filter: alpha(opacity=0);
+    -moz-opacity: 0;
+    opacity: 0;
+}
+#netdisk_qrcode_login_form {
+    height: 185px;
+}
+#login-container .tang-pass-login {
+    position: relative;
+    padding: 0 20px 0 20px;
+    margin-top:20px;
+}
+#login-container .tang-pass-qrcode .tang-pass-qrcode-content {
+    text-align: center;
+    margin: 22px 0 0 0;
+    left: 0;
+}
+#login-middle .tang-pass-wltopc-qrcode-init {
+    float: none;
+}
+#login-container .tang-pass-qrcode .tang-pass-qrcode-content .animate-left {
+    margin-left: -70px;
+}
+#login-container .tang-pass-login .pass-form-item {
+    position: relative;
+    margin-bottom: 0;
+    clear: both;
+    z-index: 18;
+}
+#login-container .tang-pass-login .pass-form-item.pass-form-item-userName {
+    border: 1px solid #eaeaea;
+    z-index: 21;
+    border-bottom-width: 0;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+#login-container .tang-pass-login .pass-form-item .pass-text-input {
+    position: relative;
+    z-index: 17;
+    display: block;
+    padding: 7px 10px;
+    height: 26px;
+    width: 284px;
+    border: 1px solid #dedede;
+    font-size: 14px;
+    color: #666;
+    transition: .3s;
+    line-height: 26px;
+    background-color: #fefefe;
+    padding-left: 20px;
+}
+#login-container .tang-pass-login .pass-form-item input.pass-text-input-userName {
+    padding-left: 16px!important;
+    border: 0;
+    border-bottom: 1px solid #e7e7e7;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    outline: none;
+}
+#login-container .tang-pass-login .pass-form-item.pass-form-item-password {
+    border: 1px solid #e7e7e7;
+    border-top-width: 0;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+#login-container .tang-pass-login .pass-form-item .pass-text-input {
+    position: relative;
+    z-index: 17;
+    display: block;
+    height: 43px;
+    width: 100%;
+    border: 1px solid #dedede;
+    font-size: 14px;
+    color: #666;
+    transition: .3s;
+    line-height: 26px;
+    background-color: #fefefe;
+    padding-left: 20px;
+}
+#login-container .tang-pass-login .pass-form-item input.pass-text-input-password {
+    padding-left: 16px;
+    border: 0;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    outline: none;
+}
+#login-container .pass-form .pass-form-item-password {
+    border: 1px solid #e7e7e7;
+    border-top-width: 0;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+#login-container .tang-pass-login .pass-form-item-memberPass input {
+    vertical-align: middle;
+    margin-top: -4px;
+}
+.tang-pass-login a, .tang-pass-login label, .tang-pass-login p, .tang-pass-login li, .tang-pass-login input {
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.tang-pass-login .pass-form-item-memberPass label {
+    color: #666;
+    margin-left: 5px;
+    font-size: 14px;
+}
+.tang-pass-login .pass-form-item-memberPass label {
+    color: #666;
+    margin-left: 5px;
+}
+.tang-pass-login .pass-form-item-memberPass {
+    padding-top: 19px;
+}
+#login-container .tang-pass-login .pass-form-item {
+    position: relative;
+    margin-bottom: 0;
+    clear: both;
+    z-index: 18;
+}
+#login-container .tang-pass-login .pass-form-item-submit .pass-button-submit {
+    width: 100%;
+    height: 41px;
+    background:#00aaff;
+    border-radius: 4px;
+    transition: .3s;
+    font-size: 16px;
+    border: 0;
+    color: #fff;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: Microsoft YaHei,SimHei,Tahoma;
+    font-weight: 100;
+}
+#login-container .tang-pass-login .pass-form-item-submit .pass-fgtpwd {
+    color: #666;
+    text-decoration: none;
+    font-size: 14px;
+    position: relative;
+    top: 14px;
+    margin: 0;
+}
+.tang-pass-login .pass-form-item-submit {
+    position: relative;
+    padding-top: 20px;
+}
+/*底部*/
+#login-container .tang-pass-login-phoenix {
+    border: 0;
+    overflow: hidden;
+}
+#pass-phoenix-login {
+    height: 65px;
+    margin-top: 34px;
+    background: #f3f8ff;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+#pass-phoenix-login .pass-phoenix-title {
+    display: none;
+}
+#pass-phoenix-login .pass-phoenix-list {
+    float: left;
+    line-height: 17px;
+    zoom: 1;
+    padding-left: 106px;
+}
+.tang-pass-login-phoenix .pass-phoenix-list {
+    clear: both;
+    line-height: 20px;
+    zoom: 1;
+}
+.tang-pass-login-phoenix .pass-phoenix-list .pass-phoenix-btn {
+    float: left;
+}
+.tang-pass-login-phoenix .pass-phoenix-list .bd-acc-list, .tang-pass-login-phoenix .pass-phoenix-list .bd-acc-list li {
+    float: left;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+#pass-phoenix-login .pass-phoenix-list .bd-acc-list {
+    float: left;
+}
+
+#pass-phoenix-login .pass-phoenix-list li {
+    display: inline-block;
+    margin: 0 16px;
+    width: 25px;
+    height: 22px;
+    float: left;
+    color: #00C;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 12px;
+    list-style: none;
+    text-indent: -9999em;
+    overflow: hidden;
+    margin-top: 23px;
+    background-size: cover;
+}
+#pass-phoenix-list-login li {
+    background: url(http://pan.baidu.com/static/images/16new/17third.png) no-repeat;
+}
+#pass-phoenix-login .pass-phoenix-list .bd-acc-tsina {
+    background-position: -62px -0;
+}
+#pass-phoenix-login .pass-phoenix-list .bd-acc-tsina {
+    background-position: -62px -0;
+}
+#pass-phoenix-login .pass-phoenix-list .bd-acc-qzone {
+    width: 18px;
+    background-position: -18px -0;
+    height: 21px;
+}
+#login-middle .pass-login-tab {
+    position: absolute;
+    width: 115px;
+    font-size: 14px;
+    padding-left: 10px;
+    bottom: 20px;
+}
+#login-middle .pass-login-tab a {
+    text-decoration: none;
+    font-size: 14px;
+    color:#00aaff;
+}
+/*注册*/
+.login-info .link-create {
+    position: absolute;
+    bottom: 15px;
+    right: 20px;
+    width: 86px;
+    padding: 6px 10px;
+    border: 1px solid rgba(100, 203, 253, 0.58);
+    color: #00aaff;
+    text-decoration: none;
+    border-radius: 4px;
+    text-align: center;
+}
+
+#login-download {
+    margin: 0 auto;
+    clear: both;
+    width: 750px;
+    height: 110px;
+    margin-top: 30px;
+}
+@media screen and (min-width: 1400px){
+	#login-download {
+	    margin-top: 60px;
+	}
+}
+.tab-download li {
+    float: left;
+    width: 150px;
+    display: block;
+}
+.tab-download li .windows {
+    background-position: -500px -70px;
+}
+.tab-download li a {
+    display: block;
+    height: 70px;
+    width: 90px;
+    margin: 0 auto;
+    overflow: hidden;
+    cursor: pointer;
+    outline: 0;
+    text-indent: -999em;
+    background: url(http://pan.baidu.com/static/images/16new/login.png) no-repeat;
+}
+.tab-download li .android {
+    background-position: -320px -0px;
+}
+.tab-download li a {
+    display: block;
+    height: 70px;
+    width: 90px;
+    margin: 0 auto;
+    overflow: hidden;
+    cursor: pointer;
+    outline: 0;
+    text-indent: -999em;
+    background: url(http://pan.baidu.com/static/images/16new/login.png) no-repeat;
+}
+.tab-download li .iphone {
+    background-position: -270px -160px;
+}
+.tab-download li a {
+    display: block;
+    height: 70px;
+    width: 90px;
+    margin: 0 auto;
+    overflow: hidden;
+    cursor: pointer;
+    outline: 0;
+    text-indent: -999em;
+    background: url(http://pan.baidu.com/static/images/16new/login.png) no-repeat;
+}
+.tab-download li .ipad {
+    background-position: -500px -0px;
+}
+.tab-download li a {
+    display: block;
+    height: 70px;
+    width: 90px;
+    margin: 0 auto;
+    overflow: hidden;
+    cursor: pointer;
+    outline: 0;
+    text-indent: -999em;
+    background: url(http://pan.baidu.com/static/images/16new/login.png) no-repeat;
+}
+.tab-download li .wp {
+    height: 67px;
+    width: 32px;
+    overflow: hidden;
+    background-position: -392px -160px;
+}
+.tab-download li a {
+    display: block;
+    height: 70px;
+    width: 90px;
+    margin: 0 auto;
+    overflow: hidden;
+    cursor: pointer;
+    outline: 0;
+    text-indent: -999em;
+    background: url(http://pan.baidu.com/static/images/16new/login.png) no-repeat;
+}
+.tab-download li .tongbupan {
+    background-position: -180px -160px;
+}
+.tab-download li a {
+    display: block;
+    height: 70px;
+    width: 90px;
+    margin: 0 auto;
+    overflow: hidden;
+    cursor: pointer;
+    outline: 0;
+    text-indent: -999em;
+    background: url(http://pan.baidu.com/static/images/16new/login.png) no-repeat;
+}
+
+.footer {
+    text-align: center;
+    font-size: 12px;
+    color: #b6bac3;
+    padding-bottom: 10px;
+    margin-top: 10px;
+}
+.footer .b-lnk-gy {
+    color: #b6bac3;
+    text-decoration: none;
+}
+.footer .b-lnk-gy:hover{
+	color: #b6bac3;
+    text-decoration: none;
+}

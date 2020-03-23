@@ -1,0 +1,130 @@
+			/*隐藏*/
+			
+			.hide {
+				display: none;
+			}
+			
+			.nav {
+				overflow-y: hidden;
+			}
+			
+			.nav ul {
+				width: 100%;
+				display: inline;
+				white-space: nowrap;
+				overflow-x: scroll;
+				float: left;
+				overflow-y: hidden;
+				padding: 0;
+				margin: 0;
+				background: #ec2023;
+			}
+			
+			.header_div {
+				overflow: hidden;
+				height: 44px;
+				line-height: 44px;
+				background: #ec2023;
+			}
+			
+			.header_div a,
+			.header_div div {
+				float: left;
+				color: #FFF;
+			}
+			
+			.header_div a {
+				width: 12%;
+				font-size: 22px;
+			}
+			
+			.header_div div:nth-of-type(1) {
+				width: 76%;
+				text-align: center;
+				font-size: 17px;
+			}
+			
+			.header_div div:nth-of-type(2) {
+				float: right;
+				width: 12%;
+				font-size: 22px;
+			}
+			
+			.center {
+				z-index: 10000;
+				width: 100vw;
+				height: 100vh;
+				background: #fff;
+				position: relative;
+				display: none;
+			}
+			
+			.xh_top {
+				height: 180px;
+				background: linear-gradient(180deg, rgba(250, 188, 9, 0.33), #fabc09);
+			}
+			
+			.xh_top div {
+				text-align: center;
+			}
+			
+			.xh_top div img {
+				width: 70px;
+				height: 70px;
+				border-radius: 50%;
+				text-align: center;
+				display: inline-block;
+				margin-top: 25px;
+				margin-bottom: 10px;
+			}
+			
+			.xh_top h4 {
+				color: #fff;
+				text-align: center;
+				font-weight: 400;
+				font-size: 15px;
+			}
+			
+			.cen_ul {
+				overflow: hidden;
+			}
+			
+			.cen_ul li {
+				border-right: 1px solid #e5e5e5;
+				border-bottom: 1px solid #e5e5e5;
+				height: 90px;
+				float: left;
+				width: 33%;
+			}
+			
+			.cen_ul li:nth-of-type(3) {
+				border-right: none;
+				height: 90px;
+				float: left;
+				width: 33%;
+			}
+			
+			.cen_ul li img {
+				width: 25px;
+				margin: 0 auto;
+				display: block;
+				margin-top: 17px;
+			}
+			
+			.cen_ul li span {
+				display: inline-block;
+				text-align: center;
+				width: 100%;
+				font-size: 12px;
+				color: #111;
+				margin-top: 12px;
+			}
+			
+			.close {
+				position: absolute;
+				top: 10px;
+				right: 10px;
+				color: #fff;
+				font-size: 22px;
+			}
+			

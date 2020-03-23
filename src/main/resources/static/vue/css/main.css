@@ -1,0 +1,158 @@
+body, html, #app {
+	height: 100%;
+}
+
+body {
+	padding: 0px;
+	margin: 0px;
+}
+
+.el-header, .el-footer {
+	color: #fff;
+	line-height: 60px;
+	height: 60px;
+	background-color: #000000;
+}
+
+.el-pagination__jump{
+	cursor: pointer;
+}
+
+.logo {
+	padding-left: 30px;
+	float: left;
+	background: url('') no-repeat;
+	background-size: 100%;
+}
+
+.logo img {
+	height: 60px;
+}
+
+.el-aside {
+	color: #333;
+	text-align: left;
+}
+
+.el-main {
+	background-color: #FFF;
+	color: #333;
+	flex: 1;
+}
+
+.toolbar{
+	background-color: #E9EEF3
+}
+
+.el-aside, .el-main {
+	overflow: auto;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.el-menu {
+	height: 100%;
+}
+
+.wrapper {
+	height: 100%;
+}
+
+body>.el-container {
+	margin-bottom: 40px;
+}
+
+.el-container:nth-child(5) .el-aside, .el-container:nth-child(6) .el-aside
+	{
+	line-height: 260px;
+}
+
+.el-container:nth-child(7) .el-aside {
+	line-height: 320px;
+}
+
+.el-menu {
+	border-right: none;
+	list-style: none;
+	position: relative;
+	margin: 0;
+	padding-left: 0;
+	background-color: #fff;
+}
+
+.el-main {
+	padding: 10px;
+}
+
+.nav-item {
+	background: #fff;
+	height: 40px;
+	padding: 0 10px;
+	border-radius: 5px;
+}
+
+.table-list {
+	margin-top: 10px;
+	border-radius: 5px;
+	background-color: #fff;
+	padding: 30px 0 20px 0;
+}
+
+.el-breadcrumb {
+	line-height: 40px;
+}
+
+.btn-show {
+	float: left;
+	padding-left: 39px;
+}
+
+a:hover, a:link {
+	color: #ffff;
+}
+
+a {
+	color: #ffff;
+}
+
+.head-text {
+	float: left;
+	font-weight: bold;
+}
+
+.admin-info {
+	float: right;
+	color: #fff;
+	padding-right: 20px;
+}
+
+.el-dropdown {
+	color: #fff;
+}
+
+::-webkit-scrollbar {
+	width: 3px;
+	height: 3px;
+}
+
+::-webkit-scrollbar-thumb, ::-webkit-scrollbar-thumb:horizontal {
+	border-radius: 6px;
+	background: #BDBDBD;
+}
+
+::-webkit-scrollbar-button {
+	display: none;
+}
+
+::-webkit-scrollbar-track, ::-webkit-scrollbar-track-piece {
+	background: -webkit-gradient(linear, left);
+}
+
+::-webkit-scrollbar-track-piece {
+	background: #FFF;
+}
+
+.el-menu--collapse .title, .el-menu--collapse .el-submenu__title .title,
+	.el-menu--collapse .menu_title {
+	display: none !important;
+}

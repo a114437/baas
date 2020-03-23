@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    	 <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+		<title>快速开发平台</title>
+		<link rel="shortcut icon" href="/static/favicon.ico"/>
+   		<link rel="bookmark" href="/static/favicon.ico"/>
+		<!-- zTree引入 -->
+		<link rel="stylesheet" href="/static/plugin/zTree_v3-master/css/demo.css" type="text/css">
+		<link rel="stylesheet" href="/static/plugin/zTree_v3-master/css/sidebarStyle/zTreeStyle.css" type="text/css">		
+		
+		<!-- 引入样式 -->
+		<link href="/static/plugin/bootstrap/css/bootstrap.css" rel="stylesheet">
+		<link href="/static/css/all.css" rel="stylesheet">
+		<link rel="stylesheet" href="/static/css/topStyle1.css" /> 
+		<!--皮肤 -->
+	 	 <!-- <link rel="stylesheet" href="/static/css/skin/skin1.css" /> -->   <!-- 默认 -->
+		<!-- <link rel="stylesheet" href="/static/css/skin/skin2.css" /> --><!-- 蓝白 -->
+		<!-- <link rel="stylesheet" href="/static/css/skin/skin3.css" /> --><!-- 紫色 --> 
+		<link rel="stylesheet" href="/static/css/skin/skin4.css" />
+		 <!--图标-->
+		<link rel="stylesheet" href="/static/plugin/fontawesome-4.2.0_ie7/4.2.0/css/font-awesome.min.css" />
+		<link rel="stylesheet" href="/static/plugin/fontawesome-4.2.0_ie7/4.2.0/css/font-awesome-ie7.min.css" />
+		<link rel="stylesheet" href="/static/plugin/linearicons/style.css" />
+		 
+		 <!-- bootStrapTable -->
+		 <link rel="stylesheet" href="/static/plugin/bootstrap-table-develop/src/bootstrap-table.css" >
+		
+		<!-- 表单验证 -->
+		<link rel="stylesheet" href="/static/plugin/bootstrapValidator/dist/css/bootstrapValidator.css"/>
+		 <!-- 图标 -->
+		<link href="/static/plugin/icheck-1.x/skins/square/blue.css" rel="stylesheet">
+		<link href="/static/plugin/fontawesome-4.2.0_ie7/4.2.0/css/font-awesome.css"/>
+		<link href="/static/plugin/fontawesome-4.2.0_ie7/4.2.0/css/font-awesome-ie7.min.css"/>
+		
+		<!-- bootStrapTable -->
+		<link rel="stylesheet" href="/static/plugin/bootstrap-table-develop/src/bootstrap-table.css" >
+
+		<!-- 表单验证 -->
+		<link rel="stylesheet" href="/static/plugin/bootstrapValidator/dist/css/bootstrapValidator.css"/>
+		
+		<!-- 单选框，复选框 -->
+		<link href="/static/plugin/icheck-1.x/skins/square/blue.css" rel="stylesheet">
+	
+		<!-- 日历组件 -->
+		<link href="/static/plugin/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+		 <style>
+		  .sidebar-scroll{
+		  	-ms-overflow-style:none;
+   			overflow:-moz-scrollbars-none;
+		  }  
+		 	.sidebar-scroll::-webkit-scrollbar{
+			  display:none;
+			}
+		</style>
+	</head>
+	<body style="padding-right:0;overflow: auto;">
+		<div id="wrapper" class="clearfix">
+			<nav class="navbar navbar-default navbar-fixed-top" style="background-image: url('/static/image/Vision1.jpg');">
+				<div class="brand" style="background:rgba(255,255,255,0);">
+					<span style="color: #e7eaef;font-size: 27px;">后台管理系统</span>
+				</div>
+				<div class="container-fluid">
+					<div id="navbar-menu">
+						<ul class="nav navbar-nav navbar-right">
+							
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+									<img src="/static/image/user-medium.png" class="img-circle" alt="Avatar">
+									<span th:text="${session.user.loginName}"></span>
+									<i class="icon-submenu lnr lnr-chevron-down"></i>
+								</a>
+								<ul class="dropdown-menu">
+									<!-- <li><a id="MySelfMsg"><i class="lnr lnr-user"></i><span>个人信息</span></a></li> -->
+									<!--<li><a href="javascript:;"><i class="lnr lnr-envelope"></i> <span>我的消息</span></a></li> -->
+									<!-- <li><a href="javascript:;" id="update_psw"><i class="lnr lnr-cog"></i><span>修改登陆密码</span></a></li>
+									<li><a href="javascript:;" id="update_Paypw"><i class="lnr lnr-cog"></i><span>修改支付密码</span></a></li> -->
+									<li><a href="javascript:;" id="update_psw"><i class="lnr lnr-cog"></i><span>修改登陆密码</span></a></li>
+									<li id="exits"><a href="javascript:;"  data-toggle="modal" data-target="#myModal"><i class="lnr lnr-exit"></i> <span>退出</span></a></li>
+								</ul><!-- id="exits" -->
+							</li>
+							<!-- <li>
+								<a class="update-pro" href="#downloads/klorofil-pro-bootstrap-admin-dashboard-template/?utm_source=klorofil&utm_medium=template&utm_campaign=KlorofilPro" title="Upgrade to Pro" target="_blank"><i class="fa fa-rocket"></i> <span>UPGRADE TO PRO</span></a>
+							</li> -->
+						</ul>
+					</div>
+				</div>
+			</nav>
+		<!-- 左侧菜单 -->
+		<div id="sidebar-nav" class="sidebar">
+			<div class="sidebar-collapse" >
+				<i id="sideNav1" class="fa fa-angle-double-left"></i>
+			</div>
+			<div id="sideNav2" href="" class=""><i class="fa fa-angle-double-right"></i></div>
+			
+			<div class="slimScrollDiv" style="position: relative; overflow: hidden; width:260px; height: 95%;">
+				<div class="sidebar-scroll" style="overflow-y:scroll; width: 278px; height: 95%;">
+					<nav>
+						<ul id="sidebarTree" class="nav ztree"></ul>
+					</nav>
+				</div>
+			</div>
+		</div>
+		<!--主要部分  -->
+		<div class="main">
+			<div class="main-content" >
+				<div class="container-fluid" id="container-fluid" > 
+					<!-- <ul id="tree" class="ztree"></ul> -->
+					
+					<!-- <div class="form-group col-md-12">
+						<div class="col-md-4">
+							<label class="col-md-4 control-label" style="margin-top: 8px;">一对一图片</label>
+							<a class="btn btn-default uploadBtn_item">图片上传</a> 
+							<input class="file_upload_item" type="file" data-id="fileUploadContent2"
+								accept="image/gif,image/jpeg,image/jpg,image/png,image/svg" style="display: none;" /> 
+							<input class="file_form_item" type="hidden" data-id="fileUploadContent2" name="HOUSEIMG" value="/upLoadResource/d30ebc86d7b2433ba6659825b5fbe39a/5K2A0084.jpg"/>
+						</div>
+						<div class="col-md-7"></div>
+					</div>
+					<div class="form-group col-md-12">
+						<label class="col-md-12  "></label>
+						<div id="fileUploadContent2" class="fileUploadContent">
+							<div class="box"></div>
+						</div>
+					</div> -->
+					
+				 </div>
+			</div> 
+			<div class="clearfix"></div>
+			<footer>
+				<div class="container-fluid">
+					<p class="copyright">© 2017-2020 版权所有&nbsp;</p>
+				</div>
+			</footer>
+		</div>
+		</div>
+		
+			
+</body>
+	<script th:inline="javascript">
+		var btnResource = [[${session.btnResource}]];
+	</script>
+	<script src="/static/js/jquery-1.11.1.min.js"></script>
+	<script src="/static/js/sidebar.js"></script>
+	<script src="/static/plugin/bootstrap/js/bootstrap.min.js"></script>
+	<!-- zTree -->
+	<script type="text/javascript" src="/static/plugin/zTree_v3-master/js/jquery.ztree.core.js"></script>
+	<SCRIPT type="text/javascript" src="/static/js/zTree.js"></SCRIPT>
+	<script type="text/javascript" src="/static/plugin/zTree_v3-master/js/jquery.ztree.excheck.js"></script>
+	<!-- bootStrapTable -->
+	<script src="/static/plugin/bootstrap-table-develop/dist/bootstrap-table.js"></script>
+	<script src="/static/plugin/bootstrap-table-develop/dist/locale/bootstrap-table-zh-CN.js"></script>
+	<script src="/static/plugin/bootstrap-table-develop/dist/extensions/export/bootstrap-table-export.js"></script>
+	<!-- 表格封装 -->
+	<script type="text/javascript" src="/static/js/jquery.widget.table.js" charset="UTF-8"></script>
+	<!-- 表格处理 -->
+	<script type="text/javascript" src="/static/js/jquery.widget.tableHandle.js" charset="UTF-8"></script>
+		
+	<!-- 单选框，复选框 -->
+	<script src="/static/plugin/icheck-1.x/icheck.js"></script>
+	
+	 <!-- 警告框 -->
+	<script src="/static/plugin/bootstrap-notify-master/bootstrap-notify.js"></script>
+	<script src="/static/js/jquery.widget.notify.js"></script>
+	
+	<!-- 弹出框 -->
+	<script type="text/javascript" src="/static/js/jquery.widget.dialog.js"></script>
+	<script src="/static/js/jquery.widget.comDialog.js"></script>
+	
+	<!-- 按钮 -->
+	<script type="text/javascript" src="/static/js/jquery.widget.toolBar.js"></script>
+	
+	<!-- 删除 -->
+	<script type="text/javascript" src="/static/js/jquery.widget.deleteRow.js"></script>
+	
+	<!-- 查询 -->
+	<script type="text/javascript" src="/static/js/jquery.widget.query.js"></script>
+	
+	<!-- 表单验证 -->
+	<script type="text/javascript" src="/static/plugin/bootstrapValidator/dist/js/bootstrapValidator.js"></script>
+	
+	<!-- 自定义表单验证 -->
+	<script type="text/javascript" src="/static/js/jquery.widget.bootstrapValidator.js"></script>
+
+	<!-- 表单提交 -->
+	<script type="text/javascript" src="/static/js/jquery.widget.formSubmit.js"></script>
+	
+	<!-- 日历组件 -->
+	<script type="text/javascript" src="/static/plugin/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="/static/plugin/bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+	
+	<!-- json解析 -->
+	<script type="text/javascript" src="/static/js/json2.js" charset="UTF-8"></script>
+	
+	<script>
+		var path = 'http://localhost:8080';
+		
+		$("#sss").on("change",function(){
+			var $this = $(this);
+			var files = $this.get(0).files;
+			fileUpload(files,path+'/upload/uploadOneFile',function(data){
+				console.log(data);
+			});
+		});
+	</script>
+
+	<script>
+	/* 左侧菜单栏 */
+	$(document).ready(function(){
+		
+		var zNodes =[
+						{ id:0, pid:-1, name:"系统管理", iconSkin:"lnr lnr-home","url":""},
+			 			{ id:1, pid:0, name:"用户管理", iconSkin:"lnr lnr-home","url":"/user/loadUser"},
+			 			{ id:2, pid:0, name:"菜单管理", iconSkin:"lnr lnr-home","url":"/tree/loadTree"},
+			 			{ id:3, pid:0, name:"机构管理", iconSkin:"lnr lnr-home","url":"/org/loadOrg"},
+			 			{ id:4, pid:0, name:"角色管理", iconSkin:"lnr lnr-home","url":"/role/loadRole"}
+			 		];
+		
+		/* 后台获取左侧菜单数据 */
+		$.ajax({
+			async:false,
+			cache:false,
+			type:'POST',  
+        	dataType:"json",  
+			url:'/tree/initTreeUser',
+			success:function(data){
+				zNodes = data;
+			}
+		});
+		for(var i in zNodes){
+			zNodes[i].URL =  zNodes[i].url;
+			zNodes[i].url = null;
+		}
+		
+		var treeObj = $("#sidebarTree");
+		$.fn.zTree.init(treeObj, setting, zNodes);
+		zTree_Menu = $.fn.zTree.getZTreeObj("sidebarTree");
+		zTree_Menu.selectNode(curMenu);
+
+		treeObj.hover(function () {
+			if (!treeObj.hasClass("showIcon")) {
+				treeObj.addClass("showIcon");
+			}
+		}, function() {
+			treeObj.removeClass("showIcon");
+		});
+	});
+	
+	
+	$(document).ready(function(){
+	  $('input.icheck').iCheck({
+	    checkboxClass: 'icheckbox_square-blue',
+	    radioClass: 'iradio_square-blue'
+	  });
+	});
+	</script>
+	<script type="text/javascript" th:inline="javascript">
+
+	function loadContent(zUrl){
+		if( typeof(zUrl)!="undefined"&& zUrl != null&& zUrl !=""){
+	    	$("#container-fluid").load(zUrl);
+	    }
+	}
+	
+	//退出
+	$('#exits').click(function(){
+		window.location.href= "/exit";
+	});
+	
+	$("#update_psw").click(function(){
+		$("body").createDialog({
+	           id:'editTableDig',//id
+	           contentUrl:'/user/loadUpdatePsw',/*弹窗内嵌入页面地址 */
+	           title: "修改登录密码",
+	           height:250,
+	           width:520,
+	           closeBtn:true, //是否存在右上角关闭按钮
+	           buttons:{       //下方按钮
+	               items:[{
+	                   id:'closeSqlConfig',
+	                   text:'取消',
+	                   iconCls:'btn btn-danger',
+	                   handler:function(){ 
+	                       closeModal(editTableDig);//关闭弹窗传弹窗id给closeModal();
+	                   }
+	               },{
+	                   id:'addSqlConfig',
+	                   text:'提交',
+	                   iconCls:'btn btn-success',
+	                   handler:function(){
+	                  		$("#defaultForm").bootstrapValidator('validate');//提交验证
+		                if ($("#defaultForm").data('bootstrapValidator').isValid()) {//获取验证结果，如果成功，执行下面代码
+		                    if($("#old_psw").val()==""){
+	                        	Modal.alert({ msg: "请输入原密码" });
+	                        	return;
+	                        }
+	                        if($("#new_psw1").val()!=$("#new_psw2").val()){
+	                        	Modal.alert({ msg: "两次输入的新密码不一致" });
+	                        	return;
+	                        }
+	                        if($("#new_psw1").val()==""){
+	                        	Modal.alert({ msg: "不允许为空" });
+	                        	return;
+	                        }
+	                        if($("#new_psw2").val()==""){
+	                        	Modal.alert({ msg: "不允许为空" });
+	                        	return;
+	                        }
+	                         $.ajax({
+	                            type:"POST",
+	                            url:"/user/updatePassword",
+	                            data:{
+	                                userId:[[${session.user.id}]],
+	                                oldPsw:$("#old_psw").val(),
+	                                newPsw:$("#new_psw1").val()
+	                            },
+	                            success:function(data){
+	                                if(data.success==true){
+	                                    Notify.notify({msg:"修改成功", type: "success"});
+	                                    closeModal(editTableDig);//关闭弹窗传弹窗id给closeModal();
+	                                    //window.location.href= "<%=path_home%>/login/exit.do";
+	                                }else{
+	                                    Notify.notify({msg:data.message, type: "danger"});
+	                                }
+	                            }
+	                        });
+		                }
+	                   }
+	               }]
+	        }
+	    }); 
+	});
+	
+  </script>
+</html>

@@ -1,0 +1,206 @@
+<h3 class="page-title">系统token管理</h3>
+<div class="row">
+	<div class="col-md-12">
+		<!-- BASIC TABLE -->
+		<div class="panel">
+			<div class="panel-heading">
+				<form class="form-inline" id="searchForm">
+					<div class="form-group">
+						<span for="form-text">合约地址：</span>
+						<input type="text" class="form-control" name="contractAddress">
+					</div>
+					<div class="form-group">
+						<span for="form-text">代币名称：</span>
+						<input type="text" class="form-control" name="tokenSymbol">
+					</div>
+				</form>
+			</div>
+			<div class="panel-body ">
+				<table id="mychart1"  class="col-md-12">
+					<thead>
+						<tr>
+							<th class="bs-checkbox " data-checkbox="true" style="width: 36px; " data-field="0"><input name="btSelectAll" type="checkbox"></th>
+							<th style="text-align: center; vertical-align: middle; " data-field="id" data-visible="false">ID</th>
+							<th style="text-align: center; vertical-align: middle; " data-field="contractAddress">合约地址</th>
+							<th style="text-align: center; vertical-align: middle; " data-field="tokenSymbol">代币编号</th>
+							<th style="text-align: center; vertical-align: middle; " data-field="logo" data-formatter="logoFormatter">logo图</th>
+							<th style="text-align: center; vertical-align: middle; " data-field="createDate">录入时间</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+function logoFormatter(value, row, index) {
+	if(value != null && value!=undefined && value!=''){
+	    return '<img src="/upload/loadFile?path='+value+'" style="width:50px;height:50px;"/> ';
+	}else{
+		return "-";
+	}
+}
+	$(function(){
+		$('.panel-body').createTable({
+			id:	'mychart1',	
+			url:'/tokenSystem/listTokenSystem',
+			formId:'searchForm'
+		});	
+		
+		 $(".panel-heading form").createToolBar({
+			buttons:{
+				items:[ {
+					id:'defaultTokenSystemInfo',
+					text:'查询',
+					iconCls:'btn btn-default',
+					handler:function(){
+						
+						searchTokenSystem();
+					}
+				},{
+					id:'addTokenSystemInfo',
+					text:'新增',
+					iconCls:'btn btn-primary',
+					handler:function(){
+
+						addTokenSystem();
+					}
+				},{
+					id:'editTokenSystemInfo',
+					text:'修改',
+					iconCls:'btn btn-info',
+					handler:function(){
+
+						 updateTokenSystem();
+					}
+				},{
+					id:'deleteTokenSystemInfo',
+					text:'删除',
+					iconCls:'btn btn-danger',
+					handler:function(){
+	
+						deleteTokenSystem();
+					}
+				}]
+			}
+		}); 
+		
+		
+    //数据增删查改功能
+    var _body= $("body");
+ 	//新增
+     function addTokenSystem(){
+    	  _body.createDialog({
+	    		  	id:'addDate',//id
+					contentUrl:'/tokenSystem/loadAddTokenSystem',/*弹窗内嵌入页面地址 */
+		            title: "新增系统token",
+		            height:500,
+					width:800,
+					closeBtn:true, //是否存在右上角关闭按钮
+					buttons:{		//下方按钮
+						items:[{
+							id:'closeUserInfoConfig',
+							text:'取消',
+							iconCls:'btn btn-primary',
+							handler:function(){	
+								closeModal(addDate);//关闭弹窗传弹窗id给closeModal();
+							}
+						},{
+							id:'addUserInfoConfig',
+							text:'提交',
+							iconCls:'btn btn-success',
+							handler:function(){
+								$("#defaultForm").bootstrapValidator('validate');//提交验证
+				                if ($("#defaultForm").data('bootstrapValidator').isValid()) {//获取验证结果，如果成功，执行下面代码
+				                   $.ajax({
+										type:"POST",
+										url:"/tokenSystem/addTokenSystem",
+										data:$("#defaultForm").serialize(),
+										success:function(data){
+											if(data.success){
+												Notify.notify({msg:"新增成功！", type: "success"});
+							                	$('#mychart1').bootstrapTable('refresh', {url: '/tokenSystem/listTokenSystem'});  
+							                	closeModal(addDate);
+											}else{
+												Notify.notify({msg:data.message, type: "danger"});
+											}
+										}
+									});
+				                }
+							}	
+						}]
+				}
+    	  });
+    	
+
+      }; 
+ 	
+      //修改
+	function updateTokenSystem(){
+    	  
+		 var single=TableHandle.singleSelect('mychart1');//传一个表格id，判断是否选中一条数据
+  	 	 if(!single){
+  		  return false;
+  	  	 }
+	  	 var rows = $('#mychart1').bootstrapTable('getSelections');
+    		  
+   	    _body.createDialog({
+    		  	id:'updataDate',//id
+				contentUrl:'/tokenSystem/loadUpdateTokenSystem',/*弹窗内嵌入页面地址 */
+				data:{"id":rows[0].id},//选中的id
+	            title: "修改系统token",
+	            height:500,
+				width:800,
+				closeBtn:true, //是否存在右上角关闭按钮
+				buttons:{ 		//下方按钮
+					items:[{
+						id:'closeUserInfoConfig',
+						text:'取消',
+						iconCls:'btn btn-primary',
+						handler:function(){	
+							closeModal(updataDate);//关闭弹窗传弹窗id给closeModal();
+						}
+					},{
+						id:'editUserInfoConfig',
+						text:'提交',
+						iconCls:'btn btn-success',
+						handler:function(){
+							$("#defaultForm").bootstrapValidator('validate');//提交验证
+			                if ($("#defaultForm").data('bootstrapValidator').isValid()) {//获取验证结果，如果成功，执行下面代码
+			                   $.ajax({
+									type:"POST",
+									url:"/tokenSystem/updateTokenSystem",
+									data:$("#defaultForm").serialize(),
+									success:function(data){
+										if(data.success){
+											Notify.notify({msg:"修改成功！", type: "success"});
+						                	$('#mychart1').bootstrapTable('refresh', {url: '/tokenSystem/listTokenSystem'});  
+						                	closeModal(updataDate);
+										}else{
+											Notify.notify({msg:data.message, type: "danger"});
+										}
+									}
+								});
+			                }
+						}	
+					}]
+			}
+ 	  		});
+    		  
+  			
+    }; 
+      //删除
+    function deleteTokenSystem(){
+    	  
+    	$("#mychart1").deleteRow({url:"/tokenSystem/deleteTokenSystem"});
+      }; 
+      
+     //查询
+     function  searchTokenSystem(){
+    	 $('#mychart1').queryTable();
+     }
+
+
+	}); 
+	
+</script>

@@ -1,0 +1,494 @@
+<h3 class="page-title">角色管理</h3>
+<div class="row">
+	<div class="col-md-3">
+		<!-- BASIC TABLE -->
+		<div class="panel" style="padding-top:20px;">
+			<span for="form-text" style="font-weight: 500;font-family: 微软雅黑;margin-left: 15%;font-size: 15px;">机构列表</span>
+			<div class="panel-body  clearfix">
+				<div class="manage_list clearfix">
+					<ul id="tree" class="ztree"></ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-9">
+		<!-- BASIC TABLE -->
+		<div class="panel">
+			<div class="panel-heading">
+				<form class="form-inline" id="searchForm">
+					<input type="hidden" name="orgId" id="org_id">
+					<div class="form-group">
+						<span for="form-text">角色名称：</span> <input type="text"
+							class="form-control" name="roleName" data-bv-notNull="true" />
+					</div>
+				</form>
+			</div>
+			<div class="panel-body ">
+				<table id="mychart1" class="col-md-12">
+					<thead>
+						<tr>
+							<th class="bs-checkbox " data-checkbox="true"
+								style="width: 36px; " data-field="0"><input
+								name="btSelectAll" type="checkbox"></th>
+							<th style="text-align: center; vertical-align: middle; "
+								data-field="id" data-visible="false">ID</th>
+							<th style="text-align: center; vertical-align: middle; "
+								data-field="roleName">角色名称</th>
+							<th style="text-align: center; vertical-align: middle; "
+								data-field="mark">备注</th>
+							<th style="text-align: center; vertical-align: middle; "
+								data-field="createDate">创建时间</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+
+	var checkNo = null; //选中的节点
+
+	var setting1 = {
+		view : {
+			selectedMulti : false,
+			dblClickExpand : false,
+		},
+		data : {
+			simpleData : {
+				enable : true,
+				idKey : "id",
+				icon : "iconSkin",
+				pIdKey : "pid"
+			},
+			key : {
+				name : "name"
+			}
+		},
+		callback : {
+			onClick : this.menuClick
+		}
+	};
+
+	//节点点击事件
+	function menuClick(e, treeId, node) {
+		checkNo = node;
+		$("#org_id").val(checkNo.id);
+		searchRoleInfo();
+	}
+
+
+	$(document).ready(function() {
+
+		var zNode1;
+		$.ajax({
+			async : false,
+			cache : false,
+			type : 'POST',
+			dataType : "json",
+			url : '/org/initOrgUser',
+			success : function(data) {
+				zNode1 = data;
+			}
+		});
+		for (var i in zNode1) {
+			zNode1[i].url = null;
+		}
+		$.fn.zTree.init($("#tree"), setting1, zNode1);
+
+	});
+
+	//添加节点
+	function addNode(newNode) {
+		newNode.url = null;
+		var zTree = $.fn.zTree.getZTreeObj("tree");
+		if (zTree.getSelectedNodes()[0]) {
+			zTree.addNodes(zTree.getSelectedNodes()[0], newNode);
+		} else {
+			zTree.addNodes(null, newNode);
+		}
+	}
+
+	//修改节点
+	function editTree(newNode) {
+		newNode.url = null;
+		var zTree = $.fn.zTree.getZTreeObj("tree");
+		var node = zTree.getSelectedNodes()[0];
+		node.name = newNode.name;
+		node.icon = newNode.iconSkin;
+		node.remark = newNode.remark;
+		zTree.updateNode(node);
+	}
+
+	//删除节点
+	function removeNode() {
+		var zTree = $.fn.zTree.getZTreeObj("tree");
+		var nodes = zTree.getSelectedNodes();
+		if (nodes && nodes.length > 0) {
+			checkNo = null; //选中的节点归零
+			if (nodes[0].children && nodes[0].children.length > 0) {
+				zTree.removeNode(nodes[0]);
+			} else {
+				zTree.removeNode(nodes[0]);
+			}
+		}
+	}
+</script>
+
+<script>
+ //数据增删查改功能
+var _body= $("body");
+
+$(function(){
+		
+		$('.panel-body').createTable({
+			id:	'mychart1',	
+			formId:'searchForm',
+			url:'/role/listRole'
+		});
+		
+		 $(".panel-heading form").createToolBar({
+			buttons:{
+				items:[ {
+					id:'searchRole',
+					text:'查询',
+					iconCls:'btn btn-default',
+					handler:function(){
+						searchRoleInfo();
+					}
+				}, {
+					id:'addRoleInfo',
+					text:'新增',
+					iconCls:'btn btn-primary',
+					handler:function(){
+
+						addSystemRoleInfo();
+					}
+				},{
+					id:'editRoleInfo',
+					text:'修改',
+					iconCls:'btn btn-info',
+					handler:function(){
+
+						 updateSystemRoleInfo();
+					}
+				}, {
+					id:'deleteRoleInfo',
+					text:'删除',
+					iconCls:'btn btn-danger',
+					handler:function(){
+
+						deleteSystemRoleInfo();
+					}
+				}, {
+					id:'menuDistribute',
+					text:'菜单分配',
+					iconCls:'btn btn-paleGreen',
+					handler:function(){
+
+						distributeMenu();
+					}
+				}, {
+					id:'btnDistribute',
+					text:'按钮分配',
+					iconCls:'btn btn-orange',
+					handler:function(){
+
+						distributeBtn();
+					}
+				}]
+			}
+		}); 
+	
+	var sessionRoleId = '[[${session.user.roleId}]]';
+	//菜单分配
+     function distributeMenu(){
+    	 var dataID= $('#mychart1').bootstrapTable('getSelections');
+    	 var single=TableHandle.singleSelect('mychart1');//传一个表格id，判断是否选中一条数据
+  	 	 if(!single){
+  		  return false;
+  	  	 }
+	   		  _body.createDialog({
+		    		  	id:'add_menuDis',//id
+						contentUrl:'/role/loadMenuDistribute',/*弹窗内嵌入页面地址 */
+						data:{"id":dataID[0].id},//选中的id
+			            title: "菜单分配",
+			            height:450,
+						width:600,
+						closeBtn:true, //是否存在右上角关闭按钮
+						buttons:{ 		//下方按钮
+							items:[{
+								id:'closeRoleInfoConfig',
+								text:'取消',
+								iconCls:'btn btn-primary',
+								handler:function(){	
+									closeModal(add_menuDis);//关闭弹窗传弹窗id给closeModal();
+								}
+							},{
+								id:'editRoleInfoConfig',
+								text:'提交',
+								iconCls:'btn btn-success',
+								handler:function(){
+									if(sessionRoleId == dataID[0].id){
+										Modal.confirm({ msg: "您正在操作您所在机构的权限，确定提交吗？" ,height:210,cancel:function(){
+											closeModal(add_menuDis);
+										}})
+										.on(function (e) {
+								            if (e) {
+								            	updateUserTree();
+								            }
+								        })
+									}else{
+										updateUserTree();
+									}
+						        
+							        function updateUserTree(){
+							       		var menuIds = relateTree();
+										var menuArr = menuIds.split("|");
+										var addIds = menuArr[0];
+										var delIds = menuArr[1];
+										$.ajax({
+											type:"POST",
+											data:{
+												roleId:dataID[0].id,
+												addIds:addIds,
+												delIds:delIds
+											},
+											url:'/role/relateMenu',
+											asunc:false,
+											success:function(data){
+												if(data.success==true){
+													Notify.notify({msg:"操作成功！", type: "success"});
+													closeModal(add_menuDis);//关闭弹窗传弹窗id给closeModal();
+												}else{
+													Notify.notify({msg:"操作失败！", type: "danger"});
+												}
+											}
+										});
+							        }
+								}	
+							}]
+					}
+	 	  		});
+	   			  
+    	 
+     }
+     
+     //按钮分配
+     function distributeBtn(){
+    	 
+    	 var dataID= $('#mychart1').bootstrapTable('getSelections');
+	   	  if(dataID.length==0){
+	   		Notify.notify({msg:"请选中一项内容", type: "info"});
+	   	  }else if(dataID.length>1){
+	   		  
+	   		Notify.notify({msg:"请选中一项内容进行操作", type: "warning"});
+	   	  }else{
+	   		  _body.createDialog({
+		    		  	id:'add_BtnDis',//id
+						contentUrl:'/role/loadBtnDistribute',/*弹窗内嵌入页面地址 */
+						data:{"id":dataID[0].id},//选中的id
+			            title: "按钮分配",
+			            height:500,
+						width:900,
+						closeBtn:true, //是否存在右上角关闭按钮
+						buttons:{ 		//下方按钮
+							items:[{
+								id:'closeRoleInfoConfig',
+								text:'关闭',
+								iconCls:'btn btn-primary',
+								handler:function(){	
+									closeModal(add_BtnDis);//关闭弹窗传弹窗id给closeModal();
+								}
+							},{
+								id:'editRoleInfoConfig',
+								text:'提交',
+								iconCls:'btn btn-success',
+								handler:function(){
+								
+									if(sessionRoleId == dataID[0].id){
+										Modal.confirm({ msg: "您正在操作您所在机构的权限，确定提交吗？" ,height:210})
+										.on(function (e) {
+								            if (e) {
+								            	updateUserButton();
+								            }
+								        })
+									}else{
+										updateUserButton();
+									}
+									
+									function updateUserButton(){
+										var addBtn = getAddBtn();
+										var delBtn = getDelBtn();
+										$.ajax({
+											type:"POST",
+											data:{
+												roleId:dataID[0].id,
+												addIds:addBtn,
+												delIds:delBtn
+											},
+											url:'/role/relateBtn',
+											async:false,
+											success:function(data){
+												if(data.success==true){
+													Notify.notify({msg:"操作成功！", type: "success"});
+													updateBtnArr(addBtn,delBtn);
+												}else{
+													Notify.notify({msg:"操作失败！", type: "danger"});
+												}
+											}
+										});
+									}
+									
+								}	
+							}]
+					}
+	 	  		});
+	   			  
+  	  	}
+     }	
+		
+		
+		//新增
+     function addSystemRoleInfo(){
+     	  if(checkNo == null){
+    	 	Notify.notify({msg:"请选择机构！", type: "warning"});
+    	 	return;
+    	 }
+    	 var orgId = checkNo.id;
+    	  _body.createDialog({
+	    		  	id:'addDate',//id
+					contentUrl:'/role/loadAddRole?orgId='+orgId,/*弹窗内嵌入页面地址 */
+		            title: "新增角色",
+		            height:300,
+					width:400,
+					closeBtn:true, //是否存在右上角关闭按钮
+					buttons:{ 		//下方按钮
+						items:[{
+							id:'closeRoleInfoConfig',
+							text:'取消',
+							iconCls:'btn btn-primary',
+							handler:function(){	
+								closeModal(addDate);//关闭弹窗传弹窗id给closeModal();
+							}
+						},{
+							id:'addRoleInfoConfig',
+							text:'提交',
+							iconCls:'btn btn-success',
+							handler:function(){
+								//获取表单对象
+								$("#defaultForm").bootstrapValidator('validate');//提交验证
+				                if ($("#defaultForm").data('bootstrapValidator').isValid()) {//获取验证结果，如果成功，执行下面代码
+								//表单提交的方法、比如ajax提交
+									$.ajax({
+						                cache: true,
+						                type: "POST",
+						                url:'/role/addRole',
+						                data:$('#defaultForm').serialize(),// 你的formid
+						                async: false,
+						                error: function(request) {
+						                    alert("Connection error");
+						                },
+						                success: function(data) {
+						                	if(data.success==true){
+						                		
+						                		Notify.notify({msg:"新增成功！", type: "success"});
+							                	$('#mychart1').bootstrapTable('refresh', {url: '/role/listRole'});  
+							                	closeModal(addDate);
+						                	}else{
+						                		
+						                		Notify.notify({msg:"新增失败！", type: "danger"});
+						                	}
+						                }
+						            });
+								
+								}
+							}	
+						}]
+				}
+    	  });
+    	
+
+      }; 
+ 	
+      //修改
+	function updateSystemRoleInfo(){
+    	  var dataID= $('#mychart1').bootstrapTable('getSelections');
+    	  if(dataID.length==0){
+    		  Notify.notify({msg:"请选中一项内容", type: "info"});
+    	  }else if(dataID.length>1){
+    		  Notify.notify({msg:"请选中一项内容进行修改", type: "warning"});
+    	  }else{
+    		  _body.createDialog({
+	    		  	id:'updataDate',//id
+					contentUrl:'/role/loadUpdateRole',/*弹窗内嵌入页面地址 */
+					data:{"id":dataID[0].id},//选中的id
+		            title: "修改数据",
+		            height:250,
+					width:500,
+					closeBtn:true, //是否存在右上角关闭按钮
+					buttons:{ 		//下方按钮
+						items:[{
+							id:'closeRoleInfoConfig',
+							text:'取消',
+							iconCls:'btn btn-primary',
+							handler:function(){	
+								closeModal(updataDate);//关闭弹窗传弹窗id给closeModal();
+							}
+						},{
+							id:'editRoleInfoConfig',
+							text:'提交',
+							iconCls:'btn btn-success',
+							handler:function(){
+								$("#upDateForm").bootstrapValidator('validate');//提交验证
+				                if ($("#upDateForm").data('bootstrapValidator').isValid()) {//获取验证结果，如果成功，执行下面代码
+									$.ajax({
+		          	  	                cache: true,
+		          	  	                type: "POST",
+		          	  	                url:'/role/updateRole',
+		          	  	                data:$('#upDateForm').serialize(),// 你的formid
+		          	  	                async: false,
+		          	  	                error: function(request) {
+		          	  	                    alert("出错了");
+		          	  	                },
+		          	  	                success: function(data) {
+			          	  	                if(data.success==true){
+				          	  	            	Notify.notify({msg:"修改成功！", type: "success"});
+						                	}else{
+						                		 Notify.notify({msg:"新增失败！", type: "danger"});
+						                	}
+		          	  	                }
+		          	  	            });
+									$('#mychart1').bootstrapTable('refresh', {url: '/role/listRole'});  
+									closeModal(updataDate);//关闭弹窗传弹窗id给closeModal();
+								}	
+							}
+						}]
+				}
+  	  		});
+    		  
+    	
+    	  }
+  			
+    }; 
+      //删除
+    function deleteSystemRoleInfo(){
+   	
+  	  	$("#mychart1").deleteRow({url:"/role/deleteRole"});
+    }; 
+      
+}); 
+
+//查询
+function searchRoleInfo(){
+	 var zTree = $.fn.zTree.getZTreeObj("tree");
+	 if(zTree.getSelectedNodes().length == 0){
+	 	Notify.notify({msg:"请选择机构！", type: "warning"});
+	 	return;
+	 }
+	 $('#mychart1').queryTable();
+}
+
+ 
+</script>
