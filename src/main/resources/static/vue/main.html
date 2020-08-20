@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+<!-- <link rel="stylesheet" href="./css/element-2D3234/index.css"> -->
+<link rel="stylesheet" href="./css/main.css">
+</head>
+<body>
+	<div id="app">
+		<el-container class="wrapper"> 
+			<el-header style="padding:0; margin:0;">
+				<div class="logo" v-if="showLogo">后台管理中心 v1.0</div>
+				<div class="btn-show" :style="toggleMunuStyle">
+					<a href="javascript:void(0);" @click="toggleMenu()"><i class="el-icon-menu"></i></a>
+				</div>
+				<div class="admin-info">
+					<el-dropdown > 
+						<span class="el-dropdown-link">
+							超级管理员：admin <i class="el-icon-arrow-down el-icon--right"></i>
+						</span> 
+						<el-dropdown-menu slot="dropdown" background-color="#303133"> 
+							<el-dropdown-item>个人信息</el-dropdown-item>
+							<el-dropdown-item>注销登陆</el-dropdown-item> 
+						</el-dropdown-menu> 
+					</el-dropdown>
+				</div>
+			</el-header> 
+			<el-container> 
+				<el-aside :style="asideStyle">
+					<el-menu background-color="#303133" text-color="#fff"
+						active-text-color="#ffd04b" :default-active="this.$route.path"
+						:unique-opened = "true"
+						:collapse="isCollapse"> 
+						<nav-menu :menus="leftMenus"></nav-menu>
+					</el-menu> 
+				</el-aside> 
+				<el-main> 
+					<el-tabs :value="editableTabsValue" type="card" closable @tab-click="toggleTab" @tab-remove="removeTab" >
+						<el-tab-pane
+						    v-for="(item, index) in editableTabs"
+						    :key="item.name"
+						    :label="item.title"
+						    :name="item.name"
+						  >
+						  	<!-- <div>{{item.title}}</div> -->
+						    <!-- <router-view :name="item.view"></router-view> -->
+						 </el-tab-pane>
+					</el-tabs>
+					<keep-alive>
+			        	<router-view></router-view>
+			        </keep-alive>
+				</el-main> 
+			</el-container> 
+		</el-container>
+	</div>
+
+	<div id="template">
+		<!-- test -->
+		<template id="test"><test :name="'测试洗衣啊'"></test></template>
+		<!-- foo -->
+		<template id="foo"><div>foo</div></template>
+		<!-- bar -->
+		<template id="bar">
+			 <div>bar内容内容内容</div>
+		</template>
+		<!-- car -->
+		<template id="car"><div @click="test()">{{cdata}}</div></template>
+		<template id="car1"><div @click="test()">{{cdata}}</div></template>
+		
+		<template id="test-table"><t-table></t-table></template>
+	</div>
+
+</body>
+<script src="./js/base/vue.js"></script>
+<script src="./js/base/vuex.js"></script>
+<script src="./js/base/vue-router.js"></script>
+<script src="./js/base/element-index.js"></script>
+<script src="./js/base/axios.js"></script>
+<script src="./js/jquery-1.11.1.min.js"></script>
+<script src="./js/template/menu.js"></script>
+<script src="./js/template/table.js"></script>
+<script src="./js/filter.js"></script>
+<script src="./js/test.js"></script>
+<script>
+</script>
+<script>
+	var leftMenus = [];
+	/* $.ajax({
+		type:"GET",
+		async:false,
+		url:"./data/menus.json",
+		dataType:"json",
+		success:function(data){
+			leftMenus = data;
+		}
+	}); */
+	leftMenus = [
+				    {
+				        "entity": {
+				            "id": "1",
+				            "icon": "el-icon-rank",
+				            "name": "系统管理1",
+				            "url": "",
+				            "template": "",
+				            "childs": [
+				                {
+				                    "entity": {
+				                        "id": "2",
+				                        "icon": "el-icon-rank",
+				                        "name": "内容管理2",
+				                        "url": "",
+				                        "childs": [
+				                            {
+				                                "entity": {
+				                                    "id": "3",
+				                                    "icon": "el-icon-rank",
+				                                    "url": "abc",
+				                                    "template": "foo",
+				                                    "name": "foo管理",
+				                                    "childs": null
+				                                }
+				                            }
+				                        ]
+				                    }
+				                }
+				            ]
+				        }
+				    },
+				    {
+				        "entity": {
+				            "id": "4",
+				            "icon": "el-icon-rank",
+				            "name": "bar管理",
+				            "url": "bcd",
+				            "template": "bar",
+				            "childs": null
+				        }
+				    },
+				    {
+				        "entity": {
+				            "id": "5",
+				            "icon": "el-icon-rank",
+				            "name": "内容管理",
+				            "url": "",
+				            "template": "",
+				            "childs": [
+				                {
+				                    "entity": {
+				                        "id": "6",
+				                        "icon": "el-icon-rank",
+				                        "url": "cde",
+				                        "template": "car",
+				                        "name": "car管理",
+				                        "childs": [
+				                            {
+				                                "entity": {
+				                                    "id": "7",
+				                                    "icon": "el-icon-rank",
+				                                    "url": "edf",
+				                                    "template": "test",
+				                                    "name": "test测试",
+				                                    "childs": [
+				                                        {
+				                                            "entity": {
+				                                                "id": "9",
+				                                                "icon": "el-icon-rank",
+				                                                "url": "sdsf",
+				                                                "template": "car1",
+				                                                "name": "test测试",
+				                                                "childs": null
+				                                            }
+				                                        }
+				                                    ]
+				                                }
+				                            },
+				                            {
+				                                "entity": {
+				                                    "id": "8",
+				                                    "icon": "el-icon-rank",
+				                                    "url": "sdf",
+				                                    "template": "car",
+				                                    "name": "car测试",
+				                                    "childs": null
+				                                }
+				                            },
+				                            {
+				                                "entity": {
+				                                    "id": "10",
+				                                    "icon": "el-icon-rank",
+				                                    "url": "dfg",
+				                                    "template": "test-table",
+				                                    "name": "table测试",
+				                                    "childs": null
+				                                }
+				                            }
+				                        ]
+				                    }
+				                }
+				            ]
+				        }
+				    }
+				];
+	
+</script>
+<script src="./js/router/test-view.js"></script>
+<script src="./js/router/router.js"></script>
+<script src="./js/main.js"></script>
+
+</html>

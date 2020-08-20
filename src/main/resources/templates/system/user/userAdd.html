@@ -1,0 +1,31 @@
+<form id="defaultForm" method="post" class="form-horizontal" action=""
+      data-bv-message="This value is not valid"
+      data-bv-feedbackicons-valid="fa fa-check"
+      data-bv-feedbackicons-invalid="fa fa-times"
+      data-bv-feedbackicons-validating="fa fa-refresh" xmlns:th="http://www.thymeleaf.org">
+      	<input type="hidden" name="orgId" th:value="${session.user.orgId}">
+         <div class="form-group">
+            <label class="col-lg-3 control-label">昵称</label>
+            <div class="col-lg-9">
+                <input type="text" class="form-control" name="nickName" data-bv-notempty="true" data-bv-notempty-message="不能为空" />
+            </div>
+        </div>
+         <div class="form-group">
+            <label class="col-lg-3 control-label">登录账户</label>
+            <div class="col-lg-9">
+                <input type="text" class="form-control" name="loginName" data-bv-notempty="true" data-bv-notempty-message="不能为空" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-3 control-label">密码</label>
+            <div class="col-lg-9">
+                <input type="text" class="form-control" name="loginPwd" data-bv-notempty="true" data-bv-notempty-message="不能为空" />
+            </div>
+        </div>
+         <div class="form-group">
+            <label class="col-lg-3 control-label">手机号</label>
+            <div class="col-lg-9">
+                <input type="text" class="form-control" name="phone" data-bv-mobile="true" data-bv-notempty="true" data-bv-notempty-message="不能为空" />
+            </div>
+        </div>
+	</form>

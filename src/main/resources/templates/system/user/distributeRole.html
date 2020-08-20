@@ -1,0 +1,189 @@
+<div class="row">
+	<div class="col-md-4">
+		<!-- BASIC TABLE -->
+		<div class="panel" style="padding-top:20px;">
+			<span for="form-text" style="font-weight: 500;font-family: 微软雅黑;margin-left: 15%;font-size: 15px;">机构列表</span>
+			<div class="panel-body  clearfix">
+				<div class="manage_list clearfix">
+					<ul id="tree" class="ztree"></ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-8">
+		<!-- BASIC TABLE -->
+		<div class="panel">
+			<div class="panel-heading">
+				<form class="form-inline" id="searchForm2">
+					<input type="hidden" name="orgId" id="check_org_id">
+					<div class="form-group">
+						<span for="form-text">角色名称：</span> <input type="text"
+							class="form-control" name="roleName" data-bv-notNull="true" />
+					</div>
+				</form>
+			</div>
+			<div class="panel-body " id="dis_role">
+				<table id="mychart2" class="col-md-12">
+					<thead>
+						<tr>
+							<th class="bs-checkbox " data-checkbox="true"
+								style="width: 36px; " data-field="0"><input
+								name="btSelectAll" type="checkbox"></th>
+							<th style="text-align: center; vertical-align: middle; "
+								data-field="id" data-visible="false">ID</th>
+							<th style="text-align: center; vertical-align: middle; "
+								data-field="roleName">角色名称</th>
+							<th style="text-align: center; vertical-align: middle; "
+								data-field="mark">备注</th>
+							<th style="text-align: center; vertical-align: middle; "
+								data-field="createDate">创建时间</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+
+	var checkNo = null; //选中的节点
+
+	var setting1 = {
+		view : {
+			selectedMulti : false,
+			dblClickExpand : false,
+		},
+		data : {
+			simpleData : {
+				enable : true,
+				idKey : "id",
+				icon : "iconSkin",
+				pIdKey : "pid"
+			},
+			key : {
+				name : "name"
+			}
+		},
+		callback : {
+			onClick : this.menuClick
+		}
+	};
+
+	//节点点击事件
+	function menuClick(e, treeId, node) {
+		checkNo = node;
+		$("#check_org_id").val(checkNo.id);
+		searchRoleInfo();
+	}
+
+
+	$(document).ready(function() {
+
+		var zNode1;
+		$.ajax({
+			async : false,
+			cache : false,
+			type : 'POST',
+			dataType : "json",
+			url : '/org/initOrgUser',
+			success : function(data) {
+				zNode1 = data;
+			}
+		});
+		for (var i in zNode1) {
+			zNode1[i].url = null;
+		}
+		$.fn.zTree.init($("#tree"), setting1, zNode1);
+
+	});
+
+	//添加节点
+	function addNode(newNode) {
+		newNode.url = null;
+		var zTree = $.fn.zTree.getZTreeObj("tree");
+		if (zTree.getSelectedNodes()[0]) {
+			zTree.addNodes(zTree.getSelectedNodes()[0], newNode);
+		} else {
+			zTree.addNodes(null, newNode);
+		}
+	}
+
+	//修改节点
+	function editTree(newNode) {
+		newNode.url = null;
+		var zTree = $.fn.zTree.getZTreeObj("tree");
+		var node = zTree.getSelectedNodes()[0];
+		node.name = newNode.name;
+		node.icon = newNode.iconSkin;
+		node.remark = newNode.remark;
+		zTree.updateNode(node);
+	}
+
+	//删除节点
+	function removeNode() {
+		var zTree = $.fn.zTree.getZTreeObj("tree");
+		var nodes = zTree.getSelectedNodes();
+		if (nodes && nodes.length > 0) {
+			checkNo = null; //选中的节点归零
+			if (nodes[0].children && nodes[0].children.length > 0) {
+				zTree.removeNode(nodes[0]);
+			} else {
+				zTree.removeNode(nodes[0]);
+			}
+		}
+	}
+</script>
+
+<script>
+ //数据增删查改功能
+var _body= $("body");
+
+$(function(){
+		
+		$('#dis_role').createTable({
+			id:	'mychart2',	
+			formId:'searchForm2',
+			url:'/role/listRole'
+		});
+		
+		 $("#searchForm2").createToolBar({
+			buttons:{
+				items:[ {
+					id:'searchRole',
+					text:'查询',
+					iconCls:'btn btn-default',
+					handler:function(){
+						searchRoleInfo();
+					}
+				}]
+			}
+		}); 
+	
+}); 
+
+//查询
+function searchRoleInfo(){
+	 var zTree = $.fn.zTree.getZTreeObj("tree");
+	 if(zTree.getSelectedNodes().length == 0){
+	 	Notify.notify({msg:"请选择机构！", type: "warning"});
+	 	return;
+	 }
+	 $('#mychart2').queryTable();
+}
+
+function checkOrgRole(){
+	var zTree = $.fn.zTree.getZTreeObj("tree");
+	 if(zTree.getSelectedNodes().length == 0){
+	 	Notify.notify({msg:"请选择机构！", type: "warning"});
+	 	return;
+	 }
+	var single=TableHandle.singleSelect('mychart2');//传一个表格id，判断是否选中一条数据
+ 	 	if(!single){
+ 		  return false;
+ 	  	}
+  	var rows = $('#mychart2').bootstrapTable('getSelections');
+  	return [checkNo.id,rows[0].id]
+}
+ 
+</script>

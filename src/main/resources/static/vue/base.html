@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+ <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+</head>
+<body>
+<button id="exitssss" type="button" >点我1</button>
+<button id="exits" type="button" style="display: none;">点我2</button>
+</body>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript">
+$("#exitssss").click(function(){
+$("#exits").show();
+	$("#exits").bind("click",function(){
+		$("#exits").attr("disabled","disabled");
+		console.log(1);
+	});
+})
+</script>
+</html>

@@ -1,0 +1,208 @@
+@charset "utf-8";
+
+			* {
+				margin: 0;
+				padding: 0;
+				-webkit-touch-callout:none;
+				-webkit-user-select:none;
+				-webkit-tap-highlight-color:transparent;
+			}
+			body{background-color: white}
+			ul{list-style-type: none}
+			a {text-decoration: none;}
+			
+			/*模拟的标题*/
+			/*.header{
+				z-index: 9990;
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 44px;
+				line-height: 44px;
+				text-align: center;
+				border-bottom: 1px solid #eee;
+				background-color: white;
+			}
+			.header .btn-left{
+				position: absolute;
+				top: 0;
+				left: 0;
+				line-height: 22px;
+				padding:12px;
+			}*/
+			/*模拟的轮播*/
+			.swiper{
+				width: 100%;
+				vertical-align: bottom;
+			}
+			/*菜单*/
+			.nav{
+				text-align: center;
+				padding: 10px;
+				overflow: hidden;
+			}
+			.com_comment_h{
+				padding-top: 15px;
+			}
+			.nav p{
+			    display: inline-block;
+			    padding: 6px 20px;
+			    margin:1.5% 2%;
+			    background: #e2e3e5;
+			    border-radius: 9px;
+			    float: left;
+			}
+			.nav .active{
+				background-color: #f02b2b;
+    			color: #FFF;
+			}
+			/*列表*/
+			.mescroll{
+				position: fixed;
+				top: 44px;
+				bottom: 0;
+				height: auto;
+			}
+			/*展示上拉加载的数据列表*/
+	/*		.data-list li{
+				position: relative;
+				padding: 10px 8px 10px 120px;
+				border-bottom: 1px solid #eee;
+			}
+			.data-list .pd-img{
+				position: absolute;
+				left: 18px;
+				top: 18px;
+				width: 80px;
+				height: 80px;
+			}
+			.data-list .pd-name{
+				font-size: 16px;
+				line-height: 20px;
+				height: 40px;
+				overflow: hidden;
+			}
+			.data-list .pd-price{
+				margin-top: 8px;
+				color: red;
+			}
+			.data-list .pd-sold{
+				font-size: 12px;
+				margin-top: 8px;
+				color: gray;
+			}
+	*/
+	
+	/*样式更改*/		
+.comment_box li{
+	padding-top: 15px;
+}
+.comment_time{
+	font-size: 12px;
+}
+.com_comment_h span:nth-of-type(2) {
+    float: right;
+    margin-right: 5px;
+}
+
+
+/*评论详情回复*/
+
+.comment_children{
+	
+}
+.comment_children li{
+	border: none;
+}
+.comment_children .comment_box_b_c{
+	
+}
+.comment_children .comment_box_b_c span{
+	display: inline-block;
+    margin-bottom: 5px;
+}
+.comment_children .comment_box_b_c span img{
+	width: 100%;
+	max-height: 800px;
+}
+
+.children_list{
+	
+	
+}
+.children_list h4{
+	font-size: 13px;
+	line-height: 45px;
+	padding: 0;
+	margin: 0;
+	padding-left: 10px;
+}
+.children_list ul{
+	
+	
+}
+.children_list li{
+	border-bottom: 1px solid #e3e5e9;
+	
+}
+.children_list li:last-child{
+    border-bottom:none;
+}
+.children_list .comment_box_p{
+	padding-left: 35px;
+}
+
+.children_reply{
+	font-size: 14px;
+	padding-left: 35px;
+	margin-bottom: 5px;
+}
+
+
+.comment_children_footer{
+	overflow: hidden;
+	padding: 10px;
+	position: fixed;
+	left: 0px;
+	bottom: 0px;
+	height: 50px;
+	border-top:1px solid #e3e5e9;
+	background: #fff;
+	width: 100%;
+}
+.comment_children_footer div{
+	float: left;
+}
+.comment_children_footer div:nth-of-type(1){
+	width: 60%;
+}
+
+
+.comment_children_footer i{
+	font-size:18px ;
+	color:#ccc;
+	margin-right: 3px;
+	vertical-align: sub;
+}
+.comment_children_footer .comment_children_p{
+    background: #f2f5f7;
+    font-size: 12px;
+    padding: 0;
+    margin: 0;
+    line-height:0;
+    height: 0px;
+    padding: 14px;
+    border: none;
+    width: 60%;
+    float: left;
+    border-radius:4px;
+}
+.comment_children_footer span{
+	float: left;
+	width: 20%;
+	text-align: center;
+	vertical-align: middle;
+	line-height: 30px;
+	font-size: 10px;
+}

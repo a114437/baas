@@ -1,0 +1,118 @@
+@CHARSET "UTF-8";
+html body, html{
+    background-color: #eff1f9;
+}
+/* 字体颜色 开始*/
+.sidebar .nav  ul li a {
+    color: #999;
+}
+.sidebar .nav  ul li a:hover{
+	color:#0893fd;
+}
+/* 字体颜色 结束*/
+/* 顶部 */
+.navbar-default {
+	 background-color: #0893fd;/* 顶部背景色 */
+}
+/* 背景色 */
+#wrapper .main {
+	background-color: #eff1f9;
+}
+/*左侧项目图标背景色*/
+.navbar-default .brand {
+    background-color: transparent;
+}
+.btn-toggle-fullwidth{
+	color: inherit;
+}
+/*顶部伸缩按钮*/
+.layout-fullwidth #wrapper .btn-toggle-fullwidth {
+  color: #00AAFF; 
+}
+/* 右侧信息颜色 */
+.navbar-default .navbar-nav>li>a {
+    color: #aaddff;
+}
+/*右侧信息鼠标放上颜色*/
+.navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover {
+    color: #fff;
+    background-color: transparent;
+}
+/*右侧信息鼠标点击后颜色*/
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover {
+    color: #fff;
+    background-color: rgba(231, 231, 231, 0)
+}
+/*右侧信息下拉框*/
+/*顶部横线颜色*/
+.navbar-nav .dropdown-menu {
+    border-top: 2px solid #ACB0B5;
+}
+/*字体颜色*/
+.dropdown-menu > li > a {
+    color: #676a6d;
+}
+
+/*-------------------------------------------------------------------------------------------------*/
+/*左侧菜单栏*/
+/*背景色*/
+#wrapper .sidebar {
+    background-color: #fff;
+}
+.sidebar .ztree li ul {
+	background-color: #e9f3fc;
+}
+/*字体颜色*/
+.sidebar .nav > li > a {
+	color: #999;
+}
+/* 鼠标放上去字体颜色 */
+.sidebar .ztree > li > a:hover, .sidebar .ztree > li > a:focus, .sidebar .ztree > li > a.curSelectedNode {
+    color: #0893fd;
+}
+.nav>li a>.level0.switch, .nav>li a>.level1.switch, .nav>li a>.level2.switch, .nav>li a>.level3.switch, .nav>li a>.level4.switch{
+	color: #0893fd;
+}
+/*鼠标放上去，点击字体颜色*/
+.sidebar .nav  ul li a:hover, .sidebar .nav  ul li a:focus, .sidebar .nav  ul li a.curSelectedNode {
+	color: #0893fd;	
+}
+.sidebar .nav  ul li a.curSelectedNode span{
+ 	color:#0893fd;
+ }
+/*  一级菜单点击 */
+.sidebar .nav > li > a:focus, .sidebar .nav > li > a.curSelectedNode {
+    background-color: #e9f3fc;
+    border-left-color: #0893fd;
+}
+.sidebar  .ztree > li > a.active {
+    color: #0893fd;
+    background-color: #e9f3fc;
+    border-left-color: #00AAFF;
+}
+/*左侧图标样式，点击和鼠标放上去的样式*/
+.sidebar .nav > li > a.curSelectedNode span.lnr,.sidebar .nav > li > a:hover span.lnr,.sidebar  .ztree > li > a.active span.lnr{
+    color: #00AAFF;
+}
+/* 右侧箭头鼠标放上和点击样式 */
+.sidebar .nav>li a:hover>.switch, .sidebar .nav > li > a.curSelectedNode>.switch,.sidebar-scroll ul.ztree>li > a.active>.switch{
+	background-image: url(../../image/left_menuFor2.png);
+	transition:background-image 0.5s;
+}
+/*左侧菜单栏伸缩按钮*/
+.sidebar-collapse:before {
+    color: #66d4ff;
+}
+.sidebar-collapse {
+	border-bottom: 1px solid #0893fd;
+    background-color: #0893fd;
+}
+.sidebar-collapse i.fa{
+	border: 1px solid #0893fd;
+    background: #0893fd;
+    color: #ffffff;
+}
+#sideNav2{
+	 color: #ffffff;
+	 background-color: #0893fd;
+}

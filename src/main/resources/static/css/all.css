@@ -1,0 +1,241 @@
+@CHARSET "UTF-8";
+@media (min-width: 768px){
+	.navbar-header {
+	    width: 100%;
+	}
+}
+.user-menu {
+    display: inline-block;
+    margin-top: 14px;
+    margin-right: 10px;
+    float: right;
+    list-style: none;
+    padding: 0;
+}
+ul li{
+	list-style-type:none;
+}
+a{
+	text-decoration: none;
+}
+textarea{
+	resize: none;
+}
+/*清除浮动*/
+.clearfix:before,.clearfix:after{
+	display:table;
+	content:"";
+}
+.clearfix:after{
+	clear:both;
+}
+.no-padding {
+    padding: 0 !important;
+}
+.no_marginBottom{
+	margin-bottom:0 !important;
+}
+/*左侧菜单*/
+@media (min-width: 768px){
+	.sidebar {
+	    display: none;
+	    position: fixed;
+	    top: 5px;
+	    bottom: 0;
+	    left: 0;
+	    z-index: 1000;
+	    display: block;
+	    margin: 0;
+	    padding: 0;
+	    background-color: #fff;
+	    box-shadow: 1px 0px 10px rgba(0, 0, 0, .05);
+	}
+}
+@media (max-width: 768px) {
+	.sidebar .attribution {
+		display: none;
+	}
+}
+
+/*二级菜单*/
+.breadcrumb {
+    border-radius: 0;
+    padding: 10px 15px;
+    background: #e9ecf2;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+    margin: 0;
+}
+
+/*顶部bar*/
+.navbar-toggle .fa-bars {
+    display: block;
+    width: 22px;
+    height: 2px;
+    border-radius: 1px;
+    margin-top: 4px;
+    background-color: #fff;
+    color:#fff;
+}
+/* /*按钮*/
+
+/*****************************************************************************************
+ * BUTTONS
+ /****************************************************************************************/
+
+.modal-footer .btn{
+    margin-bottom: 0;
+    margin-left: 5px;
+} 
+
+.btn {
+	 margin-bottom:15px;
+	 margin-right: 7px;
+}
+.btn.btn-table{
+	margin:0;
+	padding: 2.5px 12px;
+    font-size: 12px;
+	color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+}
+
+
+
+/* 新增按钮样式 */
+.btn-paleGreen {
+    color: #fff;
+    background-color: #9fbf40;
+    border-color: #9bb43f;
+}
+.btn-paleGreen:hover,.btn-paleGreen:link{
+	color: #fff;
+    background-color: #85a72e;
+    border-color: #7b9b1c;
+}
+.btn-orange{
+	color: #fff;
+    background-color: #ed864c;
+    border-color: #d78850;
+}
+.btn-orange:hover,.btn-orange:link{
+	color: #fff;
+    background-color: #d4722b;
+    border-color: #d76912;
+}
+.btn-mauve{
+	color: #fff;
+    background-color: #c14e77;
+    border-color: #9c506c;
+}
+.btn-mauve:hover,.btn-mauve:link{
+	color: #fff;
+    background-color: #a54165;
+    border-color: #9a2c53;
+}
+.btn-purple{
+	color: #fff;
+    background-color: #8969ca;
+    border-color: #7863ae;
+}
+.btn-purple:hover,.btn-purple:link{
+	color: #fff;
+    background-color: #7558b4;
+    border-color: #6149ab;
+}
+/*表单*/
+.form-control {
+    -moz-box-shadow: 0px 1px 2px 0 rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 0px 1px 2px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 1px 2px 0 rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    border-color: #ccc;
+}
+.form-inline .form-group{
+	margin-bottom:15px;
+}
+/* 日期 */
+.input-group.date{
+    float: none;
+    padding-right: 15px;
+    padding-left: 15px;
+    box-shadow: none;
+}
+
+/*警告框*/
+[data-notify="progressbar"] {
+			margin-bottom: 0px;
+			position: absolute;
+			bottom: 0px;
+			left: 0px;
+			width: 100%;
+			height: 5px;
+}
+/* 表单验证 */
+.has-success .form-control-feedback {
+    color: #3c763d;
+    width: 34px;
+    height: 34px;
+    line-height: 34px;
+}
+.has-error .form-control-feedback {
+    color: #a94442;
+    width: 34px;
+    height: 34px;
+    line-height: 34px;
+}
+.has-refresh .form-control-feedback {
+    color: #00AAFF;
+    width: 34px;
+    height: 34px;
+    line-height: 34px;
+}
+
+/* foot */
+footer{
+    float: right;
+}
+.container-fluid {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+p {
+    margin: 0 0 10px;
+}
+a {
+    color: #3287B2;
+}
+/* 提示框 */
+.alert-minimalist {
+	background-color: rgb(241, 242, 240);
+	border-color: rgba(149, 149, 149, 0.3);
+	border-radius: 3px;
+	color: rgb(149, 149, 149);
+	padding: 10px;
+}
+.alert-minimalist > [data-notify="icon"] {
+	height: 50px;
+	margin-right: 12px;
+}
+.alert-minimalist > [data-notify="title"] {
+	color: rgb(51, 51, 51);
+	display: block;
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+.alert-minimalist > [data-notify="message"] {
+	font-size: 80%;
+}
+/* 自定义表单，删除 */
+.delect_ul{
+	    position: absolute;
+    right: -8px;
+    top: 10px;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    width: 33px;
+    z-index: 10;
+}

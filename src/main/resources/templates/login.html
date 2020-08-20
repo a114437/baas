@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <!--Meta setup - Required for apple device-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <!--Title-->
+    <title>云平台登录</title>
+    <link rel="shortcut icon" href="/static/favicon.ico"/>
+   	<link rel="bookmark" href="/static/favicon.ico"/>
+	<!--Required libraries-->
+    <script src="/static/js/jquery-1.11.1.min.js" type="text/javascript"></script>
+    <script src="/static/js/min/modernizr-custom-v2.7.1.min.js" type="text/javascript"></script>
+    <script src="/static/js/min/hammer-v2.0.3.min.js" type="text/javascript"></script>
+    <script src="/static/js/min/flickerplate.min.js" type="text/javascript"></script>
+
+    <!--Include flickerplate-->
+	<link href="/static/css/flickerplate.css"  type="text/css" rel="stylesheet">
+	<link rel="stylesheet" href="/static/css/login.css" />
+	<STYLE>
+		html{
+			background: #eff4f8;;
+		}
+	</STYLE>
+	
+	<!--Execute flickerplate-->
+	<script>
+	$(function(){
+		$('.flicker-example').flickerplate(
+		{
+            auto_flick 				: true,
+            auto_flick_delay 		: 15,
+            flick_animation 		: 'transform-slide'
+        });
+	});
+	</script>
+
+	<!-- Demo styles -->
+	<link href="/static/css/demo.css"  type="text/css" rel="stylesheet">
+	<style>
+		.flickerplate ul.flicks>li .flick-title span.flick-block-text, .flickerplate ul.flicks>li .flick-sub-text span.flick-block-text{
+			background: transparent;
+		}
+	</style>
+</head>
+<body>
+	<!--Basic example-->
+<div class="flicker-example">
+		
+		<ul id="show1">
+			<li data-background="/static/image/flicker-4.jpg" >
+				<div class="flick-title">好友分享 <br>共度幸福时光</div>
+				<!--<div class="flick-sub-text">Heaven forbid this package you downloaded is broken. That wouldn't be embarrassing at all.</div>-->
+			</li>
+			<li data-background="/static/image/flicker-5.jpg" >
+				<div class="flick-title">在线预览  <br>文件即开即看</div>
+				<!--<div class="flick-sub-text">Take a look at the extensive documentation to see how you can change the settings in multiple ways.</div>-->
+			</li>
+			<li data-background="/static/image/flicker-6.jpg">
+				<div class="flick-title">多端并用 <br>数据随身携带</div>
+				<!--<div class="flick-sub-text"> Hammer.js is a great touch library that has been included as part of the Flickerplate package.</div>-->
+			</li>
+		</ul>
+		
+	</div>
+<div id="login-container">
+<!--	头部-->
+	<div class="header-container">
+		<div id="login-header">
+		<!-- <div class="logo">
+		<a class="yun-logo" href="javascript:;" target="_blank" title="心悦灵">心悦灵</a>
+		</div> -->
+		<!-- <span class="login-title">
+		<a class="b-no-ln" hidefocus="true" href="javascript:;" target="_blank">联系客服</a>
+		</span> -->
+		</div>
+		</div>
+	
+	<!--登录框-->
+	<div class="login-main">
+		<div id="login-middle">
+			<div class="header-login">
+				<div class="login-header-title">
+					<h4 class="">帐号密码登录</h4>
+				</div>
+				<div class="tang-pass-login">
+					<form method="POST" action="/main" id="loginForm">
+						<div style="color:red;margin-bottom:5px;font-size:12px;" id="error" th:text="${error}"></div>
+						<p class="pass-form-item pass-form-item-userName">
+							<input type="text" name="loginName" id="loginName" class="pass-text-input pass-text-input-userName" autocomplete="off" placeholder="手机/用户名">
+						</p>
+						<p class="pass-form-item pass-form-item-password">
+							<input type="hidden" name="flag" th:value="${flag}">
+							<input type="password" name="password" id="password" class="pass-text-input pass-text-input-password" placeholder="密码">
+						</p>
+						<p class="pass-form-item pass-form-item-memberPass">
+						<input id="TANGRAM__PSP_4__memberPass" type="checkbox" name="memberPass" value="1" checked="checked" class="pass-checkbox-input pass-checkbox-memberPass">
+						<label for="TANGRAM__PSP_4__memberPass" id="TANGRAM__PSP_4__memberPassLabel" class="">下次自动登录</label></p>
+						<p class="pass-form-item pass-form-item-submit">
+							<input type="button" id="login_btn" value="登录" class="pass-button pass-button-submit">
+						</p>
+					</form>
+				</div>
+			<div class="pass-login-tab">
+				<!-- <div class="account-title active"><a href="javascript:;">快速登录</a></div> -->
+			</div>
+			</div>
+		</div>
+	</div>
+	<!--Documentation link-->
+	<div class="documentation">
+		
+		<h3>Read The Documentation</h3>
+	
+	</div>
+</div>	
+<!-- <div id="login-download">
+	<ul class="tab-download clearfix" id="tab-download">
+		<li><a class="windows download-target"  href="javascript:;" id="windows-download">Windows</a></li>
+		<li><a class="android"  href="javascript:;" id="android-download" >Android</a></li>
+		<li><a class="iphone"  href="javascript:;" id="iphone-download" >iPhone</a></li>
+		<li><a class="ipad download-open" href="javascript:;" id="ipad-download" >iPad</a></li>
+		<li><a class="tongbupan download-target" href="javascript:;" id="tongbupan-download" >MAC</a></li>
+	</ul>
+</div> -->
+<div class="footer">
+<div >
+	©2019  
+	<!-- <a class="b-lnk-gy" href="javascript:;" target="_blank">心理咨询平台</a> | 
+	<a class="b-lnk-gy" href="javascript:;" target="_blank">服务协议</a> | 
+	<a class="b-lnk-gy" href="javascript:;" target="_blank">权利声明</a> | 
+	<a class="b-lnk-gy" href="javascript:;" target="_blank">版本更新</a> | 
+	<a class="b-lnk-gy" href="javascript:;" target="_blank">帮助中心</a> | 
+	<a class="b-lnk-gy" href="javascript:;" target="_blank">版权投诉</a> -->
+	<span class="b-lnk-gy" >后台管理平台</span> | 
+	<span class="b-lnk-gy" >服务协议</span> | 
+	<span class="b-lnk-gy" >权利声明</span> | 
+	<span class="b-lnk-gy" >版本更新</span> | 
+	<span class="b-lnk-gy" >帮助中心</span> | 
+	<span class="b-lnk-gy" >版权投诉</span>
+</div>
+</div>
+</body>
+<script type="text/javascript">
+$("#login_btn").click(function(){
+	$("#loginForm").submit();
+});
+
+$(document).keydown( function(e) {
+    var key = window.event?e.keyCode:e.which;
+    if(key.toString() == "13"){	
+    	$("#loginForm").submit();
+    }
+});
+</script>
+</html>

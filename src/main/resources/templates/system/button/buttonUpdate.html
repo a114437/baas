@@ -1,0 +1,36 @@
+<style>
+	body{
+ 		background: #fff;
+ 		margin:20px;
+ 	}
+ </style>
+     <form id="upDateForm" method="post" class="form-horizontal" action=""
+      data-bv-message="This value is not valid"
+      data-bv-feedbackicons-valid="fa fa-check"
+      data-bv-feedbackicons-invalid="fa fa-times"
+      data-bv-feedbackicons-validating="fa fa-refresh" xmlns:th="http://www.thymeleaf.org">
+      
+        <input type="hidden" name="id" th:value="${button.id}">
+         <div class="form-group">
+            <label class="col-lg-3 control-label">按钮名称</label>
+            <div class="col-lg-9">
+                <input type="text" class="form-control" name="btnCnName" th:value="${button.btnCnName}" data-bv-notempty="true" data-bv-notempty-message="不能为空" />
+            </div>
+        </div>
+         <div class="form-group">
+            <label class="col-lg-3 control-label">英文名称</label>
+            <div class="col-lg-9">
+                <input type="text" class="form-control" name="btnEnName" th:value="${button.btnEnName}" data-bv-notempty="true" data-bv-notempty-message="不能为空"/>
+            </div>
+        </div>
+	</form>
+
+<script>
+	$(function(){
+		
+		  /* 表单验证 */
+	    $('#upDateForm').bootstrapValidator();
+		
+		
+	});
+</script>

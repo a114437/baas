@@ -1,0 +1,56 @@
+<form id="defaultForm" method="post" class="form-horizontal" action=""
+      data-bv-message="This value is not valid"
+      data-bv-feedbackicons-valid="fa fa-check"
+      data-bv-feedbackicons-invalid="fa fa-times"
+      data-bv-feedbackicons-validating="fa fa-refresh">
+         <div class="form-group">
+            <label class="col-lg-3 control-label">合约地址</label>
+            <div class="col-lg-9">
+                <input type="text" class="form-control" id="contract_addr_item" name="contractAddress"  data-bv-notempty-message="不能为空" />
+            </div>
+        </div>
+         <div class="form-group">
+            <label class="col-lg-3 control-label">代币编号</label>
+            <div class="col-lg-9">
+                <input type="text" class="form-control" id="contract_symbol_item" disabled="disabled" data-bv-notempty="true" data-bv-notempty-message="不能为空" />
+            </div>
+        </div>
+        <div class="form-group">
+			<div class="col-md-6">
+				<label class="col-md-6 control-label" style="margin-top: 8px;">logo图</label>
+				<a class="btn btn-default uploadBtn_item" style="margin-left: 15px;">图片上传</a> 
+				<input class="file_upload_item" type="file" data-id="fileUploadContent2"
+					accept="image/gif,image/jpeg,image/jpg,image/png,image/svg" style="display: none;" /> 
+				<input class="file_form_item" type="hidden" data-id="fileUploadContent2" name="logo" value=""/>
+			</div>
+			<div class="col-md-6"></div>
+		</div>
+		<div class="form-group">
+			<label class="col-md-3"></label>
+			<div id="fileUploadContent2" class="fileUploadContent col-md-9">
+				<div class="box"></div>
+			</div>
+		</div>
+</form>
+<!-- 图片上传预览组件  -->
+<link href="/static/plugin/fileUpload/css/fileUpload.css" rel="stylesheet" />
+<link href="/static/plugin/fileUpload/css/iconfont.css" rel="stylesheet" />
+<!-- 文件上传 -->
+<script type="text/javascript" src="/static/plugin/upload/upload.js" charset="UTF-8"></script>
+<script type="text/javascript" src="/static/plugin/upload/fileUpload.js" charset="UTF-8"></script>
+<script>
+$("body").on("input propertychange","input",function(){
+	if($(this).attr("id") == "contract_addr_item"){
+		$.ajax({
+			type:"POST",
+			url:"/tokenSystem/queryContractSymbol",
+			data:{
+				contractAddress:$(this).val()
+			},
+			success:function(data){
+				$("#contract_symbol_item").val(data);
+			}
+		});
+	}
+})
+</script>

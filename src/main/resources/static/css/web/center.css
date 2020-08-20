@@ -1,0 +1,271 @@
+@charset "utf-8";
+			.con_header{
+				background:#fff url(../../images/con_lo.png)no-repeat;
+				height: 130px;
+				background-size: 100% 130px;
+				position: relative;
+			}
+			.con_header ul{
+				overflow: hidden;
+				padding:40px 15px 15px 15px;
+			}
+			.con_header li{
+				float: left;
+				height: 65px;
+			}
+			.con_header .con_toux{
+				width:65px;
+				height: 65px;
+				border-radius: 50%;
+				background: #fff;
+				border:2px solid #eaaa00;
+			    background: url(../../images/con_2.png) no-repeat center;
+			    background-size: 68px 68px;
+			    position: relative;
+			    overflow:hidden;
+			    border:2px solid #fff;
+			}
+			.con_toux img{
+/* 			    border: 0;
+			    width: 70px;
+			    height: 70px;
+			    border: 2px solid #fff;
+			    border-radius: 50%;
+			    margin: -3px 0px 1px -5px; */
+			    
+			    
+		        width: 100%;
+			    margin: auto;
+			    position: absolute;
+			    top: 0;
+			    left: 0;
+			    bottom: 0;
+    			right: 0;
+			}
+			.con_header .con_youhui{
+			    float: right;
+			     color: rgb(255, 255, 255);
+				  background: rgba(0, 0, 0, 0.5019607843137255);
+			    border-radius: 20px;
+			    font-size: 10px;
+			    display: inline-block;
+			    padding: 0px 10px;
+			    margin-top: 25px;
+			    height: 24px;
+			    line-height:24px;
+			    margin-right: -27px;
+			    padding: 0px 15px;
+			}
+			.con_header .con_iphone{
+				font-size: 16px;
+				color: #000;
+				margin-left: 10px;
+				width: 40%;
+				padding-top: 10px;
+			}
+			.con_header .con_iphone .icon-cry{
+				margin-left: 10px;
+			}
+			.con_iphone div{
+			    color: #fff;
+			    background: rgba(0, 0, 0, 0.5019607843137255);
+			    border-radius: 20px;
+			    font-size: 10px;
+			    display: inline-block;
+			    padding: 0px 10px;
+			    margin-top: 5px;
+			    display:none;
+			    width: max-content;
+			}
+			.con_iphone .com_vip1 .icon-VIP1{
+			
+			}
+			.con_iphone .com_vip2 .icon-VIP{
+				color:#ffd237;
+			}			
+			.icon-atmaway{
+				padding-right: 10px;
+				font-size: 10px;
+				
+			}
+			.con_header .iconfont{
+				font-size: 12px;
+			}
+			.con_xiaoxi{
+				position: absolute;
+				top: 15px;
+				right: 15px;
+			}
+			.con_header .con_xiaoxi i{
+				font-size: 20px;
+				color: #444;
+			}
+			.con_xiaoxi_tit{
+				position: absolute;
+				width: 6px;
+				height: 6px;
+				background: #d6391f;
+				display: block;
+				border-radius: 50%;
+				right: 12px;
+				top: 12px;
+			}
+			
+/*收藏列表--订单列表*/
+			.con_head2{
+				background: #FFF;
+				height: 75px;
+			}
+			.con_head2 ul{
+				overflow: hidden;
+			}
+			.con_head2 li{
+				float: left;
+				width: 25%;
+				height: 75px;
+			}
+			.con_head2 .con_head2_my{
+				
+			}
+			.con_head2 li a{
+				    width: 100%;
+				    height: 100%;
+				    display: block;
+				    display: grid;
+				    display: -webkit-grid;
+			}			
+			.con_head2 li i{
+				    font-size: 20px;
+				    text-align: center;
+				    margin-top: 13px;
+				    color: #5c5c65;
+				    font-weight: 500;
+				    display: block;
+				    text-align: center;
+			}
+			.con_head2 li p{
+				text-align: center;
+				margin-top: 5px;
+				font-size: 12px;
+				color: #5c5c65;
+			}
+			
+.con_order{
+	height:auto;
+}
+.con_order h2{
+	height: 39px;
+	font-size:15px;
+	color: #222;
+	font-weight: 400;
+	text-indent:15px;
+	line-height: 40px;
+	border-bottom: 1px solid #f2f2f2;
+	overflow: hidden;
+	margin: 0px;
+}
+.con_order h2 a{
+	float: right;
+	left: 15px;
+	padding-right: 15px;
+	color: #000000;
+	font-weight: 100;
+}
+.con_order h2 a i{
+	font-size: 12px;
+}
+.con_order ul li i{
+	font-size: 23px;
+}
+.con_order ul{
+	
+}
+.con_order ul li{
+	width: 20%;
+}
+
+.con_block{
+	
+	height: 210px;
+}
+.con_block ul{
+	
+}
+.con_block ul li{
+	width: 33%;
+	height: 105px;
+}
+.con_block ul li{
+	width: 33%;
+	height: 105px;
+}
+.con_block ul li:nth-of-type(1){
+	border-bottom: 1px solid #F2F2F2;
+	border-right: 1px solid #F2F2F2;
+}
+.con_block ul li:nth-of-type(2){
+	border-bottom: 1px solid #F2F2F2;
+	border-right: 1px solid #F2F2F2;
+}
+.con_block ul li:nth-of-type(3){
+	border-bottom: 1px solid #F2F2F2;
+}
+.con_block ul li:nth-of-type(4){
+	border-right: 1px solid #F2F2F2;
+}
+.con_block ul li:nth-of-type(5){
+	border-right: 1px solid #F2F2F2;
+}
+.con_block ul li:nth-of-type(6){
+
+}
+
+.con_block ul li i{
+	margin-top: 30px;
+	font-size: 24px;
+}
+.con_block ul li p{
+	margin-top:0px;
+}
+
+
+/*个人信息  图片上传*/
+
+.com_setup .set_photo{
+	
+}
+.com_setup .set_photo{
+	height: 63px;
+	line-height: 63px;
+}
+.com_setup .set_photo .set_a1,.com_setup .set_photo .set_a2{
+	height: 63px;
+	line-height: 63px;
+	margin: 0;
+}
+.com_setup .set_photo .set_a2{	
+	border:1px solid #dddddd60;
+	border-radius:50%;
+	height: 45px;
+	width: 45px;
+	margin-top:9px;
+	margin-right: 10px;
+	overflow: hidden;
+	position: relative;
+}
+.com_setup .set_photo .set_a2 img{	
+    width: 100%;
+    margin: auto;  
+ 	position: absolute;  
+  	top: 0; left: 0; bottom: 0; right: 0;  
+	
+}
+.com_setup .set_photo a{
+	
+}
+.com_setup .set_photo i{
+	height: 63px;
+	line-height: 63px;
+	margin: 0;
+}
+
