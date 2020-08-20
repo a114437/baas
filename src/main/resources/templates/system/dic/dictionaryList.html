@@ -1,0 +1,451 @@
+<h3 class="page-title">数据字典</h3>
+<div class="row">
+	<div class="col-md-6">
+		<!-- BASIC TABLE -->
+		<div class="panel">
+			<div class="panel-heading">
+				<form class="form-inline" id="dicSearchForm">
+					<div class="form-group">
+						<span for="form-text">英文名：</span>
+						<input type="text" class="form-control" name="enName">
+					</div>
+					<div class="form-group">
+						<span for="form-text">中文名：</span>
+						<input type="text" class="form-control" name="cnName">
+					</div>
+				</form>
+			</div>
+			<div class="panel-body" id="dicBody">
+				<table id="mychart1"  class="col-md-12">
+					<thead>
+						<tr>
+							<th class="bs-checkbox " data-checkbox="true" style="width: 36px; " data-field="0"><input name="btSelectAll" type="checkbox"></th>
+							<th style="text-align: center; vertical-align: middle; " data-field="id" data-visible="false">ID</th>
+							<th style="text-align: center; vertical-align: middle; " data-field="enName">英文名</th>
+							<th style="text-align: center; vertical-align: middle; " data-field="cnName">中文名</th>
+							<th style="text-align: center; vertical-align: middle; " data-formatter="actionFormatter" data-events="actionEvents">操作</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+	</div>
+	
+		<div class="col-md-6">
+		<!-- BASIC TABLE -->
+		<div class="panel">
+			<div class="panel-heading">
+				<form class="form-inline" id="dicItemSearchForm">
+					<div class="form-group">
+						<span for="form-text">文本内容：</span>
+						<input type="text" class="form-control" name="content">
+					</div>
+					<div class="form-group">
+						<span for="form-text">值：</span>
+						<input type="text" class="form-control" name="dicVal">
+					</div>
+				</form>
+			</div>
+			<div class="panel-body" id="dicItemBody">
+				<table id="mychart2"  class="col-md-12">
+					<thead>
+						<tr>
+							<th class="bs-checkbox " data-checkbox="true" style="width: 36px; " data-field="0"><input name="btSelectAll" type="checkbox"></th>
+							<th style="text-align: center; vertical-align: middle; " data-field="ID" data-visible="false">ID</th>
+							<th style="text-align: center; vertical-align: middle; " data-field="content">文本内容</th>
+							<th style="text-align: center; vertical-align: middle; " data-field="dicVal">值</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+$(function(){
+	$('#dicBody').createTable({
+		id:	'mychart1',	
+		url:'/dic/listDic',
+		formId:'dicSearchForm'
+	});	
+	
+		
+	 $("#dicSearchForm").createToolBar({
+		buttons:{
+			items:[ {
+				id:'defaultDic',
+				text:'查询',
+				iconCls:'btn btn-default',
+				handler:function(){
+					
+					searchDic();
+				}
+			},{
+				id:'addDic',
+				text:'新增',
+				iconCls:'btn btn-primary',
+				handler:function(){
+
+					addDicInfo();
+				}
+			},{
+				id:'editDic',
+				text:'修改',
+				iconCls:'btn btn-info',
+				handler:function(){
+
+					 updateDicInfo();
+				}
+			},  {
+				id:'deleteDic',
+				text:'删除',
+				iconCls:'btn btn-danger',
+				handler:function(){
+
+					deleteDicInfo();
+				}
+			}
+			]
+		}
+	}); 
+		
+		
+    //数据增删查改功能
+    var _body= $("body");
+ 	//新增
+     function addDicInfo(){
+    	  _body.createDialog({
+	    		  	id:'addDate',//id
+					contentUrl:'/dic/loadAddDic',/*弹窗内嵌入页面地址 */
+		            title: "新增字典组",
+		            height:300,
+					width:400,
+					closeBtn:true, //是否存在右上角关闭按钮
+					buttons:{ 		//下方按钮
+						items:[{
+							id:'closeUserInfoConfig',
+							text:'取消',
+							iconCls:'btn btn-primary',
+							handler:function(){	
+								closeModal(addDate);//关闭弹窗传弹窗id给closeModal();
+							}
+						},{
+							id:'addUserInfoConfig',
+							text:'提交',
+							iconCls:'btn btn-success',
+							handler:function(){
+								//获取表单对象
+								$("#defaultForm").bootstrapValidator('validate');//提交验证
+				                if ($("#defaultForm").data('bootstrapValidator').isValid()) {//获取验证结果，如果成功，执行下面代码
+								//表单提交的方法、比如ajax提交
+									$.ajax({
+						                cache: true,
+						                type: "POST",
+						                url:'/dic/addDic',
+						                data:$('#defaultForm').serialize(),// 你的formid
+						                async: false,
+						                error: function(request) {
+						                    alert("Connection error");
+						                },
+						                success: function(data) {
+						                	if(data.success==true){
+						                		Notify.notify({msg:"新增成功！", type: "success"});
+							                	$('#mychart1').bootstrapTable('refresh', {url: '/dic/listDic'});  
+							                	closeModal(addDate);
+						                	}else{
+						                		
+						                		Notify.notify({msg:"新增失败！", type: "danger"});
+						                	}
+						                }
+						            });
+								
+								}
+							}	
+						}]
+				}
+    	  });
+    	
+
+      }; 
+ 	
+      //修改
+	function updateDicInfo(){
+    	  
+		 var single=TableHandle.singleSelect('mychart1');//传一个表格id，判断是否选中一条数据
+  	 	 if(!single){
+  		  return false;
+  	  	 }
+	  	 var rows = $('#mychart1').bootstrapTable('getSelections');
+    		  
+   	    _body.createDialog({
+    		  	id:'updataDate',//id
+				contentUrl:'/dic/loadUpdateDic',/*弹窗内嵌入页面地址 */
+				data:{"id":rows[0].id},//选中的id
+	            title: "修改字典组",
+	            height:250,
+				width:500,
+				closeBtn:true, //是否存在右上角关闭按钮
+				buttons:{ 		//下方按钮
+					items:[{
+						id:'closeUserInfoConfig',
+						text:'取消',
+						iconCls:'btn btn-primary',
+						handler:function(){	
+							closeModal(updataDate);//关闭弹窗传弹窗id给closeModal();
+						}
+					},{
+						id:'editUserInfoConfig',
+						text:'提交',
+						iconCls:'btn btn-success',
+						handler:function(){
+							//获取表单对象
+							$("#defaultForm").bootstrapValidator('validate');//提交验证
+			                if ($("#defaultForm").data('bootstrapValidator').isValid()) {//获取验证结果，如果成功，执行下面代码
+							//表单提交的方法、比如ajax提交
+								$.ajax({
+					                cache: true,
+					                type: "POST",
+					                url:'/dic/updateDic',
+					                data:$('#defaultForm').serialize(),// 你的formid
+					                async: false,
+					                error: function(request) {
+					                    alert("Connection error");
+					                },
+					                success: function(data) {
+					                	if(data.success==true){
+					                		Notify.notify({msg:"修改成功！", type: "success"});
+						                	$('#mychart1').bootstrapTable('refresh', {url: '/dic/listDic'});  
+						                	closeModal(updataDate);
+					                	}else{
+					                		
+					                		Notify.notify({msg:"修改失败！", type: "danger"});
+					                	}
+					                }
+					            });
+							
+							}
+						}	
+					}]
+			}
+ 	  		});
+    		  
+  			
+    }; 
+      //删除
+    function deleteDicInfo(){
+    	  
+    	$("#mychart1").deleteRow({url:"/dic/deleteDic"});
+      }; 
+      
+     //查询
+     function  searchDic(){
+    	 $('#mychart1').queryTable();
+     }
+     
+     
+}); 
+
+
+var groupId = "";
+$(function(){
+	
+	$('#dicItemBody').createTable({
+		id:	'mychart2',	
+		url:'/dic/listDicItem?groupId='+groupId,
+		formId:'dicItemSearchForm'
+	});	
+	
+	
+	 $("#dicItemSearchForm").createToolBar({
+			buttons:{
+				items:[{
+					id:'defaultDicItem',
+					text:'查询',
+					iconCls:'btn btn-default',
+					handler:function(){
+						
+						searchDicItem();
+					}
+				},{
+					id:'addDicItem',
+					text:'新增',
+					iconCls:'btn btn-primary',
+					handler:function(){
+
+						addDicItemInfo();
+					}
+				},{
+					id:'editDicItem',
+					text:'修改',
+					iconCls:'btn btn-info',
+					handler:function(){
+
+						 updateDicItemInfo();
+					}
+				},  {
+					id:'deleteDicItem',
+					text:'删除',
+					iconCls:'btn btn-danger',
+					handler:function(){
+
+						deleteDicItemInfo();
+					}
+				}
+				]
+			}
+	}); 
+	 //查询
+     function  searchDicItem(){
+    	 $('#mychart2').queryTable();
+     }
+	
+	//数据增删查改功能
+	    var _body= $("body");
+	 	//新增
+	     function addDicItemInfo(){
+	 		if(groupId == ""){
+	 			Notify.notify({msg:"请先选择组！", type: "danger"});
+	 			return;
+	 		}
+	    	  _body.createDialog({
+		    		  	id:'addDate',//id
+						contentUrl:'/dic/loadAddDicItem?groupId='+groupId,/*弹窗内嵌入页面地址 */
+			            title: "新增字典Item",
+			            height:300,
+						width:400,
+						closeBtn:true, //是否存在右上角关闭按钮
+						buttons:{ 		//下方按钮
+							items:[{
+								id:'closeUserInfoConfig',
+								text:'取消',
+								iconCls:'btn btn-primary',
+								handler:function(){	
+									closeModal(addDate);//关闭弹窗传弹窗id给closeModal();
+								}
+							},{
+								id:'addUserInfoConfig',
+								text:'提交',
+								iconCls:'btn btn-success',
+								handler:function(){
+									//获取表单对象
+									$("#defaultForm").bootstrapValidator('validate');//提交验证
+					                if ($("#defaultForm").data('bootstrapValidator').isValid()) {//获取验证结果，如果成功，执行下面代码
+									//表单提交的方法、比如ajax提交
+										$.ajax({
+							                cache: true,
+							                type: "POST",
+							                url:'/dic/addDicItem',
+							                data:$('#defaultForm').serialize(),// 你的formid
+							                async: false,
+							                error: function(request) {
+							                    alert("Connection error");
+							                },
+							                success: function(data) {
+							                	if(data.success==true){
+							                		Notify.notify({msg:"新增成功！", type: "success"});
+								                	$('#mychart2').bootstrapTable('refresh', {url: '/dic/listDicItem?groupId='+groupId});  
+								                	closeModal(addDate);
+							                	}else{
+							                		
+							                		Notify.notify({msg:"新增失败！", type: "danger"});
+							                	}
+							                }
+							            });
+									
+									}
+								}	
+							}]
+					}
+	    	  });
+	    	
+
+	      }; 
+	 	
+	      //修改
+		function updateDicItemInfo(){
+	    	  
+			 var single=TableHandle.singleSelect('mychart2');//传一个表格id，判断是否选中一条数据
+	  	 	 if(!single){
+	  		    return false;
+	  	  	 }
+		  	 var rows = $('#mychart2').bootstrapTable('getSelections');
+		  	 if(rows[0].id == undefined){
+		  		Notify.notify({msg:"请选中一项内容！"});//提示框
+		  		return false;
+		  	 }
+	    		  
+	   	    _body.createDialog({
+	    		  	id:'updataDate',//id
+					contentUrl:'/dic/loadUpdateDicItem',/*弹窗内嵌入页面地址 */
+					data:{"id":rows[0].id},//选中的id
+		            title: "修改字典item",
+		            height:250,
+					width:500,
+					closeBtn:true, //是否存在右上角关闭按钮
+					buttons:{ 		//下方按钮
+						items:[{
+							id:'closeUserInfoConfig',
+							text:'取消',
+							iconCls:'btn btn-primary',
+							handler:function(){	
+								closeModal(updataDate);//关闭弹窗传弹窗id给closeModal();
+							}
+						},{
+							id:'editUserInfoConfig',
+							text:'提交',
+							iconCls:'btn btn-success',
+							handler:function(){
+								//获取表单对象
+								$("#defaultForm").bootstrapValidator('validate');//提交验证
+				                if ($("#defaultForm").data('bootstrapValidator').isValid()) {//获取验证结果，如果成功，执行下面代码
+								//表单提交的方法、比如ajax提交
+									$.ajax({
+						                cache: true,
+						                type: "POST",
+						                url:'/dic/updateDicItem',
+						                data:$('#defaultForm').serialize(),// 你的formid
+						                async: false,
+						                error: function(request) {
+						                    alert("Connection error");
+						                },
+						                success: function(data) {
+						                	if(data.success==true){
+						                		Notify.notify({msg:"新增成功！", type: "success"});
+							                	$('#mychart2').bootstrapTable('refresh', {url: '/dic/listDicItem?groupId='+groupId});  
+							                	closeModal(updataDate);
+						                	}else{
+						                		Notify.notify({msg:"新增失败！", type: "danger"});
+						                	}
+						                }
+						            });
+								
+								}
+							}	
+						}]
+				}
+	 	  		});
+	    		  
+	  			
+	    }; 
+	      //删除
+	    function deleteDicItemInfo(){
+	    	  
+	    	$("#mychart2").deleteRow({url:"/dic/deleteDicItem"});
+	    }; 
+	
+	
+});
+	
+function actionFormatter(value, row, index) {
+    return '<a class="btn btn-table">选择</a> ';
+}
+
+//表格  - 操作 - 事件
+window.actionEvents = {
+	'click .btn-table': function(e, value, row, index) {   
+		groupId = row.id;
+		$('#mychart2').bootstrapTable('refresh', {url: '/dic/listDicItem?groupId='+groupId});  
+   }
+};
+	
+</script>			

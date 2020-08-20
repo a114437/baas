@@ -1,0 +1,219 @@
+<div class="row" xmlns:th="http://www.thymeleaf.org">
+	<div class="col-md-12">
+		<!-- BASIC TABLE -->
+		<div class="panel">
+			<div class="panel-heading">
+				<form class="form-inline" id="searchForm2">
+					<input type="hidden" name="treeId" th:value="${treeId}">
+					<div class="form-group">
+						<span for="form-text">按钮名称：</span> <input type="text"
+							class="form-control" name="btnCnName" data-bv-notNull="true" />
+					</div>
+					<div class="form-group">
+						<span for="form-text">英文名称：</span> <input type="text"
+							class="form-control" name="btnEnName" data-bv-notNull="true" />
+					</div>
+				</form>
+			</div>
+			<div class="panel-body2 ">
+				<table id="mychart2" class="col-md-12">
+					<thead>
+						<tr>
+							<th class="bs-checkbox " data-checkbox="true"
+								style="width: 36px; " data-field="0"><input
+								name="btSelectAll" type="checkbox"></th>
+							<th style="text-align: center; vertical-align: middle; "
+								data-field="id" data-visible="false">ID</th>
+							<th style="text-align: center; vertical-align: middle; "
+								data-field="btnCnName">按钮名称</th>
+							<th style="text-align: center; vertical-align: middle; "
+								data-field="btnEnName">英文名称</th>
+							<th style="text-align: center; vertical-align: middle; "
+								data-field="createDate">创建时间</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script th:inline="javascript">
+ //数据增删查改功能
+var _body= $("body");
+
+$(function(){
+		
+		$('.panel-body2').createTable({
+			id:	'mychart2',	
+			formId:'searchForm2',
+			url:'/button/listButton'
+		});
+		
+		 $("#searchForm2").createToolBar({
+			buttons:{
+				items:[ {
+					id:'searchButton',
+					text:'查询',
+					iconCls:'btn btn-default',
+					handler:function(){
+						searchButtonInfo();
+					}
+				}, {
+					id:'addButtonInfo',
+					text:'新增',
+					iconCls:'btn btn-primary',
+					handler:function(){
+
+						addSystemButtonInfo();
+					}
+				},{
+					id:'editButtonInfo',
+					text:'修改',
+					iconCls:'btn btn-info',
+					handler:function(){
+
+						 updateSystemButtonInfo();
+					}
+				}, {
+					id:'deleteButtonInfo',
+					text:'删除',
+					iconCls:'btn btn-danger',
+					handler:function(){
+
+						deleteSystemButtonInfo();
+					}
+				}]
+			}
+		}); 
+		
+		//新增
+     function addSystemButtonInfo(){
+     	var treeId= [[${treeId}]];
+    	  _body.createDialog({
+	    		  	id:'addDate',//id
+					contentUrl:'/button/loadAddButton?treeId='+treeId,/*弹窗内嵌入页面地址 */
+		            title: "新增按钮",
+		            height:300,
+					width:400,
+					closeBtn:true, //是否存在右上角关闭按钮
+					buttons:{ 		//下方按钮
+						items:[{
+							id:'closeButtonInfoConfig',
+							text:'取消',
+							iconCls:'btn btn-primary',
+							handler:function(){	
+								closeModal(addDate);//关闭弹窗传弹窗id给closeModal();
+							}
+						},{
+							id:'addButtonInfoConfig',
+							text:'提交',
+							iconCls:'btn btn-success',
+							handler:function(){
+								//获取表单对象
+								$("#defaultForm").bootstrapValidator('validate');//提交验证
+				                if ($("#defaultForm").data('bootstrapValidator').isValid()) {//获取验证结果，如果成功，执行下面代码
+								//表单提交的方法、比如ajax提交
+									$.ajax({
+						                cache: true,
+						                type: "POST",
+						                url:'/button/addButton',
+						                data:$('#defaultForm').serialize(),// 你的formid
+						                async: false,
+						                error: function(request) {
+						                    alert("Connection error");
+						                },
+						                success: function(data) {
+						                	if(data.success==true){
+						                		
+						                		Notify.notify({msg:"新增成功！", type: "success"});
+							                	$('#mychart2').bootstrapTable('refresh', {url: '/button/listButton'});  
+							                	closeModal(addDate);
+						                	}else{
+						                		
+						                		Notify.notify({msg:"新增失败！", type: "danger"});
+						                	}
+						                }
+						            });
+								
+								}
+							}	
+						}]
+				}
+    	  });
+    	
+
+      }; 
+ 	
+      //修改
+	function updateSystemButtonInfo(){
+    	  var dataID= $('#mychart2').bootstrapTable('getSelections');
+    	  var single=TableHandle.singleSelect('mychart1');//传一个表格id，判断是否选中一条数据
+  	 	 if(!single){
+  		  return false;
+  	  	 }
+    		  _body.createDialog({
+	    		  	id:'updataDate',//id
+					contentUrl:'/button/loadUpdateButton',/*弹窗内嵌入页面地址 */
+					data:{"id":dataID[0].id},//选中的id
+		            title: "修改按钮",
+		            height:250,
+					width:500,
+					closeBtn:true, //是否存在右上角关闭按钮
+					buttons:{ 		//下方按钮
+						items:[{
+							id:'closeButtonInfoConfig',
+							text:'取消',
+							iconCls:'btn btn-primary',
+							handler:function(){	
+								closeModal(updataDate);//关闭弹窗传弹窗id给closeModal();
+							}
+						},{
+							id:'editButtonInfoConfig',
+							text:'提交',
+							iconCls:'btn btn-success',
+							handler:function(){
+								$("#upDateForm").bootstrapValidator('validate');//提交验证
+				                if ($("#upDateForm").data('bootstrapValidator').isValid()) {//获取验证结果，如果成功，执行下面代码
+									$.ajax({
+		          	  	                cache: true,
+		          	  	                type: "POST",
+		          	  	                url:'/button/updateButton',
+		          	  	                data:$('#upDateForm').serialize(),// 你的formid
+		          	  	                async: false,
+		          	  	                error: function(request) {
+		          	  	                    alert("出错了");
+		          	  	                },
+		          	  	                success: function(data) {
+			          	  	                if(data.success==true){
+				          	  	            	Notify.notify({msg:"修改成功！", type: "success"});
+						                	}else{
+						                		 Notify.notify({msg:"新增失败！", type: "danger"});
+						                	}
+		          	  	                }
+		          	  	            });
+									$('#mychart2').bootstrapTable('refresh', {url: '/button/listButton'});  
+									closeModal(updataDate);//关闭弹窗传弹窗id给closeModal();
+								}	
+							}
+						}]
+				}
+  	  		});
+    		  
+  			
+    }; 
+      //删除
+    function deleteSystemButtonInfo(){
+   	
+  	  	$("#mychart2").deleteRow({url:"/button/deleteButton"});
+    }; 
+      
+	//查询
+	function searchButtonInfo(){
+		 $('#mychart2').queryTable();
+	}
+}); 
+
+
+ 
+</script>

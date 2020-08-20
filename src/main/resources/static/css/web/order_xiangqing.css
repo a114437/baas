@@ -1,0 +1,403 @@
+@charset "utf-8";
+* {
+	line-height: inherit;;
+	list-style: none;
+}
+
+body {
+	background-color: #f2f5f7;
+}
+
+.font1 {
+	color: #686868;
+	font-size: 3.73vw;
+}
+
+.font11 {
+	color: #686868;
+	font-size: 3.6vw;
+}
+
+.font2 {
+	font-size: 3.33vw;
+	color: #B1B2B3;
+}
+
+.ddxq-top {
+	margin-top: 0.21rem;
+}
+
+.ddxq-title {
+	margin-top: 45px;
+	width: 100%;
+	height: 19.33vw;
+	background: -webkit-linear-gradient(#FD5B67, #FC7760);
+	/* Safari 5.1 - 6.0 */
+	background: -o-linear-gradient(#FD5B67, #FC7760);
+	/* Opera 11.1 - 12.0 */
+	background: -moz-linear-gradient(#FD5B67, #FC7760);
+	/* Firefox 3.6 - 15 */
+	background: linear-gradient(#FD5B67, #FC7760);
+	/* 标准的语法 */
+	vertical-align: middle;
+}
+
+.ddxq-title span img {
+	width: 5.33vw;
+	height:5.33vw;
+	vertical-align: middle;
+}
+
+.ddxq-title span {
+	display: block;
+	line-height: 19.33vw;;
+	margin-left: 3.2vw;
+}
+
+.ddxq-title span b {
+	display: inline-block;
+	font-size: 0.36rem;
+	padding-left: 0.19rem;
+	color: #FFFFFF;
+	vertical-align: middle;
+}
+
+.ddxq-title2 {
+	height: 13.86vw;
+	background-color: #fff;
+	vertical-align: middle;
+	margin-top: 2.53vw;
+}
+
+.ddxq-title2 span {
+	display: block;
+	height: 0.97rem;
+	line-height:13.86vw;
+	margin-left: 3.2vw;
+}
+
+.ddxq-title2 span img {
+	width: 5.33vw;
+	height:5.33vw;
+	vertical-align: middle;
+}
+
+.ddxq-title2 span b {
+	display: inline-block;
+	font-size: 0.31rem;
+	padding-left: 0.19rem;
+	vertical-align: middle;
+	color: #686868;
+}
+
+.ddxq-next {
+	width: 0.26rem;
+	height: 0.26rem;
+	float: right;
+	position: relative;
+	top: 5.4vw;
+	right: 0.1rem;
+}
+
+.ddxq-address {
+	height: 24.5333vw;
+	background: #FFFFFF;
+}
+
+.ddxq-address span {
+	margin-left: 0.2rem;
+	padding-bottom: 0;
+}
+
+.ddxq-address-mk1 {
+	height: 0.8rem;
+	padding-top: 0.32rem;
+	padding-left: 3.2vw;
+}
+
+.ddxq-address-mk1 img {
+	width:3.86vw;
+	height: 3.86vw;
+	float: left;
+	margin-top: 3px;
+}
+
+.ddxq-address-name {
+	float: left;
+	padding-left: 0.2rem;
+}
+
+.ddxq-address-mk1-number {
+	float: left;
+	padding-left: 0.3rem;
+}
+
+.ddxq-shop {
+	height: 26.1333vw;
+	background: #FFFFFF;
+	display: flex;
+	padding: 10px;
+	position: relative;
+}
+
+.ddxq-shop-img {
+	width: 19.46vw;
+	height:19.46vw;
+	padding: 2px;
+	float: left;
+	border-radius: 3px;
+	border: 1px solid #E3E5E9;
+}
+
+.ddxq-shop img {
+	width: 100%;
+	height: 100%;
+}
+
+.ddxq-address-mk2 {
+	margin-top: 3.6vw;
+	margin-left: 0.7rem;
+	line-height: 5.2vw;
+	padding-bottom: 0.2rem;
+}
+
+.ddxq-shop-title {
+	position: relative;
+    left: 0.17rem;
+    /* margin-top: 10px; */
+    max-height: 40px;
+    overflow: hidden;
+}
+
+.ddxq-shop-title2 {
+	position: relative;
+	left: 0.17rem;
+	line-height: 25px;
+}
+
+.ddxq-shop-price {
+	color:#f02b2b;
+	position: relative;
+	left: 0.17rem;
+}
+
+.ddxq-shop-bus {
+	color:black;
+	display: inline;
+	/* border: 1px solid #989A9D; */
+	float: right;
+	position: absolute;
+	border-radius: 3px;
+	text-align: center;
+	line-height: 0.47rem;
+	bottom: 10px;
+	right:10px;
+	font-size: 10px;
+	padding: 1px 6px;
+}
+
+.ddxq-mk3 {
+	height:11.3vw;
+	background: #F8F8F8;
+	padding-right: 10px;
+}
+
+.ddxq-mk3-tv1 {
+	line-height:11.3vw;
+	margin-left: 0.23rem;
+	float: left;
+}
+
+.ddxq-mk3-tv2 {
+	float: right;
+	line-height: 11.3vw;
+}
+
+.ddxq-mk3-next {
+	widows: 0.4rem;
+	height: 0.4rem;
+	line-height: 0.76rem;
+	vertical-align: middle;
+}
+
+.ddxq-shop-mk {
+	width: 100%;
+	height: auto;
+	float: left;
+	flex: 1;
+	padding-left: 5px;
+}
+
+.ddxq-mk4 {
+	height: 1.39rem;
+	width: 100%;
+	background: #FFFFFF;
+}
+
+.ddxq-mk4-tv2 {
+	line-height: 1.39rem;
+	font-weight: bold;
+	margin-left: 0.2rem;
+	float: left;
+}
+
+.ddxq-mk4-tv3 {
+	float: right;
+	line-height: 1.39rem;
+	margin-right:10px;
+
+}
+
+.ddxq-mk5 {
+	height: 1.47rem;
+	width: 100%;
+	background: #FFFFFF;
+	height: auto;
+}
+
+.ddxq-mk5 .ddxq-date{
+		padding-bottom: 0.2rem;
+}
+
+.ddxq-number {
+	padding-top: 0.25rem;
+	padding-left: 0.2rem;
+}
+
+.ddxq-mk6 {
+	height: 0.93rem;
+	width: 100%;
+	background: #FFFFFF;
+	border-top: 1px solid #e3e5e9;
+	line-height: 0.93rem;
+}
+
+.ddxq-mk6 span {
+	margin-left: 0.2rem;
+}
+
+.ddxq-mk7 {
+	height: 3.96rem;
+	width: 100%;
+	background: #FFFFFF;
+	border-top: 1px solid #e3e5e9;
+}
+
+.ddxq-fs {
+	padding-top: 0.4rem;
+	padding-left: 0.2rem;
+}
+
+.ddxq-rq {
+	padding-top: 0.3rem;
+	padding-left: 0.2rem;
+}
+
+.ddxq-fplx {
+	padding-top: 0.6rem;
+	padding-left: 0.2rem;
+}
+
+.ddxq-fz {
+	display: inline-block;
+	height: 0.4rem;
+	padding: 0.05rem;
+	border: 1px solid black;
+	margin-left: 0.2rem;
+	text-align: center;
+	line-height: 0.4rem;
+}
+
+.ddxq-fplx-btn {
+	height: 0.4rem;
+	padding: 0.05rem;
+	display: inline-block;
+	border: 1px solid black;
+	margin-left: 0.2rem;
+	text-align: center;
+	line-height: 0.4rem;
+}
+
+.ddxq-mk-h {}
+
+.order_total {
+	margin-top: 10px;
+	background: #fff;
+	padding: 10px 10px 0px 10px;
+	position: relative;
+	margin-bottom:30px;
+}
+
+.order_total ul {
+	overflow: hidden;
+}
+
+.order_total li {
+	font-size: 13px;
+	color: #686868;
+	line-height: 25px;
+}
+
+.order_total li span {
+	float: right;
+	color: #f02b2b;
+	line-height: 25px;
+}
+
+.total {
+	border-top: 1px solid #e3e5e9;
+	line-height: 45px;
+	color: #111;
+	float: right;
+}
+
+.order_total li .total_fixed{
+	position:relative;
+	background: #fff;
+	padding-top: 8px;
+}
+
+.order_total li .total_fixed span{
+	padding: 4px 9px;
+	border: 1px solid #BFBFBF;
+	color:#111;
+}
+
+.total_fixed {
+	border-top: 1px solid #e3e5e9;
+	line-height: 52px;
+	height: 52px;
+	position: fixed;
+	bottom: 0px;
+	left: 0px;
+	font-size: 15px;
+	float: right;
+	background: #f8f8f8;
+	width: 100%;
+	overflow: hidden;
+	padding-top: 10px;
+	font-size: 13px;
+}
+
+.total_fixed span {
+	float: right;
+	display: inline-block;
+	padding: 8px 9px;
+	border: 1px solid #BFBFBF;
+	border-radius: 3px;
+	margin-right: 10px;
+	text-align: center;
+	line-height: initial; 
+}
+
+.total_fixed .total_del {
+	border: none;
+	padding: 0;
+	line-height: 31px;
+	float: left;
+	margin-left: 10px;
+}
+
+.ddxq-address-mk2 {
+	padding-right: 10px;
+}

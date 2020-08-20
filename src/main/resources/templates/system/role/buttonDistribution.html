@@ -1,0 +1,159 @@
+<div class="row">
+	<div class="col-md-3">
+		<div class="manage_list clearfix" >
+			<ul id="tree2" class="ztree"></ul>
+		</div>
+	</div>
+	<div class="col-md-9" >	
+		<div class="panel-heading" id="aa">
+			<form class="form-inline">
+			</form>
+		</div>		
+		<table id="mychart2"  class="col-md-12">
+			<thead>
+				<tr>
+					<th class="bs-checkbox " data-checkbox="true"
+						style="width: 36px; " data-field="0"><input
+						name="btSelectAll" type="checkbox"></th>
+					<th style="text-align: center; vertical-align: middle; "
+						data-field="id" data-visible="false">ID</th>
+					<th style="text-align: center; vertical-align: middle; "
+						data-field="btnCnName">按钮名称</th>
+					<th style="text-align: center; vertical-align: middle; "
+						data-field="btnEnName">英文名称</th>
+					<th style="text-align: center; vertical-align: middle; "
+						data-field="createDate">创建时间</th>
+				</tr>
+			</thead>
+		</table>
+	</div>		
+			
+	
+</div>
+<script th:inline="javascript">
+		
+		var menuId = '';//菜单id
+		var result = [[${result}]];//默认按钮
+		var btnArr = result.split(',');  //默认选中数据
+		var selectArr = [];//页面上选中的数据
+		var rowData =[];
+		
+		var setting1 = {
+				view: {
+					selectedMulti: false,
+					dblClickExpand: false,
+				},
+				data:{
+					simpleData:{
+						enable:true,
+						idKey:"id",
+						icon:"iconSkin",
+						pIdKey:"pid"
+					},
+					key:{
+						name:"name",
+						url:"url"
+					}
+				},
+				callback: {
+					onClick: this.menuClick
+				}
+			};
+		
+		//节点点击事件
+		function menuClick(e,treeId,node){
+			menuId = node.id;	
+			$('#mychart2').bootstrapTable('refresh',{url:'/button/listButtonUser?treeId='+menuId});
+	    }
+		
+		
+		$(document).ready(function(){
+			
+			var zNode1;
+			$.ajax({
+				async:false,
+				cache:false,
+				type:'POST',  
+	        	dataType:"json",  
+				url:'/tree/initTreeUser',
+				success:function(data){
+					zNode1 = data
+				}
+			});
+			for(var i in zNode1){
+				zNode1[i].url = null;
+			}
+			
+			var zTree = $.fn.zTree.init($("#tree2"), setting1, zNode1);
+			
+			$('.col-md-9').createTable({
+				id:	'mychart2',	
+				url:'/button/listButtonUser?treeId='+menuId,
+				onLoadSuccess:function(row){
+					rowData = row.rows;  
+		            $.each(rowData,function(idx,val){
+						for(var i = 0 ; i < btnArr.length ; i++){
+							var btnId = btnArr[i];
+							if(val.id == btnId){
+								 $("#mychart2").bootstrapTable("check", idx);
+							}
+						}
+		            });  
+				}
+			});	
+		});
+		
+		
+		//获取新增的按钮id
+		function getAddBtn(){
+			selectArr = [];
+			var addIds = '';
+			var rows = $('#mychart2').bootstrapTable('getSelections');
+			for(var i=0; i<rows.length; i++){
+				var rowId = rows[i].id;
+				selectArr.push(rowId);
+				var flag = $.inArray(rowId, btnArr);  
+				if(flag == '-1'){
+					addIds += rowId+",";
+				}
+			}
+			if(addIds.length>0){
+				addIds = addIds.substr(0,addIds.length-1);
+			}
+			return addIds;
+		}
+
+		//获取删除的按钮id
+		function getDelBtn(){
+			selectArr = [];
+			var rows = $('#mychart2').bootstrapTable('getSelections');
+			for(var i=0; i<rows.length; i++){
+				var rowId = rows[i].id;
+				selectArr.push(rowId);
+			}
+			var delIds = '';
+			for(var i = 0 ; i < rowData.length ; i ++){
+				var flag = $.inArray(rowData[i].id, selectArr);  
+				if(flag == '-1'){
+					delIds += rowData[i].id+",";
+				}
+			}
+			if(delIds.length>0){
+				delIds = delIds.substr(0,delIds.length-1);
+			}
+			return delIds;
+		}
+		
+		function updateBtnArr(addIds,delIds){
+			var addArr = addIds.split(",");
+			for(var i in addArr){
+				btnArr.push(addArr[i]);
+			}			
+			var delArr = delIds.split(",");
+			for(var i in delArr){
+				btnArr.splice($.inArray(delArr[i], btnArr),1);
+			}
+			
+		}
+		
+</script>

@@ -1,0 +1,131 @@
+body{
+	background: #efefef;
+}
+#status{
+	height: 135px;
+	text-align: center;
+	background: #FFFFFF;
+	padding-top:10px;
+}
+.headImg{
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	background: url(../../image/mobile/com_img.png) no-repeat;
+	display: inline-block;
+	vertical-align: middle;
+	background-size: 40px;
+}
+.name{
+	width: 100px;
+	height: 24px;
+	display: inline-block;
+	margin-top: 12px;
+	margin-left: 8px;
+	text-align: left;
+	font-size: 16px;
+}
+ul{
+	padding: 0px 15px 0px 15px;
+}
+#secondStatus{
+	background: #FFFFFF;
+}
+#secondStatus li{
+	line-height: 35px;
+}
+.money{
+	font-size: 28px;
+	margin-top: 20px;
+}
+.moneyStatus{
+	font-size: 16px;
+	color: #acacac;
+	margin-top: 10px;
+}
+#secondStatus{
+	height: 260px;
+	color: #a6a6a6;
+	background: #FFFFFF;
+}
+.payWay,.useWay,.recever,.appointmentTime,.dealWay{
+	display: inline;
+	color: #656565;
+	
+}
+.payWayContent,.useWayContent,.receverContent,.appointmentTimeContent{
+	float: right;
+	color: #656565;
+}
+.dealContent{
+	float: right;
+	width: 77%;
+	height: 120px;
+	color: #3AA8E8;
+	background: #FFFFFF;
+	margin-top:10px;
+}
+.erjiStatus1,.erjiStatus2,.erjiStatus3{
+	display: inline;
+}
+.erjiProgress1,.erjiProgress2,.erjiProgress3{
+	float: right;
+}
+#secondStatus .dealContent li{
+	margin-top: 20px;
+}
+#thridStatus{
+	width: 100%;
+	height: 64px;
+	background: #FFFFFF;
+	border-bottom: 1px solid #e2e2e2;
+}
+#thridStatus li{
+	margin-bottom: 10px;
+}
+.payee,.appointment{
+	display: inline;
+}
+.payeeContent,.apppointTime{
+	float: right;
+}
+#fourth{
+	padding-top: 4px;
+	background: #FFFFFF;
+}
+#fourth li{
+	line-height: 35px;
+}
+ 
+ body li p{
+ 	font-size: 15px;
+ 	color: #888;
+ }
+  body li p:nth-of-type(2){
+ 	font-size: 14px;
+ 	color: #a6a6a6;
+ }
+ body #secondStatus .dealContent li{
+ 	margin:0px;
+ 	line-height: 21px;
+ }
+ body .dealContent li p:nth-of-type(2){
+ 	font-size: 12px;
+ }
+ body .dealContent li p:nth-of-type(1){
+ 	height: 66px;
+    display: inline-block;
+    padding-left: 25px;
+    background: url(../../image/mobile/icon_16_1.png) no-repeat;
+    background-size: 21px 66px;
+    color: #489ef3;
+    line-height: 22px;
+ }
+ body .dealContent li .erjiStatus3:nth-of-type(1){
+ 	height: 21.4px;
+    display: inline-block;
+    padding-left: 25px;
+    background: url(../../image/mobile/icon_16.png) no-repeat;
+    background-size: 21px 66px;
+    color: #a6a6a6;
+ }

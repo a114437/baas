@@ -1,0 +1,118 @@
+<div class="row">
+	<div class="col-md-12">
+		<!-- BASIC TABLE -->
+		<div class="panel">
+			<div class="panel-body  clearfix">
+				<div class="manage_list clearfix" >
+				
+					<ul id="tree2" class="ztree"></ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script th:inline="javascript">
+		var saveTree = [[${result}]];//默认关联的数据
+		var treeList = saveTree.split(",");//需要默认选中的树形菜单
+		
+		var setting1 = {
+				view: {
+					selectedMulti: false,
+					dblClickExpand: false,
+				},
+				data:{
+					simpleData:{
+						enable:true,
+						idKey:"id",
+						icon:"iconSkin",
+						pIdKey:"pid"
+					},
+					key:{
+						name:"name",
+						url:"url"
+					}
+				},
+				callback: {
+					onClick: this.menuClick
+				},
+				check: {
+					enable: true,
+					chkStyle: "checkbox",
+					chkboxType: { "Y": "", "N": "" }
+				}
+			};
+		
+		//节点点击事件
+		function menuClick(e,treeId,node){
+	    }
+		
+		
+		$(document).ready(function(){
+			
+			var zNode1;
+			$.ajax({
+				async:false,
+				cache:false,
+				type:'POST',  
+	        	dataType:"json",  
+				url:'/tree/initTreeUser',
+				success:function(data){
+					zNode1 = data;
+				}
+			});
+			
+			for(var i in zNode1){
+				zNode1[i].url = null;
+			}
+			
+			var tree = $.fn.zTree.init($("#tree2"), setting1, zNode1);
+			for(var i = 0 ; i < treeList.length ; i++){
+		    	var id = treeList[i];
+		    	if(id==""){
+		    		continue;
+		    	}
+		    	var node = tree.getNodeByParam("id", id, null);
+		    	if(node!=null){
+			    	tree.checkNode(node, true, true);
+		    	}
+		     }
+	
+		});
+		
+		
+		//关联树形菜单节点
+		function relateTree(){
+			var treeObj=$.fn.zTree.getZTreeObj("tree2");
+	        var nodes=treeObj.getCheckedNodes(true);
+	        var nodeIdArr=[];
+	        var addIds = '';
+	        var delIds = '';
+	        for(var i=0;i<nodes.length;i++){
+	        	var nodeId = nodes[i].id;//当前选中节点
+	        	nodeIdArr.push(nodeId);
+				var flag = $.inArray(nodeId, treeList);  
+				if(flag == '-1'){
+					addIds += nodeId+",";
+				}
+	        }
+	        
+	        if(addIds.length > 0){
+	        	addIds = addIds.substr(0,addIds.length-1);
+	        }
+	        
+			for(var i = 0 ; i < treeList.length ; i++){
+				var saveId = treeList[i];
+				var flag = $.inArray(saveId, nodeIdArr); 
+				if(flag == '-1'){
+					delIds+=saveId+",";
+				}
+			}
+			if(delIds.length>0){
+				delIds = delIds.substr(0,delIds.length-1);
+			}        
+			
+			return addIds+"|"+delIds;
+		}
+		
+		
+</script>

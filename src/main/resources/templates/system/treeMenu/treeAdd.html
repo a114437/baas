@@ -1,0 +1,45 @@
+<form id="defaultForm" method="post" class="form-horizontal" action=""
+      data-bv-message="This value is not valid"
+      data-bv-feedbackicons-valid="fa fa-check"
+      data-bv-feedbackicons-invalid="fa fa-times"
+      data-bv-feedbackicons-validating="fa fa-refresh" xmlns:th="http://www.thymeleaf.org">
+       <div class="form-group">
+            <label class="col-lg-3 control-label">父级菜单</label>
+            <div class="col-lg-9">
+                <input type="text" class="form-control"  disabled="disabled" th:value="${parentName}" data-bv-notempty="true" data-bv-notempty-message="不能为空" />
+                <input type="hidden" name="pid" th:value="${pid}" />
+                <input type="hidden" name="pids" th:value="${pids}" />
+            </div>
+        </div>
+         <div class="form-group">
+            <label class="col-lg-3 control-label">菜单名称</label>
+            <div class="col-lg-9">
+                <input type="text" class="form-control" name="name" data-bv-notempty="true" data-bv-notempty-message="不能为空" />
+            </div>
+        </div>
+         <div class="form-group">
+            <label class="col-lg-3 control-label">图标</label>
+            <div class="col-lg-9">
+                <input type="text" class="form-control" name="iconSkin" />
+            </div>
+        </div>
+         <div class="form-group">
+            <label class="col-lg-3 control-label">跳转地址</label>
+            <div class="col-lg-9">
+                <input type="text" class="form-control" name="url" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-3 control-label">排序</label>
+            <div class="col-lg-9">
+                <input type="text" class="form-control" name="remark" data-bv-notempty="true" data-bv-notempty-message="不能为空" data-bv-intnumber="true" data-bv-number-message="请填写数字" />
+            </div>
+        </div>
+	</form>
+<script>
+	$(function(){
+		  /* 表单验证 */
+	    $('#defaultForm').bootstrapValidator();
+	});
+</script>
+

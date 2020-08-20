@@ -1,0 +1,210 @@
+@CHARSET "UTF-8";
+/* sql生成样式 */
+.sql_build{
+	background: #f3f3f5;
+	position: relative;
+	min-height:320px;
+}
+/* 左侧切换多单表菜单 */
+.left_menu{
+	width:70px;
+	position:absolute;
+	left:0;
+	height:100%;
+}
+.left_menu ul{
+	padding:0;
+}
+.left_menu li{
+	padding:20px 26px;
+	border:1px solid #e0e0e0;
+	background: #f8f8f8;
+	width:68px;
+	cursor: pointer;
+	margin-bottom: 1px;
+}
+.left_menu li.active{
+	border:1px solid #fff;
+	background: #fff;
+	width:70px;
+}
+/* 顶部菜单 */
+.sql_top_menu{
+	padding:5px 20px 10px;
+	border-bottom:1px solid #dbdbdb;
+}
+.sql_top_menu a{
+	margin-bottom:0;
+}
+.sql_top_menu a.btn-info.clicked{
+	color: #fff;
+    background-color: #269abc;
+    border-color: #1b6d85;
+}
+
+/* sql生成语句 */
+.sql_text_main{
+	padding:15px 15px;
+	margin:20px 30px 10px;
+	webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    -moz-box-shadow: 1px 1px 9px 1px rgba(0, 0, 0, 0.08);
+    -webkit-box-shadow: 1px 1px 9px 1px rgba(0, 0, 0, 0.08);
+    box-shadow: 1px 1px 9px 1px rgba(0, 0, 0, 0.08);
+    background-color: #fff;
+    position: relative;
+}
+.sql_text_body{
+	padding-right:100px;
+	margin-top:5px;
+}
+.sql_text{
+	border-radius:5px;
+	display: inline-block;
+	outline: none;
+}
+.sql_text_main a.btn{
+	position: absolute;
+	top:30px;
+	right:20px;	
+}
+
+/* sql的body */
+.sql_body{
+	padding:15px 15px;
+}
+/* 表格头部 */
+.sql_heading{
+	padding-top: 20px;
+    padding-bottom: 20px;
+    position: relative;
+}
+
+
+/* sql生成主要内容 */
+ .panel .panel-body.sql_content{
+	background-color: #fff;
+	margin-left:70px;
+	min-height:320px;
+}
+
+.sqlMenu{
+	padding:0;
+	margin:0;
+}
+.sqlMenu li{
+	float:left;
+	height:140px;
+	width:19.6%;
+	-webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    -moz-box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    -webkit-box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    background-color: #fff;
+    margin-bottom: 30px;
+    border-bottom:4px solid #fff;
+	text-align:center;
+	padding:10px 0;
+	cursor: pointer;
+	color:#8d939c;
+}
+.sqlMenu li:not(:first-child){
+    margin-left:0.5%;
+}
+
+.sqlMenu li.active{
+	border-color:#00AAFF;
+	color:#00AAFF;
+}
+.sqlMenu li span{
+	display: block;
+	width:100%;
+	font-size:14px;
+}
+.sqlMenu li span.sqlTag{
+	padding:15px 0 10px;
+}
+.sqlMenu li span img{
+	border-radius:50px;
+	width:60px;
+}
+.sql_Detail input.form-control{
+	width:180px;
+	display: inline-block;
+}
+.sql_Detail .sql_title{
+	margin-left:10px;
+}
+/* sql生成语句 */
+.sqlTextMain .sqlText{
+	width:80%;
+	float:left;
+}
+.sqlTextMain .sqlBtn{
+	width:20%;
+	float:left;
+}
+.sqlTextMain .sqlBtn a{
+	float:right;
+	margin-bottom:0;
+	vertical-align: bottom;
+}
+/* sql的where查询 */
+a.del{
+	color:#ed5c6d;
+	cursor: pointer;
+}
+a.del:hover{
+	text-decoration: underline;
+	background: rgba(0,0,0,0);
+}
+.note{
+	margin-top:10px;
+	padding:0 10px;
+	font-size:12px;
+	color:#ccc;
+}
+.note span{
+	margin-left:5px;
+}
+.where_title{
+	display: inline-block;
+}
+/*从表样式 */
+.table-bordered>tbody>tr.second>td{
+	border-top:0;
+	border-bottom: 0;
+}
+/* 从表弹窗样式连接条件新增 */
+.plus i.fa {
+    font-size: 18px;
+}
+.plus i.fa:hover{
+	color:#de2f44;
+}
+.plus:hover{
+	background: rgba(0,0,0,0);
+}
+/* 删除 */
+table>tbody>tr>td.minus{
+	border:none;
+}
+.minus i.fa {
+    font-size: 18px;
+    margin-top: 10px;
+}
+/* 新增从表内连接条件 */
+.table.link_table{
+	border-right:none;
+	border-bottom:none;
+	border-top:none;
+}
+/* 主表样式 */
+.table-bordered>tbody>tr.frist>td{
+	border-bottom:0;
+}
+
+

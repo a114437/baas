@@ -1,0 +1,138 @@
+html,body{
+	background-color:#EEF3FA;
+	width:100%;
+	height:100%;
+}
+header{
+	width:100%;
+	height:50px;
+	line-height:50px;
+	background:#4893F2;
+	overflow:hidden;
+	text-align:center;
+	padding:0 3%;
+	box-sizing:border-box;
+	color:#fff;
+}
+header .left{
+	float:left;
+	font-size: 18px;
+}
+header .left i{
+	display:inline-block;
+	width:10px;
+	height:10px;
+	border-top:2px solid #fff;
+	border-left:2px solid #fff;
+	transform:rotate(-45deg);
+}
+header h3{
+	display:inline;
+	font-weight:normal;
+	font-size: 18px;
+}
+header .right{
+	float:right;
+	font-size: 18px;
+}
+section{
+    width: 100%;
+    background: #4893F2;
+    height: 160px;
+    color: #fff;
+    text-align: center;
+    padding-top: 14%;
+    position: relative;
+}
+section ul{
+	width:100%;
+	list-style:none;
+	position:absolute;
+	bottom:0;
+	height: 45px;
+	overflow:hidden;
+}
+section ul li{
+	width:50%;
+	float:left;
+	height: 44px;
+	line-height: 44px;
+}
+section ul li:first-child{
+	background:#4A97E1;
+	height:100%;
+	font-size: 18px;
+}
+section ul li:last-child{
+	background:#5CACF2;
+	font-size: 18px;
+}
+section p{
+
+	font-size: 16px;
+}
+section p span{
+	margin-left:14%;
+}
+section p a{
+	display:inline-block;
+	width:20px;
+	height:20px;
+	background:#eee;
+	border-radius:50%;
+	text-decoration:none;
+	color:#4893F2;
+	text-align:center;
+	float:right;
+	margin-right: 15px;
+	/*margin-right:3%;*/
+}
+section strong{
+	font-size:48px;
+	line-height: 90px;
+	font-weight: 500;
+}
+p.jilu{
+	height:44px;
+	line-height:44px;
+	background:#fff;
+	padding-left:3%;
+	font-size: 18px;
+}
+.iconfont{
+    font-family:"iconfont" !important;
+    font-size:1.4rem;font-style:normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;  
+}
+p .iconfont{
+	color:#f40;
+	margin-right:10px;
+}
+ul.list{
+	height:3.5rem;
+}
+ul.list li{
+	list-style:none;
+	background:#fff;
+	width:95%;
+	margin:0 auto;
+	margin-top:10px;
+	line-height:1.7rem;
+	padding:10px 14px 10px 12px;
+	box-sizing:border-box;
+	border-radius:6px;
+	font-size: 16px;
+}
+ul.list li span:nth-of-type(2){
+	float:right;
+}
+ul.list li p:nth-of-type(2) span:first-child{
+	color:#ABABAB;
+	font-size: 14px;
+}
+ul.list li p:nth-of-type(2) span:last-child{
+	color:#00aaee;
+	font-size:14px;
+}

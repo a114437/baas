@@ -1,0 +1,239 @@
+@charset "utf-8";
+
+/*列表*/
+
+.theme_box_3 ul {
+	background: #a11a23;
+    overflow: hidden;
+    border-top: 5px solid #a11a23;
+    padding: 0 5px;
+}
+
+.theme_box_3 li {
+	width: 50%;
+	height: 230px;
+	background: #fff;
+	float: left;
+	padding: 12px;
+}
+
+.theme_box_3 li:nth-of-type(even) {
+	border-bottom:5px solid #a11a23;
+	border-left: 2.5px solid #a11a23;
+}
+
+.theme_box_3 li:nth-of-type(odd) {
+	border-bottom: 5px solid #a11a23;
+	border-right: 2.5px solid #a11a23;
+}
+
+.theme_box_3 li a {
+	display: block !important;
+	width: 100% !important;
+	height: 100% !important;
+	display: -webkit-grid !important;
+	display: grid !important;
+}
+
+.theme_box_3 li img {
+	width: 100%;
+	height: 130px;
+}
+
+.theme_box_3 li div {
+	margin-bottom: 10px;
+	height: 30px;
+	line-height: 16px;
+	font-size: 14px;
+	color: #333;
+	overflow: hidden;
+	margin-top: 10px;
+}
+
+.theme_box_3 li span {
+	color: #ff5555;
+	position: relative;
+	text-align: left;
+	display: block;
+}
+
+.theme_box_3 li small {
+	position: absolute;
+	right: 0px;
+	bottom: 0px;
+	display: block;
+	position: absolute;
+	text-align: center;
+	color: #686868;
+	font-size: 12PX;
+	width: 49PX;
+	height: 24PX;
+	line-height: 24PX;
+	border: 1px solid rgba(104, 104, 104, 0.36);
+	border-radius: 4px;
+	z-index: 10;
+}
+
+.mui-table-view-chevron .mui-table-view-cell {
+	padding: 12px;
+}
+
+.mui-table-view-cell:after {
+	background: none;
+}
+
+.mui-table-view-cell>a:not(.mui-btn) {
+	position: relative;
+	display: block;
+	overflow: hidden;
+	margin: 0;
+	padding: 0;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	color: inherit;
+}
+
+.theme_title,
+.theme_title img {
+	width: 100%;
+}
+
+
+/*lr*/
+
+.act {
+	background-image: url(../../img/img/activity1.png);
+	height: 24.93vw;
+	width: 97vw;
+	background-size: cover;
+	margin: 0vw 0.8vw;
+	margin-bottom: 1.6vw;
+	overflow: hidden;
+}
+
+.act_li {
+	float: left;
+	margin-left: 0.8vw;
+}
+
+.act_lf {
+	width: 55.86vw;
+	margin-left: 4vw;
+}
+
+.act_ri {
+	width: 34vw;
+}
+
+.act_p1 {
+	font-size: 2.6666vw;
+	color: #FFAC93;
+	text-align: center;
+	line-height: 6vw;
+}
+
+.act_p2 {
+	font-size: 6.13333vw;
+	color: #F9EBD2;
+	text-align: center;
+}
+
+.act_lf_bot {
+	height: 9.2vw;
+}
+
+.lfb_lf_mk1 {
+	height: 9.2vw;
+	width: 17.06vw;
+	float: left;
+}
+
+.act_lfb_lf {
+	width: 32.93vw;
+	display: inline-block;
+}
+
+.act_p3 {
+	font-size: 2.4vw;
+	text-align: center;
+	color: #A30020;
+}
+
+.lfb_lf_mk1 img {
+	width: 10.4vw;
+	height: 3.4666vw;
+	margin-left: 4vw;
+}
+
+.lfb_lf_mk2 {
+	float: left;
+	height: 9.2vw;
+	font-size: 6.4vw;
+	color: #FBCCA0;
+}
+
+.act_lfb_ri img {
+	width: 18vw;
+	height: 5.3vw;
+}
+
+.act_lfb_ri {
+	display: inline-block;
+}
+
+.act_ri img {
+	width: 30.93vw;
+	height: 22.53vw;
+	margin-top: 1.2vw;
+}
+
+
+/*----------------------------------------*/
+
+.acti {
+	width: 46.533vw;
+	height: 77.333vw;
+	background: white;
+	border-radius: 3vw;
+}
+
+.acti_li {
+	margin-left: 2.5333vw;
+	margin-bottom: 2.5333vw;
+	float: left;
+}
+
+.acti_top {
+	height: 46.53vw;
+	background-image: url(../../image/flicker-4.jpg);
+	background-size: cover;
+}
+
+.acti_p1 {
+	font-size: 3.2vw;
+	color: #FD3D37;
+	margin-left: 2.5vw;
+	line-height: 7vw;
+}
+
+.acti_s {
+	margin-left: 2vw;
+}
+
+.acti_btn {
+	font-size: 3.2vw;
+	color: white;
+	background: #FB441F;
+	width: 42.13vw;
+	height: 6.4vw;
+	text-align: center;
+	line-height: 6.4vw;
+	border-radius: 5vw;
+	margin: 0 auto;
+}
+
+
+.title_spe{
+	height:45px;
+	width: 100%;
+}

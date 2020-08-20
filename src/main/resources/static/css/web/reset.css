@@ -1,0 +1,44 @@
+@charset "utf-8";
+* {
+	margin: 0;
+	padding: 0;
+	font-family: "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Droidsansfallback", "Microsoft YaHei", sans-serif;
+}
+
+
+ul,li{
+	list-style: none;
+}
+
+a {
+	color: #555;
+	text-decoration: none;
+}
+
+a{
+text-decoration: none;
+color:none;
+}
+a:visited{
+    color:none;
+}
+img {
+	border: none;
+}
+
+ol,
+ul,
+li {
+	list-style: none;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+
+.fl { float:left;}
+.fr { float:right;}
+
+.clearfix:after { display:table; content:''; clear:both; }
+.clearfix { zoom: 1;}

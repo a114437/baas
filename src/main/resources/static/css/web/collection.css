@@ -1,0 +1,359 @@
+			* {
+				margin: 0;
+				padding: 0;
+				-webkit-touch-callout: none;
+				-webkit-user-select: none;
+				-webkit-tap-highlight-color: transparent;
+			}
+			
+			
+			
+			body {
+				background-color: white
+			}
+			
+			ul {
+				list-style-type: none
+			}
+			
+			a {
+				text-decoration: none;
+			}
+			
+			*{
+				    -webkit-box-sizing: inherit;
+				    box-sizing:inherit;
+				    -webkit-user-select: none;
+				    outline: 0;
+				    -webkit-tap-highlight-color: transparent;
+				    -webkit-tap-highlight-color: transparent;
+			}
+			/*模拟的标题*/
+			/*菜单*/
+			
+			.header .nav {
+				border-bottom: 1px solid #ddd;
+			}
+			
+			.header .nav p {
+				display: inline-block;
+				width: 24%;
+				text-align: center;
+				padding-top: 44px;
+				margin: 0;
+			}
+			
+			.header .nav .active {
+				color: #f02b2b;
+			}
+			/*列表*/
+			
+			.mescroll {
+				position: fixed;
+				top: 90px;
+				bottom: 0;
+				height: auto;
+			}
+			/*展示上拉加载的数据列表*/
+			/*.data-list li{
+				position: relative;
+				padding: 10px 8px 10px 120px;
+				border-bottom: 1px solid #eee;
+			}
+			.data-list .pd-img{
+				position: absolute;
+				left: 18px;
+				top: 18px;
+				width: 80px;
+				height: 80px;
+			}
+			.data-list .pd-name{
+				font-size: 16px;
+				line-height: 20px;
+				height: 40px;
+				overflow: hidden;
+			}
+			.data-list .pd-price{
+				margin-top: 8px;
+				color: red;
+			}
+			.data-list .pd-sold{
+				font-size: 12px;
+				margin-top: 8px;
+				color: gray;
+			}*/
+			/*隐藏*/
+			
+			.hide {
+				display: none;
+			}
+			/*店铺*/
+			
+			.shop_cobox {
+				position: relative;
+				padding: 10px;
+				display: flex;
+				display: -webkit-flex;
+				align-items: center;
+				height: 60px;
+				border-bottom: 1px solid #e3e5e9;
+			}
+			
+			.shop_cobox {}
+			
+			.shop_log {
+				float: left;
+				height: 60px;
+				width: 90px;
+				text-align: center;
+			}
+			
+			.shop_log img {
+				height: 60px;
+			}
+			
+			.shop_dianpu {
+				flex: 1;
+			}
+			
+			.shop_dianpu_div1 {
+				font-size: 14px;
+			}
+			
+			.shop_dianpu_div2 {
+				font-size: 12px;
+				position: relative;
+			}
+			
+			.shop_dianpu_div2 i {
+				position: absolute;
+				right: -8px;
+				font-size: 25px;
+				top: -3px;
+			}
+			
+			.shop_dianpu_div3 {
+				font-size: 10px;
+				color: #fff;
+				padding-top: 5px;
+				font-size: 10px;
+			}
+			
+			.shop_dianpu_div3 span {
+				margin-right: 5px;
+				padding: 2px 4px;
+				border-radius: 3px;
+				background: #df443b;
+			}
+				.mui-table-view-cell {
+				position: relative;
+				overflow: hidden;
+				padding: 0px 0px;
+				-webkit-touch-callout: none;
+			}
+			
+			.mui-table-view-cell>.mui-slider-left>.mui-btn,
+			.mui-table-view-cell>.mui-slider-right>.mui-btn {
+				padding: 0 25px;
+			}
+			
+			.shop_num {}
+			
+			.shop_num i {}
+			
+			.shop_num b {}
+			
+			.she_box {
+				overflow: hidden;
+				display: -webkit-flex;
+				display: flex;
+				align-items: center;
+				padding: 10px 0px;
+				padding-bottom: 0px;
+			}
+			
+			.she_left {
+				float: left;
+				width: 105px;
+				height: 105px;
+				padding-top: 5px;
+				padding-bottom: 5px;
+			}
+			
+			.she_left img {
+				width: 100%;
+			}
+			
+			.she_right {
+				flex: 1;
+				float: left;
+				padding-left: 10px;
+				border-bottom: 1px solid #e3e5e9;
+				padding-top: 5px;
+				padding-bottom: 10px;
+				HEIGHT: 110px;
+				padding-right: 10px;
+			}
+			
+			.she_r_div1 {
+				font-size: 15px;
+				height: 38px;
+				line-height: 18px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+			
+			.she_r_div2 {
+				font-size: #868488;
+				font-size: 11px;
+				margin: 10px 0px;
+			}
+			
+			.she_r_div2 span {
+				background: #f0f2f5;
+				padding: 2px 5px;
+				margin-right: 5px;
+			}
+			
+			.she_r_div3 {
+				color: #686868;
+				position: relative;
+			}
+			
+			.she_r_div3 span {
+				font-size: 10px;
+			}
+			
+			.she_r_div3 .shop_dd {}
+			
+			.she_r_div3 .she_much {
+				font-size: 15px;
+				color: #f02b2b;
+			}
+			
+			.she_r_div3 .she_much em {
+				font-size: 10px;
+				color: #f02b2b;
+				font-style: normal;
+			}
+			
+			.she_r_div3 .she_gouwuche {
+				position: absolute;
+				right: 0px;
+				bottom: 0px;
+				padding: 3px 6px;
+				border: 0.5px solid #f02b2b61;
+				z-index: 1000;
+				border-radius: 4px;
+			}
+			
+			.she_r_div3 .she_gouwuche i {
+				font-size: 15px;
+				color: #f02b2b;
+			}
+			
+			.she_fanxian {
+				position: absolute;
+				right: 35px;
+				font-size: 12px;
+				bottom: 2px;
+			}
+			
+			
+			
+			/*没有标签  评论*/
+			
+			.class_xinde{
+				
+			}
+			.class_xinde .she_box{
+				padding: 0 ;
+				margin: 0;
+			}
+			.class_xinde .she_right{
+				padding:15px 10px 10px 10px;
+				height: auto;
+			}
+			.class_xinde .she_left{
+				padding:0px;
+			}
+			.class_xinde .she_r_div4{
+				margin: 0;
+				color:#868488;
+   				font-size: 13px;
+   				line-height: 13px;
+			}
+			.class_xinde .she_r_div4 .she_pinglunshu{
+				padding:0;
+				margin: 0;
+				background: none;
+				margin-right: 15px;
+			}
+			.class_xinde .she_r_div4 .she_pinglunshu em{
+					font-style: none;
+			}
+			.class_xinde .she_r_div4 .she_haopinglv{
+				padding:0;
+				margin: 0;
+				margin-right: 15px;
+				background: none;
+			}
+			.class_xinde .she_r_div4 .she_haopinglv em{
+					font-style: normal;
+			}
+			.class_xinde .she_r_div3{
+				line-height: 15px;
+				margin: 0;
+				padding: 0;
+				margin: 15px 0 10px 0;
+			}
+			
+			
+			
+			
+			
+			
+			
+			.she_r_div2 .she_tit {
+				background: #f02b2b;
+				font-size: 12px;
+				color: #fff;
+				display: inline-block;
+				padding: 2px 5px;
+				margin-right: 5px;
+				border-radius: 3px;
+			}
+			
+			.shop_num {
+				position: fixed;
+				right: 10px;
+				bottom: 120px;
+				border-radius: 50%;
+				border: 1px solid #95979f;
+				width: 36px;
+				height: 36px;
+				text-align: center;
+				z-index: 1000;
+				background: #fff;
+				display: none;
+			}
+			
+			.shop_num i {
+				line-height: 36px;
+				color: #95979f;
+			}
+			
+			.shop_num em {
+				position: absolute;
+				display: inline-block;
+				font-size: 10px;
+				padding: 0px 6px;
+				border-radius: 22px;
+				border: 1px solid #f02b2b;
+				color: #f02b2b;
+				display: inline-block;
+				font-style: normal;
+				top: -7px;
+				right: -3px;
+				background: #fff;
+			}
