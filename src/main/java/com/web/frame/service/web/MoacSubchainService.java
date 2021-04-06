@@ -34,7 +34,7 @@ import com.web.frame.util.moac.micro.DeployMicro;
 @Service
 @Transactional
 public class MoacSubchainService {
-	
+
 	@Autowired
 	private Moac moac;
 	@Autowired
@@ -49,7 +49,7 @@ public class MoacSubchainService {
 	private EncryptSHA encryptSHA;
 	@Autowired
 	private MoacSubchainDao moacSubchainDao;
-	
+
 	/**
 	 * 部署子链
 	 * @param accessToken
@@ -82,7 +82,7 @@ public class MoacSubchainService {
 			String subchainBaseCode, String subchainBaseErcRate, String subchainBaseMin, String subchainBaseMax,
 			String subchainBaseFlushRound, String subchainBaseMonitorBond,
 			String vnode, String scs, String addFund) throws Exception {
-		
+
 		Wallet wallet = walletDao.queryWalletById(walletId);
 		if(!encryptSHA.SHA256(payPsw).equals(wallet.getPayPsw())) {
 			throw new BussinessException(40004, "支付密码错误");
@@ -92,7 +92,7 @@ public class MoacSubchainService {
 			throw new BussinessException(40004, "账户不存在");
 		}
 		String privateKey = Md5.decrypt(account.getPrivateKey());//私钥
-		
+
 		//子链id
 		String subchainId = Uuid.getUuid();
 		Subchain subchain = new Subchain();
@@ -114,12 +114,63 @@ public class MoacSubchainService {
 		subchain.setSubchainBaseMonitorBond(subchainBaseMonitorBond);
 		//插入子链数据
 		moacSubchainDao.addSubchain(subchain);
-		
+
 		deployMicro.deployErcSubChain(account.getAddress(), privateKey, via, vnodeCode, vnodeBmin, subchainProtocolBaseCode,
 				subchainProtocolName, subchainProtocolBmin, subchainProtocolType, erc20Code, subchainBaseCode,
 				subchainBaseErcRate, subchainBaseMin, subchainBaseMax, subchainBaseFlushRound, subchainBaseMonitorBond,
 				vnode, scs, addFund,subchainId,walletId);
-		
+
+		Map<String,String> map = new HashMap<String,String>();
+		map.put("subchainId", subchainId);
+		return ResponseBase.createResponse(true, 10000, "子链正在部署中，稍后通过subchainId查询", map, HttpStatus.OK);
+	}
+
+	public ResponseEntity<ResponseBase<Map<String, String>>> deployRand(String accessToken, String walletId, String id,
+				String payPsw, String via, String vnodeCode, String vnodeBmin, String subchainProtocolBaseCode,
+				String subchainProtocolName, String subchainProtocolBmin, String subchainProtocolType, String erc20Code,
+				String subchainBaseCode, String subchainBaseErcRate, String subchainBaseMin, String subchainBaseMax,
+				String subchainBaseFlushRound, String subchainBaseMonitorBond,
+				String vnode, String scs, String addFund, String vssBaseCode, String vssBaseThreshold) throws Exception {
+
+		Wallet wallet = walletDao.queryWalletById(walletId);
+		if(!encryptSHA.SHA256(payPsw).equals(wallet.getPayPsw())) {
+			throw new BussinessException(40004, "支付密码错误");
+		}
+		Account account = accountDao.queryAccountByIdAndWalletId(id, walletId);
+		if(account == null) {
+			throw new BussinessException(40004, "账户不存在");
+		}
+		String privateKey = Md5.decrypt(account.getPrivateKey());//私钥
+
+		//子链id
+		String subchainId = Uuid.getUuid();
+		Subchain subchain = new Subchain();
+		subchain.setId(subchainId);
+		subchain.setAccountId(id);
+		subchain.setVia(via);
+		subchain.setVnodeCode(vnodeCode);
+		subchain.setVnodeBmin(vnodeBmin);
+		subchain.setSubchainProtocolBaseCode(subchainProtocolBaseCode);
+		subchain.setSubchainProtocolName(subchainProtocolName);
+		subchain.setSubchainProtocolBmin(subchainProtocolBmin);
+		subchain.setSubchainProtocolType(subchainProtocolType);
+		subchain.setErc20Code(erc20Code);
+		subchain.setSubchainBaseCode(subchainBaseCode);
+		subchain.setSubchainBaseErcRate(subchainBaseErcRate);
+		subchain.setSubchainBaseMin(subchainBaseMin);
+		subchain.setSubchainBaseMax(subchainBaseMax);
+		subchain.setSubchainBaseFlushRound(subchainBaseFlushRound);
+		subchain.setSubchainBaseMonitorBond(subchainBaseMonitorBond);
+		subchain.setVssBaseCode(vssBaseCode);
+		subchain.setVssBaseThreshold(vssBaseThreshold);
+		//插入子链数据
+		moacSubchainDao.addSubchain(subchain);
+
+		deployMicro.deployErcSubChainRand(account.getAddress(), privateKey, via, vnodeCode, vnodeBmin, subchainProtocolBaseCode,
+				subchainProtocolName, subchainProtocolBmin, subchainProtocolType, erc20Code, subchainBaseCode,
+				subchainBaseErcRate, subchainBaseMin, subchainBaseMax, subchainBaseFlushRound, subchainBaseMonitorBond,
+				vnode, scs, addFund,subchainId,walletId,vssBaseCode,vssBaseThreshold);
+
 		Map<String,String> map = new HashMap<String,String>();
 		map.put("subchainId", subchainId);
 		return ResponseBase.createResponse(true, 10000, "子链正在部署中，稍后通过subchainId查询", map, HttpStatus.OK);
@@ -131,7 +182,7 @@ public class MoacSubchainService {
 	 * @return
 	 */
 	public ResponseEntity<ResponseBase<ResponseSubchainData>> getSubchainInfo(String subchainId) {
-		
+
 		Subchain subchain = moacSubchainDao.querySubchainById(subchainId);
 		List<Vnode> vnodeList = moacSubchainDao.queryVnodeBySubchainId(subchainId);
 		List<Scs> scsList = moacSubchainDao.queryScsBySubchainId(subchainId,"");
@@ -145,14 +196,14 @@ public class MoacSubchainService {
 	/**
 	 * 子链开启注册
 	 * @param subchainId
-	 * @param payPsw 
-	 * @param id 
-	 * @param walletId 
+	 * @param payPsw
+	 * @param id
+	 * @param walletId
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public ResponseEntity<ResponseBase<Map>> resisterOpen(String subchainId, String walletId, String id, String payPsw) throws Exception {
-		
+
 		Wallet wallet = walletDao.queryWalletById(walletId);
 		if(!encryptSHA.SHA256(payPsw).equals(wallet.getPayPsw())) {
 			throw new BussinessException(40004, "支付密码错误");
@@ -167,17 +218,17 @@ public class MoacSubchainService {
 		if(subchain==null) {
 			throw new BussinessException(40004, "子链信息不存在");
 		}
-		
+
 		String hash = deployMicro.registerOpen(moac, moac.getNonce(account.getAddress()).toString(),
 				subchain.getSubchainBaseAddress(), account.getAddress(), privateKey, walletId, subchainId);
-		
+
 		Map<String,String> map = new HashMap<String,String>();
 		map.put("hash", hash);
 		return ResponseBase.createResponse(true, 10000, "registerOpen调用成功", map, HttpStatus.OK);
 	}
 
 	public ResponseEntity<ResponseBase<Map>> scsCount(String subchainId) throws Exception {
-		
+
 		Subchain subchain = moacSubchainDao.querySubchainById(subchainId);
 		String scsCount = deployMicro.scsCount(moac, subchain.getSubchainProtocolAddress(), "0x14f322e7c813f64fcaa2b3fb0bf57c9a15766e60");
 		Map<String,String> map = new HashMap<String,String>();
@@ -186,7 +237,7 @@ public class MoacSubchainService {
 	}
 
 	public ResponseEntity<ResponseBase<Map>> nodeCount(String subchainId) throws Exception {
-		
+
 		Subchain subchain = moacSubchainDao.querySubchainById(subchainId);
 		String nodeCount = deployMicro.nodeCount(moac, subchain.getSubchainBaseAddress(), "0x14f322e7c813f64fcaa2b3fb0bf57c9a15766e60");
 		Map<String,String> map = new HashMap<String,String>();
@@ -196,7 +247,7 @@ public class MoacSubchainService {
 
 	public ResponseEntity<ResponseBase<Map>> resisterClose(String subchainId, String walletId, String id,
 			String payPsw) throws Exception {
-		
+
 		Wallet wallet = walletDao.queryWalletById(walletId);
 		if(!encryptSHA.SHA256(payPsw).equals(wallet.getPayPsw())) {
 			throw new BussinessException(40004, "支付密码错误");
@@ -211,10 +262,10 @@ public class MoacSubchainService {
 		if(subchain==null) {
 			throw new BussinessException(40004, "子链信息不存在");
 		}
-		
+
 		String hash = deployMicro.registerClose(moac, moac.getNonce(account.getAddress()).toString(),
 				subchain.getSubchainBaseAddress(), account.getAddress(), privateKey,walletId,subchainId);
-		
+
 		Map<String,String> map = new HashMap<String,String>();
 		map.put("hash", hash);
 		return ResponseBase.createResponse(true, 10000, "registerClose调用成功", map, HttpStatus.OK);
@@ -222,7 +273,7 @@ public class MoacSubchainService {
 
 	public ResponseEntity<ResponseBase<Map>> registerAsMonitor(String subchainId, String walletId, String id,
 			String payPsw, String scsAddress, String monitorUrl) throws Exception {
-		
+
 		Wallet wallet = walletDao.queryWalletById(walletId);
 		if(!encryptSHA.SHA256(payPsw).equals(wallet.getPayPsw())) {
 			throw new BussinessException(40004, "支付密码错误");
@@ -233,11 +284,11 @@ public class MoacSubchainService {
 		}
 		String privateKey = Md5.decrypt(account.getPrivateKey());//私钥
 		//查询子链基础信息
-		Subchain subchain = moacSubchainDao.querySubchainById(subchainId);	
+		Subchain subchain = moacSubchainDao.querySubchainById(subchainId);
 		if(subchain==null) {
 			throw new BussinessException(40004, "子链信息不存在");
 		}
-		
+
 		String hash = deployMicro.registerAsMonitor(moac, moac.getNonce(account.getAddress()).toString(),
 				scsAddress, monitorUrl, subchain.getSubchainBaseAddress(),
 				account.getAddress(), privateKey, subchain.getSubchainBaseMonitorBond(),
@@ -253,7 +304,7 @@ public class MoacSubchainService {
 
 	public ResponseEntity<ResponseBase<Map>> deployDappBase(String subchainId, String walletId, String id,
 			String payPsw, String dappbaseCode) throws Exception {
-		
+
 		Wallet wallet = walletDao.queryWalletById(walletId);
 		if(!encryptSHA.SHA256(payPsw).equals(wallet.getPayPsw())) {
 			throw new BussinessException(40004, "支付密码错误");
@@ -264,11 +315,11 @@ public class MoacSubchainService {
 		}
 		String privateKey = Md5.decrypt(account.getPrivateKey());//私钥
 		//查询子链基础信息
-		Subchain subchain = moacSubchainDao.querySubchainById(subchainId);	
+		Subchain subchain = moacSubchainDao.querySubchainById(subchainId);
 		if(subchain==null) {
 			throw new BussinessException(40004, "子链信息不存在");
 		}
-		
+
 		List<Scs> scsList = moacSubchainDao.queryScsBySubchainId(subchainId,"1");
 		if(scsList.size()==0) {
 			throw new BussinessException(40004, "无monitor信息，请先添加monitor");
@@ -278,7 +329,7 @@ public class MoacSubchainService {
 		String hash = deployMicro.deployDappBase(moac, nonce, subchain.getErc20Address(),
 				subchain.getSubchainBaseErcRate(), account.getAddress(), privateKey, dappbaseCode,
 				subchain.getSubchainBaseAddress(), subchain.getVia(), walletId, subchainId);
-		
+
 		if(StringUtils.isNotEmpty(hash)) {
 			//异步获取部署结果并保存dappbase合约信息
 			deployMicro.getDappBaseAddress(moac, hash, scsList.get(0).getMonitorUrl(), subchain.getSubchainBaseAddress(), subchainId);
@@ -289,7 +340,7 @@ public class MoacSubchainService {
 	}
 
 	public ResponseEntity<ResponseBase<Map>> registerScs(String subchainId, String walletId, String id, String payPsw, String scsAddress) throws Exception {
-		
+
 		Wallet wallet = walletDao.queryWalletById(walletId);
 		if(!encryptSHA.SHA256(payPsw).equals(wallet.getPayPsw())) {
 			throw new BussinessException(40004, "支付密码错误");
@@ -300,7 +351,7 @@ public class MoacSubchainService {
 		}
 		String privateKey = Md5.decrypt(account.getPrivateKey());//私钥
 		//查询子链基础信息
-		Subchain subchain = moacSubchainDao.querySubchainById(subchainId);	
+		Subchain subchain = moacSubchainDao.querySubchainById(subchainId);
 		if(subchain==null) {
 			throw new BussinessException(40004, "子链信息不存在");
 		}
@@ -313,7 +364,7 @@ public class MoacSubchainService {
 
 	public ResponseEntity<ResponseBase<Map>> registerAdd(String subchainId, String walletId, String id, String payPsw,
 			String addNum) throws Exception {
-		
+
 		int addNumInt = 1;
 		try {
 			addNumInt = Integer.parseInt(addNum);
@@ -336,14 +387,14 @@ public class MoacSubchainService {
 		}
 		String hash = deployMicro.registerAdd(moac, moac.getNonce(account.getAddress()).toString(), addNumInt,
 				subchain.getSubchainBaseAddress(), account.getAddress(), privateKey, walletId, subchainId);
-		
+
 		Map<String,String> map = new HashMap<String,String>();
 		map.put("hash", hash);
 		return ResponseBase.createResponse(true, 10000, "子链合约registerAdd方法调用成功", map, HttpStatus.OK);
 	}
 
 	public ResponseEntity<ResponseBase<Map>> reset(String subchainId, String walletId, String id, String payPsw) throws Exception {
-		
+
 		Wallet wallet = walletDao.queryWalletById(walletId);
 		if(!encryptSHA.SHA256(payPsw).equals(wallet.getPayPsw())) {
 			throw new BussinessException(40004, "支付密码错误");
@@ -360,7 +411,7 @@ public class MoacSubchainService {
 		}
 		String hash = deployMicro.reset(moac, moac.getNonce(account.getAddress()).toString(), subchain.getSubchainBaseAddress(),
 				account.getAddress(), privateKey, walletId, subchainId);
-		
+
 		Map<String,String> map = new HashMap<String,String>();
 		map.put("hash", hash);
 		return ResponseBase.createResponse(true, 10000, "子链合约reset方法调用成功", map, HttpStatus.OK);
@@ -368,7 +419,7 @@ public class MoacSubchainService {
 
 	public ResponseEntity<ResponseBase<Map>> addFund(String subchainId, String walletId, String id, String payPsw,
 			String value) throws Exception {
-		
+
 		Wallet wallet = walletDao.queryWalletById(walletId);
 		if(!encryptSHA.SHA256(payPsw).equals(wallet.getPayPsw())) {
 			throw new BussinessException(40004, "支付密码错误");
@@ -383,7 +434,7 @@ public class MoacSubchainService {
 		if(subchain==null) {
 			throw new BussinessException(40004, "子链信息不存在");
 		}
-		String hash = deployMicro.addFund(moac, moac.getNonce(account.getAddress()).toString(), value, 
+		String hash = deployMicro.addFund(moac, moac.getNonce(account.getAddress()).toString(), value,
 				subchain.getSubchainBaseAddress(), account.getAddress(), privateKey, walletId, subchainId);
 		Map<String,String> map = new HashMap<String,String>();
 		map.put("hash", hash);
@@ -391,7 +442,7 @@ public class MoacSubchainService {
 	}
 
 	public ResponseEntity<ResponseBase<Map>> close(String subchainId, String walletId, String id, String payPsw) throws Exception {
-		
+
 		Wallet wallet = walletDao.queryWalletById(walletId);
 		if(!encryptSHA.SHA256(payPsw).equals(wallet.getPayPsw())) {
 			throw new BussinessException(40004, "支付密码错误");
@@ -414,7 +465,7 @@ public class MoacSubchainService {
 	}
 
 	public ResponseEntity<ResponseBase<Map>> info(String subchainId, String walletId, String monitorScsId, String monitorUrl) throws Exception {
-		
+
 		if(StringUtils.isEmpty(monitorScsId)&&StringUtils.isEmpty(monitorUrl)) {
 			List<Scs> scsList = moacSubchainDao.queryScsBySubchainId(subchainId,"1");
 			if(scsList.size()==0) {
@@ -444,7 +495,7 @@ public class MoacSubchainService {
 
 	public ResponseEntity<ResponseBase<List<String>>> dapplist(String subchainId, String walletId, String monitorScsId,
 			String monitorUrl) throws Exception {
-		
+
 		if(StringUtils.isEmpty(monitorScsId)&&StringUtils.isEmpty(monitorUrl)) {
 			List<Scs> scsList = moacSubchainDao.queryScsBySubchainId(subchainId,"1");
 			if(scsList.size()==0) {
@@ -474,7 +525,7 @@ public class MoacSubchainService {
 
 	public ResponseEntity<ResponseBase<Map>> transaction(String subchainId, String walletId, String monitorScsId,
 			String monitorUrl, String hash) throws Exception {
-		
+
 		if(StringUtils.isEmpty(monitorScsId)&&StringUtils.isEmpty(monitorUrl)) {
 			List<Scs> scsList = moacSubchainDao.queryScsBySubchainId(subchainId,"1");
 			if(scsList.size()==0) {
@@ -507,7 +558,7 @@ public class MoacSubchainService {
 
 	public ResponseEntity<ResponseBase<String>> dappstate(String subchainId, String walletId, String monitorScsId,
 			String monitorUrl) throws Exception {
-		
+
 		if(StringUtils.isEmpty(monitorScsId)&&StringUtils.isEmpty(monitorUrl)) {
 			List<Scs> scsList = moacSubchainDao.queryScsBySubchainId(subchainId,"1");
 			if(scsList.size()==0) {
@@ -537,7 +588,7 @@ public class MoacSubchainService {
 
 	public ResponseEntity<ResponseBase<String>> balance(String subchainId, String walletId, String monitorScsId,
 			String monitorUrl, String address) throws Exception {
-		
+
 		if(StringUtils.isEmpty(monitorScsId)&&StringUtils.isEmpty(monitorUrl)) {
 			List<Scs> scsList = moacSubchainDao.queryScsBySubchainId(subchainId,"1");
 			if(scsList.size()==0) {
@@ -567,7 +618,7 @@ public class MoacSubchainService {
 
 	public ResponseEntity<ResponseBase<Map<String, String>>> recharge1(String subchainId, String walletId,
 			String accountId, String payPsw, String value) throws Exception {
-		
+
 		Wallet wallet = walletDao.queryWalletById(walletId);
 		if(!encryptSHA.SHA256(payPsw).equals(wallet.getPayPsw())) {
 			throw new BussinessException(40004, "支付密码错误");
@@ -578,7 +629,7 @@ public class MoacSubchainService {
 		}
 		String privateKey = Md5.decrypt(account.getPrivateKey());//私钥
 		//查询子链基础信息
-		Subchain subchain = moacSubchainDao.querySubchainById(subchainId);	
+		Subchain subchain = moacSubchainDao.querySubchainById(subchainId);
 		if(subchain==null) {
 			throw new BussinessException(40004, "子链信息不存在");
 		}
@@ -589,9 +640,9 @@ public class MoacSubchainService {
 		return ResponseBase.createResponse(true, 10000, "erc20授权(approve)方法调用成功", map, HttpStatus.OK);
 	}
 
-	public ResponseEntity<ResponseBase<Map<String, String>>> recharge2(String subchainId, String walletId, 
+	public ResponseEntity<ResponseBase<Map<String, String>>> recharge2(String subchainId, String walletId,
 			String accountId, String payPsw, String value) throws Exception {
-		
+
 		Wallet wallet = walletDao.queryWalletById(walletId);
 		if(!encryptSHA.SHA256(payPsw).equals(wallet.getPayPsw())) {
 			throw new BussinessException(40004, "支付密码错误");
@@ -602,13 +653,13 @@ public class MoacSubchainService {
 		}
 		String privateKey = Md5.decrypt(account.getPrivateKey());//私钥
 		//查询子链基础信息
-		Subchain subchain = moacSubchainDao.querySubchainById(subchainId);	
+		Subchain subchain = moacSubchainDao.querySubchainById(subchainId);
 		if(subchain==null) {
 			throw new BussinessException(40004, "子链信息不存在");
 		}
 		String hash = moacMicro.buyMintToken(moac, subchain.getErc20Address(), account.getAddress(), privateKey,
 				subchain.getSubchainBaseAddress(), value, moac.getNonce(account.getAddress()).toString(), walletId);
-		
+
 		Map<String,String> map = new HashMap<String,String>();
 		map.put("hash", hash);
 		return ResponseBase.createResponse(true, 10000, "子链合约(subchainBase)授权(buyMintToken)方法调用成功", map, HttpStatus.OK);
@@ -616,7 +667,7 @@ public class MoacSubchainService {
 
 	public ResponseEntity<ResponseBase<Map<String, String>>> withdraw(String subchainId, String walletId,
 			String accountId, String payPsw, String value, String monitorScsId, String monitorUrl) throws Exception {
-		
+
 		if(StringUtils.isEmpty(monitorScsId)&&StringUtils.isEmpty(monitorUrl)) {
 			List<Scs> scsList = moacSubchainDao.queryScsBySubchainId(subchainId,"1");
 			if(scsList.size()==0) {
@@ -634,7 +685,7 @@ public class MoacSubchainService {
 		}
 		String privateKey = Md5.decrypt(account.getPrivateKey());//私钥
 		//查询子链基础信息
-		Subchain subchain = moacSubchainDao.querySubchainById(subchainId);	
+		Subchain subchain = moacSubchainDao.querySubchainById(subchainId);
 		if(subchain==null) {
 			throw new BussinessException(40004, "子链信息不存在");
 		}
@@ -660,7 +711,7 @@ public class MoacSubchainService {
 
 	public ResponseEntity<ResponseBase<Map<String, String>>> transfer(String subchainId, String walletId,
 			String accountId, String payPsw, String value, String to, String monitorScsId, String monitorUrl, String nonce) throws Exception {
-		
+
 		if(StringUtils.isEmpty(monitorScsId)&&StringUtils.isEmpty(monitorUrl)) {
 			List<Scs> scsList = moacSubchainDao.queryScsBySubchainId(subchainId,"1");
 			if(scsList.size()==0) {
@@ -678,7 +729,7 @@ public class MoacSubchainService {
 		}
 		String privateKey = Md5.decrypt(account.getPrivateKey());//私钥
 		//查询子链基础信息
-		Subchain subchain = moacSubchainDao.querySubchainById(subchainId);	
+		Subchain subchain = moacSubchainDao.querySubchainById(subchainId);
 		if(subchain==null) {
 			throw new BussinessException(40004, "子链信息不存在");
 		}
@@ -695,7 +746,7 @@ public class MoacSubchainService {
 			}
 			monitorUrlReal = scs.getMonitorUrl();
 		}
-		String hash = moacMicro.sendRawTransactionMicro(moac, account.getAddress(), privateKey, to, value, 
+		String hash = moacMicro.sendRawTransactionMicro(moac, account.getAddress(), privateKey, to, value,
 				subchain.getSubchainBaseAddress(), subchain.getVia(), nonce, monitorUrlReal, walletId, subchain.getErc20Address());
 		Map<String,String> map = new HashMap<String,String>();
 		map.put("hash", hash);
@@ -704,7 +755,7 @@ public class MoacSubchainService {
 
 	public ResponseEntity<ResponseBase<Map<String, String>>> getNonce(String subchainId, String walletId, String accountId,
 			String monitorScsId, String monitorUrl) throws Exception {
-		
+
 		if(StringUtils.isEmpty(monitorScsId)&&StringUtils.isEmpty(monitorUrl)) {
 			List<Scs> scsList = moacSubchainDao.queryScsBySubchainId(subchainId,"1");
 			if(scsList.size()==0) {
@@ -718,7 +769,7 @@ public class MoacSubchainService {
 		}
 		String privateKey = Md5.decrypt(account.getPrivateKey());//私钥
 		//查询子链基础信息
-		Subchain subchain = moacSubchainDao.querySubchainById(subchainId);	
+		Subchain subchain = moacSubchainDao.querySubchainById(subchainId);
 		if(subchain==null) {
 			throw new BussinessException(40004, "子链信息不存在");
 		}
@@ -741,8 +792,8 @@ public class MoacSubchainService {
 		return ResponseBase.createResponse(true, 10000, "获取nonce成功", map, HttpStatus.OK);
 	}
 
-	
-	
-	
+
+
+
 }
 

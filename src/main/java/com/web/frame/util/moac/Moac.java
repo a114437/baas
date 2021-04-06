@@ -38,20 +38,20 @@ import java.util.Map;
 
 @Component
 public class Moac{
-	
+
 	private Chain3j chain3j;
-	
+
 	@Autowired
-	public Moac(@Value("${chain.moac.url}") String httpUrl) { 
+	public Moac(@Value("${chain.moac.url}") String httpUrl) {
 		Service httpService = new HttpService(httpUrl);
 		chain3j = Chain3j.build(httpService);
 	}
 
 	public static void main(String[] args) throws Exception{
-		
+
 	}
-	
-	
+
+
 	public static boolean isMoacValidAddress(String input) {
 	    if (StringUtils.isEmpty(input) || !input.startsWith("0x"))
 	        return false;
@@ -64,7 +64,7 @@ public class Moac{
 	    return cleanInput.length() == 40;
 	}
 
-	
+
 	/**
 	 * 签名发送交易
 	 * @param address
@@ -74,22 +74,22 @@ public class Moac{
 	 * @param value
 	 * @param data
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public String sendRawTransaction(String address,String privateKey,String to,String gas,
 			String value,String data,String nonce) throws Exception {
-		
+
 		String transactionHash = "";
 		BigInteger gasBigInteger = new BigInteger("9000000");
 		if(StringUtils.isNotEmpty(gas)) {
 			gasBigInteger = Convert.toSha(gas, Convert.Unit.MC).toBigInteger();
 		}
-		
+
 		BigInteger valueBigInteger = new BigInteger("0");
 		if(StringUtils.isNotEmpty(value)) {
 			valueBigInteger = Convert.toSha(value, Convert.Unit.MC).toBigInteger();
 		}
-		
+
 		if(StringUtils.isNotEmpty(data)) {
 			data = Numeric.toHexString(data.getBytes());
 		}else {
@@ -98,13 +98,13 @@ public class Moac{
 		if(StringUtils.isEmpty(nonce)) {
 			nonce = getNonce(address).toString();
 		}
-		
-		RawTransaction rawTransaction = RawTransaction.createTransaction(new BigInteger(nonce), 
+
+		RawTransaction rawTransaction = RawTransaction.createTransaction(new BigInteger(nonce),
 				mcGasPrice(), gasBigInteger, to, valueBigInteger, data);
-		
+
 		ECKeyPair ecKeyPair = ECKeyPair.create(Numeric.toBigInt(privateKey));
 		Credentials credentials = Credentials.create(ecKeyPair);
-		
+
 		byte[] signedMessage = TransactionEncoder.signTxEIP155(rawTransaction, Integer.parseInt(getNetVersion()), credentials);
 		String hexValue = Numeric.toHexString(signedMessage);
 		McSendTransaction mcSendTransaction = chain3j.mcSendRawTransaction(hexValue).sendAsync().get();
@@ -114,7 +114,7 @@ public class Moac{
 		}
 		return transactionHash;
 	}
-	
+
 	/**
 	 * 子链代币提现
 	 * @param address：提现账户
@@ -124,25 +124,25 @@ public class Moac{
 	 * @param via：vnode节点配置文件
 	 * @param nonce：调用MoacMicro获取nonce（直接获取）
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public String sendRawTransactionMicroWithdraw(String address,String privateKey,String value,
 			String subChainAddr,String via,String nonce,String dappbaseAddr) throws Exception {
-		
+
 		String transactionHash = "";
 		if(!StringUtils.isNotEmpty(value)) {
 			value = "0";
 		}
 		BigInteger valueBigInteger = new BigInteger(value);
-		
-		RawTransaction rawTransaction = RawTransaction.createTransaction(new BigInteger(nonce), new BigInteger("0"), 
+
+		RawTransaction rawTransaction = RawTransaction.createTransaction(new BigInteger(nonce), new BigInteger("0"),
 				new BigInteger("0"), subChainAddr, valueBigInteger, dappbaseAddr+"89739c5b", 1, via);
-		
+
 		ECKeyPair ecKeyPair = ECKeyPair.create(Numeric.toBigInt(privateKey));
 		Credentials credentials = Credentials.create(ecKeyPair);
-		
+
 //			Credentials credentials = WalletUtils.loadCredentials("1", "C:\\Users\\Administrator\\AppData\\Roaming\\MoacNode\\testnet\\keystore\\UTC--2018-06-19T08-21-18.185054700Z--14f322e7c813f64fcaa2b3fb0bf57c9a15766e60");
-		
+
 		byte[] signedMessage = TransactionEncoder.signTxEIP155(rawTransaction, Integer.parseInt(getNetVersion()), credentials);
 		String hexValue = Numeric.toHexString(signedMessage);
 		McSendTransaction mcSendTransaction = chain3j.mcSendRawTransaction(hexValue).sendAsync().get();
@@ -163,25 +163,25 @@ public class Moac{
 	 * @param via：vnode配置文件中的
 	 * @param nonce：调用MoacMicro获取nonce（直接获取）
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public String sendRawTransactionMicro(String address,String privateKey,String to,String value,
 			String subChainAddr,String via,String nonce) throws Exception {
-		
+
 		String transactionHash = "";
 		if(!StringUtils.isNotEmpty(value)) {
 			value = "0";
 		}
 		BigInteger valueBigInteger = new BigInteger(value);
-		
-		RawTransaction rawTransaction = RawTransaction.createTransaction(new BigInteger(nonce), new BigInteger("0"), 
+
+		RawTransaction rawTransaction = RawTransaction.createTransaction(new BigInteger(nonce), new BigInteger("0"),
 				new BigInteger("0"), subChainAddr, valueBigInteger, to, 2, via);
-		
+
 		ECKeyPair ecKeyPair = ECKeyPair.create(Numeric.toBigInt(privateKey));
 		Credentials credentials = Credentials.create(ecKeyPair);
-		
+
 //			Credentials credentials = WalletUtils.loadCredentials("1", "C:\\Users\\Administrator\\AppData\\Roaming\\MoacNode\\testnet\\keystore\\UTC--2018-06-19T08-21-18.185054700Z--14f322e7c813f64fcaa2b3fb0bf57c9a15766e60");
-		
+
 		byte[] signedMessage = TransactionEncoder.signTxEIP155(rawTransaction, Integer.parseInt(getNetVersion()), credentials);
 		String hexValue = Numeric.toHexString(signedMessage);
 		McSendTransaction mcSendTransaction = chain3j.mcSendRawTransaction(hexValue).sendAsync().get();
@@ -191,7 +191,7 @@ public class Moac{
 		}
 		return transactionHash;
 	}
-	
+
 	/**
 	 * 部署dapp合约
 	 * @param address
@@ -202,28 +202,28 @@ public class Moac{
 	 * @param via
 	 * @param nonce
 	 * @return
-	 * @throws Exception 
-	 * @throws CipherException 
-	 * @throws NumberFormatException 
+	 * @throws Exception
+	 * @throws CipherException
+	 * @throws NumberFormatException
 	 */
 	public String deployDapp(String address,String privateKey,String data,String value,
 			String subChainAddr,String via,String nonce) throws Exception {
-		
+
 		Map<String, Object> map = new HashMap<String, Object>();
 		String transactionHash = "";
 		if(!StringUtils.isNotEmpty(value)) {
 			value = "0";
 		}
 		BigInteger valueBigInteger = new BigInteger(value);
-		
-		RawTransaction rawTransaction = RawTransaction.createTransaction(new BigInteger(nonce), new BigInteger("0"), 
+
+		RawTransaction rawTransaction = RawTransaction.createTransaction(new BigInteger(nonce), new BigInteger("0"),
 				new BigInteger("0"), subChainAddr, valueBigInteger, data, 3, via);
-		
+
 		ECKeyPair ecKeyPair = ECKeyPair.create(Numeric.toBigInt(privateKey));
 		Credentials credentials = Credentials.create(ecKeyPair);
-		
+
 //			Credentials credentials = WalletUtils.loadCredentials("1", "C:\\Users\\Administrator\\AppData\\Roaming\\MoacNode\\testnet\\keystore\\UTC--2018-06-19T08-21-18.185054700Z--14f322e7c813f64fcaa2b3fb0bf57c9a15766e60");
-		
+
 		byte[] signedMessage = TransactionEncoder.signTxEIP155(rawTransaction, Integer.parseInt(getNetVersion()), credentials);
 		String hexValue = Numeric.toHexString(signedMessage);
 		McSendTransaction mcSendTransaction = chain3j.mcSendRawTransaction(hexValue).sendAsync().get();
@@ -233,7 +233,7 @@ public class Moac{
 		}
 		return transactionHash;
 	}
-	
+
 	/**
 	 * 子链内合约交易方法调用
 	 * @param micro
@@ -254,13 +254,13 @@ public class Moac{
 			String address,String privateKey,String functionName,
 			List<Type> inputParameters,List<TypeReference<?>> outputParameters,
 			String value,String nonce,String via,String monitorUrl) throws Exception{
-		
+
 		inputParameters = inputParameters==null?new ArrayList<Type>():inputParameters;
 		outputParameters = outputParameters==null?new ArrayList<TypeReference<?>>():outputParameters;
 		Function function = new Function(functionName, inputParameters, outputParameters);
 		String encodedFunction = FunctionEncoder.encode(function);
 		encodedFunction = Numeric.cleanHexPrefix(encodedFunction);
-		
+
 		BigInteger valueBig = BigInteger.ZERO;
 		if(StringUtils.isNotEmpty(value)) {
 			valueBig = new BigInteger(value);
@@ -268,7 +268,7 @@ public class Moac{
 		if(!StringUtils.isNotEmpty(nonce)) {
 			nonce = micro.getNonce(address, subChainAddr,monitorUrl);
 		}
-		RawTransaction rawTransaction = RawTransaction.createTransaction(new BigInteger(nonce), new BigInteger("0"), 
+		RawTransaction rawTransaction = RawTransaction.createTransaction(new BigInteger(nonce), new BigInteger("0"),
 				new BigInteger("0"), subChainAddr, valueBig, contractAddress+encodedFunction, 1, via);
 		ECKeyPair ecKeyPair = ECKeyPair.create(Numeric.toBigInt(privateKey));
 		Credentials credentials = Credentials.create(ecKeyPair);
@@ -282,13 +282,13 @@ public class Moac{
 		}
 		return transactionHash;
 	}
-	
-	
+
+
 	/**
 	 * 获取随机串
 	 * @param address
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception
 	 * @throws Exception
 	 */
 	public BigInteger getNonce(String address) throws Exception {
@@ -296,17 +296,17 @@ public class Moac{
                 address, DefaultBlockParameterName.LATEST).send();
         return ethGetTransactionCount.getTransactionCount();
     }
-	
+
 	/**
-	 * 创建账户 
+	 * 创建账户
 	 * 0:账户地址
 	 * 1：账户公钥
 	 * 2：账户私钥
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public List<String> personNewAccount(String password) throws Exception {
-		
+
 		ECKeyPair ecKeyPair = Keys.createEcKeyPair();
         BigInteger privateKeyInDec = ecKeyPair.getPrivateKey();
         String privateKey = privateKeyInDec.toString(16);
@@ -318,7 +318,7 @@ public class Moac{
 		list.add(Numeric.toHexStringNoPrefix(credentials.getEcKeyPair().getPrivateKey()));
 		return list;
 	}
-	
+
 	/**
 	 *  通过私钥导入
 	 * 0:账户地址
@@ -328,7 +328,7 @@ public class Moac{
 	 * @return
 	 */
 	public List<String> importAccountByPrivateKey(String privateKey){
-		
+
 		List<String> list = new ArrayList<String>();
 		ECKeyPair ecKeyPair = ECKeyPair.create(Numeric.toBigInt(privateKey));
 		Credentials credentials = Credentials.create(ecKeyPair);
@@ -337,7 +337,7 @@ public class Moac{
 		list.add(Numeric.toHexStringNoPrefix(credentials.getEcKeyPair().getPrivateKey()));
 		return list;
 	}
-	
+
 	/**
 	 * 客户端版本
 	 * @return
@@ -479,7 +479,7 @@ public class Moac{
     public BigDecimal mcGetBalance(String address) throws Exception {
         McGetBalance ethGetBalance = chain3j.mcGetBalance(
         		address, DefaultBlockParameter.valueOf("latest")).send();
-        
+
         BigDecimal moac = Convert.fromSha(ethGetBalance.getBalance().toString(), Convert.Unit.MC);
         return moac;
     }
@@ -636,7 +636,7 @@ public class Moac{
      * @throws Exception
      */
     public ResponseTransactionMoac mcGetTransactionByHash(String transactionHash) throws Exception {
-    	
+
         McTransaction ethTransaction = chain3j.mcGetTransactionByHash(
         		transactionHash).send();
         if(ethTransaction.getResult() == null) {
@@ -646,31 +646,31 @@ public class Moac{
         if(transaction == null) {
         	throw new BussinessException(40007, "未查询到交易信息");
         }
-        
+
         try {
         	if(transaction.getBlockNumber() == null) {
             	throw new BussinessException(40007, "等待交易上链");
             }
 		} catch (Exception e) {
-			throw new BussinessException(40007, "等待交易上链"); 
+			throw new BussinessException(40007, "等待交易上链");
 		}
-        
+
         ResponseTransactionMoac transactionMoac = new ResponseTransactionMoac();
-        
+
     	BeanUtils.copyProperties(transaction, transactionMoac);
-    	
+
     	transactionMoac.setValue(Convert.fromSha(transaction.getValue().toString(), Convert.Unit.MC).toString());
     	transactionMoac.setBlockNumber(transaction.getBlockNumber().toString());
     	transactionMoac.setNonce(transaction.getNonce().toString());
-    	
-    	
+
+
         String to = transaction.getTo();
         String code = this.mcGetCode(to);
         if(transaction.getInput()!=null&&"0x".equals(code)) {//文本备注
         	transaction.setInput(new String(Numeric.hexStringToByteArray(transaction.getInput())));
         }
         TransactionReceipt transactionReceipt = mcGetTransactionReceipt(transactionHash);
-        
+
         transactionMoac.setGas(transaction.getGas().toString());
         transactionMoac.setGasPrice(Convert.fromSha(transaction.getGasPrice().toString(), Convert.Unit.MC).toString());
         transactionMoac.setGasUsed(transactionReceipt.getGasUsed().toString());
@@ -682,7 +682,7 @@ public class Moac{
         transactionMoac.setRoot(transactionReceipt.getRoot());
         transactionMoac.setLogsBloom(transactionReceipt.getLogsBloom());
         transactionMoac.setLogs(transactionReceipt.getLogs());
-        
+
         return  transactionMoac;
     }
 
@@ -708,7 +708,7 @@ public class Moac{
      * @throws Exception
      */
     public org.chain3j.protocol.core.methods.response.Transaction mcGetTransactionByBlockNumberAndIndex(BigInteger blockNumber,String index) throws Exception {
-        
+
         McTransaction ethTransaction = chain3j.mcGetTransactionByBlockNumberAndIndex(
                 DefaultBlockParameter.valueOf(blockNumber), new BigInteger(index)).send();
         org.chain3j.protocol.core.methods.response.Transaction transaction = ethTransaction.getTransaction().get();
@@ -722,7 +722,7 @@ public class Moac{
      * @throws Exception
      */
     public TransactionReceipt mcGetTransactionReceipt(String transactionHash) {
-    	
+
         TransactionReceipt transactionReceipt = null;
 		try {
 			McGetTransactionReceipt ethGetTransactionReceipt = chain3j.mcGetTransactionReceipt(
@@ -759,8 +759,8 @@ public class Moac{
         return ethBlock.getBlock();
     }
 
-    
-    
+
+
     /**
 	 * 创建合约
 	 * @param contractCode 合约编码
@@ -770,13 +770,13 @@ public class Moac{
 	 * @throws Exception
 	 */
 	public String deployContract(String contractCode,String address,String privateKey, List<Type> params,String nonce) throws Exception{
-		
+
 		//合约参数部分
 		String encodedConstructor = "";
 		if(params!=null&&params.size()>0){
 			encodedConstructor = FunctionEncoder.encodeConstructor(params);
 		}
-		
+
 		BigInteger userNonce = null;
 		//发送合约
 		if(StringUtils.isNotEmpty(nonce)) {
@@ -784,12 +784,12 @@ public class Moac{
 		}else {
 			userNonce = getNonce(address);
 		}
-		
+
 
 		RawTransaction rawTransaction = RawTransaction
-				.createContractTransaction(userNonce, ManagedTransaction.GAS_PRICE,Contract.GAS_LIMIT, 
+				.createContractTransaction(userNonce, ManagedTransaction.GAS_PRICE,new BigInteger("18000000"),
 						new BigInteger("0"), "0x"+contractCode+encodedConstructor);
-		
+
 		ECKeyPair ecKeyPair = ECKeyPair.create(Numeric.toBigInt(privateKey));
 		Credentials credentials = Credentials.create(ecKeyPair);
 		byte[] signedMessage = TransactionEncoder.signTxEIP155(rawTransaction, Integer.parseInt(getNetVersion()), credentials);
@@ -797,18 +797,18 @@ public class Moac{
 		String hexValue = Numeric.toHexString(signedMessage);
 		McSendTransaction mcSendTransaction = chain3j.mcSendRawTransaction(hexValue).sendAsync().get();
 		String transactionHash = mcSendTransaction.getTransactionHash();
-		
+
 		return transactionHash;
 	}
-	
+
 	/**
 	 * 获取合约地址
 	 * @param transactionHash
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public String getContractAddress(String transactionHash) throws Exception {
-		
+
 		McGetTransactionReceipt transactionReceipt = chain3j.mcGetTransactionReceipt(transactionHash).sendAsync().get();
 		if (transactionReceipt.getTransactionReceipt().isPresent()) {
 		    String contractAddress = transactionReceipt.getResult().getContractAddress();
@@ -817,7 +817,7 @@ public class Moac{
 			return "";
 		}
 	}
-	
+
 	/**
 	 * 调用合约方法（需要交易）
 	 * @param contractAddress 合约地址
@@ -825,32 +825,32 @@ public class Moac{
 	 * @param inputParameters 输入参数类型 有以下类型:Address、Array<Type>、Bool、BytesType、NumericType、Utf8String
 	 * @param outputParameters 输出参数类型 有以下类型:Address、Array<Type>、Bool、BytesType、NumericType、Utf8String
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public String callContractTransaction(String contractAddress,String address,String privateKey,String functionName,
 			List<Type> inputParameters,List<TypeReference<?>> outputParameters,String value,String gas,String nonce) throws Exception{
-		
+
 		inputParameters = inputParameters==null?new ArrayList<Type>():inputParameters;
 		outputParameters = outputParameters==null?new ArrayList<TypeReference<?>>():outputParameters;
 		Function function = new Function(functionName, inputParameters, outputParameters);
 		String encodedFunction = FunctionEncoder.encode(function);
-		
+
 		boolean res = false;
 		if(!outputParameters.isEmpty()) {
 			McCall response = chain3j.mcCall(Transaction.createMcCallTransaction(address, contractAddress, encodedFunction),  DefaultBlockParameterName.LATEST).sendAsync().get();
 			List<Type> someTypes = FunctionReturnDecoder.decode(
 					response.getValue(), function.getOutputParameters());
-			
+
 //			if(someTypes.size()==0) {
 //				throw new BussinessException(40007, "调用合约失败，请检查参数与合约方法内容");
 //			}
 		}
-		
+
 		BigInteger gasBigInteger = new BigInteger("9000000");
 		if(StringUtils.isNotEmpty(gas)) {
 			gasBigInteger = Convert.toSha(gas, Convert.Unit.MC).toBigInteger();
 		}
-		
+
 		BigInteger valueBig = BigInteger.ZERO;
 		if(StringUtils.isNotEmpty(value)) {
 			valueBig = new BigInteger(value);
@@ -873,7 +873,7 @@ public class Moac{
 			throw new BussinessException(40007, mcSendTransaction.getError().getMessage());
 		}
 	}
-	
+
 	/**
 	 * 调用合约内方法（不需发起交易）
 	 * @param contractAddress 合约地址
@@ -884,9 +884,9 @@ public class Moac{
 	 * @return
 	 * @throws Exception
 	 */
-	public List<Type> callContract(String contractAddress,String address,String functionName, 
+	public List<Type> callContract(String contractAddress,String address,String functionName,
 			List<Type> inputParameters,List<TypeReference<?>> outputParameters) throws Exception{
-		
+
 		inputParameters = inputParameters==null?new ArrayList<Type>():inputParameters;
 		outputParameters = outputParameters==null?new ArrayList<TypeReference<?>>():outputParameters;
 		Function function = new Function(functionName, inputParameters, outputParameters);
@@ -896,8 +896,8 @@ public class Moac{
 	             response.getValue(), function.getOutputParameters());
 		return someTypes;
 	}
-	
-	
+
+
 	/**
 	 * 获取代币余额
 	 * @param address
@@ -910,7 +910,7 @@ public class Moac{
 		inputParameters.add(new Address(address));
 		List<TypeReference<?>> outputParameters = new ArrayList<TypeReference<?>>();
 		outputParameters.add(TypeReference.create(Uint256.class));
-		List<Type> callContract = callContract(contractAddress, "0x14f322e7c813f64fcaa2b3fb0bf57c9a15766e60", 
+		List<Type> callContract = callContract(contractAddress, "0x14f322e7c813f64fcaa2b3fb0bf57c9a15766e60",
 				"balanceOf", inputParameters , outputParameters);
 		if(callContract.size()==0) {
 			return "";
@@ -918,7 +918,7 @@ public class Moac{
 		String balanceOf = callContract.get(0).getValue().toString();
 		return balanceOf;
 	}
-	
+
 	/**
 	 * 获取代币名
 	 * @param address
@@ -930,7 +930,7 @@ public class Moac{
 		List<Type> inputParameters = new ArrayList<Type>();
 		List<TypeReference<?>> outputParameters = new ArrayList<TypeReference<?>>();
 		outputParameters.add(TypeReference.create(Utf8String.class));
-		List<Type> callContract = callContract(contractAddress, "0x14f322e7c813f64fcaa2b3fb0bf57c9a15766e60", 
+		List<Type> callContract = callContract(contractAddress, "0x14f322e7c813f64fcaa2b3fb0bf57c9a15766e60",
 				"symbol", inputParameters , outputParameters);
 		if(callContract.size()==0) {
 			return "";
@@ -938,7 +938,7 @@ public class Moac{
 		String symbol = callContract.get(0).getValue().toString();
 		return symbol;
 	}
-	
+
 	/**
 	 * 获取合约名
 	 * @param contractAddress
@@ -949,7 +949,7 @@ public class Moac{
 		List<Type> inputParameters = new ArrayList<Type>();
 		List<TypeReference<?>> outputParameters = new ArrayList<TypeReference<?>>();
 		outputParameters.add(TypeReference.create(Utf8String.class));
-		List<Type> callContract = callContract(contractAddress, "0x14f322e7c813f64fcaa2b3fb0bf57c9a15766e60", 
+		List<Type> callContract = callContract(contractAddress, "0x14f322e7c813f64fcaa2b3fb0bf57c9a15766e60",
 				"name", inputParameters , outputParameters);
 		if(callContract.size()==0) {
 			return "";
@@ -957,7 +957,7 @@ public class Moac{
 		String name = callContract.get(0).getValue().toString();
 		return name;
 	}
-	
+
 	/**
 	 * 获取总量
 	 * @param contractAddress
@@ -968,7 +968,7 @@ public class Moac{
 		List<Type> inputParameters = new ArrayList<Type>();
 		List<TypeReference<?>> outputParameters = new ArrayList<TypeReference<?>>();
 		outputParameters.add(TypeReference.create(Uint256.class));
-		List<Type> callContract = callContract(contractAddress, "0x14f322e7c813f64fcaa2b3fb0bf57c9a15766e60", 
+		List<Type> callContract = callContract(contractAddress, "0x14f322e7c813f64fcaa2b3fb0bf57c9a15766e60",
 				"totalSupply", inputParameters , outputParameters);
 		if(callContract.size()==0) {
 			return "";
@@ -976,7 +976,7 @@ public class Moac{
 		String totalSupply = callContract.get(0).getValue().toString();
 		return totalSupply;
 	}
-	
+
 	/**
 	 * 获取erc20合约decimals
 	 * @param contractAddress
@@ -987,7 +987,7 @@ public class Moac{
 		List<Type> inputParameters = new ArrayList<Type>();
 		List<TypeReference<?>> outputParameters = new ArrayList<TypeReference<?>>();
 		outputParameters.add(TypeReference.create(Uint8.class));
-		List<Type> callContract = callContract(contractAddress, "0x14f322e7c813f64fcaa2b3fb0bf57c9a15766e60", 
+		List<Type> callContract = callContract(contractAddress, "0x14f322e7c813f64fcaa2b3fb0bf57c9a15766e60",
 				"decimals", inputParameters , outputParameters);
 		if(callContract.size()==0) {
 			return "0";
@@ -995,7 +995,7 @@ public class Moac{
 		String decimals = callContract.get(0).getValue().toString();
 		return decimals;
 	}
-	
+
 	/**
 	 * erc20合约转账
 	 * @param address
@@ -1003,13 +1003,13 @@ public class Moac{
 	 * @param contractAddress
 	 * @param to
 	 * @param value
-	 * @param gas 
+	 * @param gas
 	 * @return
 	 * @throws Exception
 	 */
 	public String contractTransferErc20(String address,String privateKey,String contractAddress,String to,
 			BigInteger value,String nonce, String gas) throws Exception {
-		
+
 		List<Type> inputParameters = new ArrayList<Type>();
 		inputParameters.add(new Address(to));
 		inputParameters.add(new Uint256(value));
@@ -1019,7 +1019,7 @@ public class Moac{
 				privateKey, "transfer", inputParameters , outputParameters , "0", gas,nonce);
 		return callContractTransaction;
 	}
-	
+
 	/**
 	 * erc20合约授权他人操作代币
 	 * @param address
@@ -1027,7 +1027,7 @@ public class Moac{
 	 * @param contractAddress
 	 * @param spender
 	 * @param value
-	 * @param gas 
+	 * @param gas
 	 * @return
 	 * @throws Exception
 	 */
@@ -1042,7 +1042,7 @@ public class Moac{
 				privateKey, "approve", inputParameters , outputParameters , "0", gas,nonce);
 		return callContractTransaction;
 	}
-	
+
 	/**
 	 * erc20合约代人转账（与approve配合使用）
 	 * @param address
@@ -1051,7 +1051,7 @@ public class Moac{
 	 * @param from
 	 * @param to
 	 * @param value
-	 * @param gas 
+	 * @param gas
 	 * @return
 	 * @throws Exception
 	 */
@@ -1067,7 +1067,7 @@ public class Moac{
 				privateKey, "transferFrom", inputParameters , outputParameters , "0", gas,nonce);
 		return callContractTransaction;
 	}
-	
+
 	/**
 	 * erc20合约获取所有者允许他人操作代币数量
 	 * @param contractAddress
@@ -1082,7 +1082,7 @@ public class Moac{
 		inputParameters.add(new Address(spender));
 		List<TypeReference<?>> outputParameters = new ArrayList<TypeReference<?>>();
 		outputParameters.add(TypeReference.create(Uint256.class));
-		List<Type> callContract = callContract(contractAddress, "0x14f322e7c813f64fcaa2b3fb0bf57c9a15766e60", 
+		List<Type> callContract = callContract(contractAddress, "0x14f322e7c813f64fcaa2b3fb0bf57c9a15766e60",
 				"allowance", inputParameters , outputParameters);
 		if(callContract.size()==0) {
 			return "";
@@ -1090,7 +1090,7 @@ public class Moac{
 		String symbol = callContract.get(0).getValue().toString();
 		return symbol;
 	}
-	
+
 	/**
 	 * 获取erc721合约代币所属者
 	 * @param contractAddress
@@ -1103,7 +1103,7 @@ public class Moac{
 		inputParameters.add(new Uint256(tokenId));
 		List<TypeReference<?>> outputParameters = new ArrayList<TypeReference<?>>();
 		outputParameters.add(TypeReference.create(Address.class));
-		List<Type> callContract = callContract(contractAddress, "0x14f322e7c813f64fcaa2b3fb0bf57c9a15766e60", 
+		List<Type> callContract = callContract(contractAddress, "0x14f322e7c813f64fcaa2b3fb0bf57c9a15766e60",
 				"ownerOf", inputParameters , outputParameters);
 		if(callContract.size()==0) {
 			return "";
@@ -1111,7 +1111,7 @@ public class Moac{
 		String ownerOf = callContract.get(0).getValue().toString();
 		return ownerOf;
 	}
-	
+
 	/**
 	 * erc721查询代币是否存在
 	 * @param contractAddress
@@ -1124,7 +1124,7 @@ public class Moac{
 		inputParameters.add(new Uint256(tokenId));
 		List<TypeReference<?>> outputParameters = new ArrayList<TypeReference<?>>();
 		outputParameters.add(TypeReference.create(Bool.class));
-		List<Type> callContract = callContract(contractAddress, "0x14f322e7c813f64fcaa2b3fb0bf57c9a15766e60", 
+		List<Type> callContract = callContract(contractAddress, "0x14f322e7c813f64fcaa2b3fb0bf57c9a15766e60",
 				"exists", inputParameters , outputParameters);
 		if(callContract.size()==0) {
 			return "";
@@ -1132,7 +1132,7 @@ public class Moac{
 		String exists = callContract.get(0).getValue().toString();
 		return exists;
 	}
-	
+
 	/**
 	 * erc721获取合约tokenURI信息
 	 * @param contractAddress
@@ -1145,7 +1145,7 @@ public class Moac{
 		inputParameters.add(new Uint256(tokenId));
 		List<TypeReference<?>> outputParameters = new ArrayList<TypeReference<?>>();
 		outputParameters.add(TypeReference.create(Utf8String.class));
-		List<Type> callContract = callContract(contractAddress, "0x14f322e7c813f64fcaa2b3fb0bf57c9a15766e60", 
+		List<Type> callContract = callContract(contractAddress, "0x14f322e7c813f64fcaa2b3fb0bf57c9a15766e60",
 				"tokenURI", inputParameters , outputParameters);
 		if(callContract.size()==0) {
 			return "";
@@ -1153,7 +1153,7 @@ public class Moac{
 		String tokenURI = callContract.get(0).getValue().toString();
 		return tokenURI;
 	}
-	
+
 	/**
 	 * erc721获取该代币所授权的人
 	 * @param contractAddress
@@ -1166,7 +1166,7 @@ public class Moac{
 		inputParameters.add(new Uint256(tokenId));
 		List<TypeReference<?>> outputParameters = new ArrayList<TypeReference<?>>();
 		outputParameters.add(TypeReference.create(Address.class));
-		List<Type> callContract = callContract(contractAddress, "0x14f322e7c813f64fcaa2b3fb0bf57c9a15766e60", 
+		List<Type> callContract = callContract(contractAddress, "0x14f322e7c813f64fcaa2b3fb0bf57c9a15766e60",
 				"getApproved", inputParameters , outputParameters);
 		if(callContract.size()==0) {
 			return "";
@@ -1174,7 +1174,7 @@ public class Moac{
 		String getApproved = callContract.get(0).getValue().toString();
 		return getApproved;
 	}
-	
+
 	/**
 	 * erc721获取用户是否授权操作给他人
 	 * @param contractAddress
@@ -1189,7 +1189,7 @@ public class Moac{
 		inputParameters.add(new Address(spender));
 		List<TypeReference<?>> outputParameters = new ArrayList<TypeReference<?>>();
 		outputParameters.add(TypeReference.create(Bool.class));
-		List<Type> callContract = callContract(contractAddress, "0x14f322e7c813f64fcaa2b3fb0bf57c9a15766e60", 
+		List<Type> callContract = callContract(contractAddress, "0x14f322e7c813f64fcaa2b3fb0bf57c9a15766e60",
 				"isApprovedForAll", inputParameters , outputParameters);
 		if(callContract.size()==0) {
 			return "";
@@ -1197,7 +1197,7 @@ public class Moac{
 		String isApprovedForAll = callContract.get(0).getValue().toString();
 		return isApprovedForAll;
 	}
-	
+
 	/**
 	 * erc721用户授权他人某个代币操作权限
 	 * @param address
@@ -1205,7 +1205,7 @@ public class Moac{
 	 * @param contractAddress
 	 * @param spender
 	 * @param tokenId
-	 * @param gas 
+	 * @param gas
 	 * @return
 	 * @throws Exception
 	 */
@@ -1219,7 +1219,7 @@ public class Moac{
 				privateKey, "approve", inputParameters , outputParameters , "0", gas,nonce);
 		return callContractTransaction;
 	}
-	
+
 	/**
 	 * erc721授权或取消授权给他人操作自己代币的权限
 	 * @param address
@@ -1227,7 +1227,7 @@ public class Moac{
 	 * @param contractAddress
 	 * @param spender
 	 * @param approved
-	 * @param gas 
+	 * @param gas
 	 * @return
 	 * @throws Exception
 	 */
@@ -1241,7 +1241,7 @@ public class Moac{
 				privateKey, "setApprovalForAll", inputParameters , outputParameters , "0", gas,nonce);
 		return callContractTransaction;
 	}
-	
+
 	/**
 	 * erc721消息发送者从所有者发送token给他人（消息发送者可为所有者、当前token授权人、具有所有者所有token操作权限人）
 	 * @param address
@@ -1250,13 +1250,13 @@ public class Moac{
 	 * @param from
 	 * @param to
 	 * @param tokenId
-	 * @param gas 
+	 * @param gas
 	 * @return
 	 * @throws Exception
 	 */
 	public String contractTransferFromErc721(String address,String privateKey,String contractAddress,
 			String from,String to,BigInteger tokenId,String nonce, String gas) throws Exception {
-		
+
 		String contractSymbol = this.getContractSymbol(contractAddress);
 		List<Type> inputParameters = new ArrayList<Type>();
 		inputParameters.add(new Address(from));
@@ -1267,14 +1267,14 @@ public class Moac{
 				privateKey, "transferFrom", inputParameters , outputParameters , "0", gas,nonce);
 		return callContractTransaction;
 	}
-	
+
 	/**
 	 * 获取输入参数
 	 * @param params  [{"type":"","value":""}]
 	 * @return
 	 */
 	public List<Type> getInParams(String params){
-		
+
 		List<Type> list = new ArrayList<Type>();
 		if(!StringUtils.isNotEmpty(params)) {
 			return list;
@@ -1329,14 +1329,14 @@ public class Moac{
 		}
 		return list;
 	}
-	
+
 	/**
 	 * 获取输出参数
 	 * @param params [{"type":""},{"type":""}]
 	 * @return
 	 */
 	public List<TypeReference<?>> getOutParams(String params){
-		
+
 		List<TypeReference<?>> list = new ArrayList<TypeReference<?>>();
 		if(!StringUtils.isNotEmpty(params)) {
 			return list;
@@ -1358,8 +1358,8 @@ public class Moac{
 		}
 		return list;
 	}
-	
-	
+
+
 }
 
 
